@@ -3,36 +3,36 @@ import styled from "styled-components";
 
 
 
-function SignUp() {
+function SignIn() {
     return (
-        <LoginContainer>
-            <LoginInnerContainer>
-                <img src="https://logos-world.net/wp-content/uploads/2020/10/Slack-Logo-2019-present.jpg" 
-                alt="" 
-                />
-                <h1>Sign up to Slack</h1>
-                <Form>
-                    <input 
-                    placeholder='sample@email.com'
-                    type='email'
-                    title='email'
-                    />
-                    <input 
-                    placeholder='password'
-                    type='password'
-                    title='password'
-                    />
-                    <input 
-                    type='submit'
-                    value='Submit'
-                    />
-                </Form>
-            </LoginInnerContainer>
-        </LoginContainer>
+      <LoginContainer>
+          <LoginInnerContainer>
+              <img src="https://logos-world.net/wp-content/uploads/2020/10/Slack-Logo-2019-present.jpg" 
+              alt="" 
+              />
+              <h1>Sign up to Slack</h1>
+              <Form>
+                  <input 
+                  placeholder='sample@email.com'
+                  type='email'
+                  title='email'
+                  />
+                  <input 
+                  placeholder='password'
+                  type='password'
+                  title='password'
+                  />
+                  <input 
+                  type='submit'
+                  value='Submit'
+                  />
+              </Form>
+          </LoginInnerContainer>
+      </LoginContainer>
     )
 }
 
-export default SignUp
+export default SignIn
 
 const LoginContainer = styled.div`
     background-color: #f8f8f8;
