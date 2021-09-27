@@ -4,22 +4,28 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import styled from "styled-components";
 import Sidebar from "./components/Sidebar/Sidebar";
+import SignUp from "./components/Login/SignUp";
+let user = false
 
 function App() {
   return (
     <div className="app">
       <Router>
-        <>
-          <Header />
-          <Appbody>
-            <Sidebar />
-            <Switch>
-              <Route path="/" exact>
-                {/* Chat */}
-              </Route>
-            </Switch>
-          </Appbody>
-        </>
+        {!user ? (
+          <SignUp />
+        ) : (
+          <>
+            <Header />
+            <Appbody>
+              <Sidebar />
+              <Switch>
+                <Route path="/" exact>
+                  {/* Chat */}
+                </Route>
+              </Switch>
+            </Appbody>
+          </>
+        )} 
       </Router>
     </div>
   );
