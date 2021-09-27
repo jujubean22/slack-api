@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import styled from "styled-components";
 import Sidebar from "./components/Sidebar/Sidebar";
-import SignIn from "./components/Login/SignUp";
+import SignIn from "./components/Login/SignIn";
 
 function App() {
   const [user, setUser] = useState(false);

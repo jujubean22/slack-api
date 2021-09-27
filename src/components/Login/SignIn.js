@@ -1,35 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from "styled-components";
 
 
 
 function SignIn() {
-    return (
-      <LoginContainer>
-          <LoginInnerContainer>
-              <img src="https://logos-world.net/wp-content/uploads/2020/10/Slack-Logo-2019-present.jpg" 
-              alt="" 
-              />
-              <h1>Sign up to Slack</h1>
-              <Form>
-                  <input 
-                  placeholder='sample@email.com'
-                  type='email'
-                  title='email'
-                  />
-                  <input 
-                  placeholder='password'
-                  type='password'
-                  title='password'
-                  />
-                  <input 
-                  type='submit'
-                  value='Submit'
-                  />
-              </Form>
-          </LoginInnerContainer>
-      </LoginContainer>
-    )
+  const [email, setEmail] = useState(''); //Email
+  const [password, setPassword] = useState(''); //Password
+
+  return (
+    <LoginContainer>
+      <LoginInnerContainer>
+        <img src="https://logos-world.net/wp-content/uploads/2020/10/Slack-Logo-2019-present.jpg" 
+        alt="" 
+        />
+        <h1>Sign up to Slack</h1>
+        <Form>
+          <input 
+          placeholder='sample@email.com'
+          type='email'
+          title='email'
+          />
+          <input 
+          placeholder='password'
+          type='password'
+          title='password'
+          />
+          <input 
+          type='submit'
+          value='Submit'
+          />
+        </Form>
+      </LoginInnerContainer>
+    </LoginContainer>
+  )
 }
 
 export default SignIn
