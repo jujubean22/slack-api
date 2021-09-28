@@ -4,51 +4,32 @@ import styled from "styled-components";
 
 
 function Login() {
-  // const [email, setEmail] = useState(''); //Email
-  // const [password, setPassword] = useState(''); //Password
-
-  //Login Button
-    // const handleLogin = () => {
-    //   axios
-    //     .post('http://206.189.91.54//api/v1/auth/sign_in,
-    //       {
-    //         "email": email,
-    //         "password": password
-    //       }
-    //     )
-    //     .then(res => {
-    //       //going to homepage
-    //     })
-    //     .catch(err => [
-    //       console.log(err);
-    //       alert('wrong email or pass');
-    //     ])
-    // }
-
-
-
 
   return (
     <LoginContainer>
       <LoginInnerContainer>
-        <img src="https://logos-world.net/wp-content/uploads/2020/10/Slack-Logo-2019-present.jpg" 
-        alt="" 
+        <img
+          src="https://logos-world.net/wp-content/uploads/2020/10/Slack-Logo-2019-present.jpg"
+          alt="slack logo" 
         />
         <h1>Sign up to Slack</h1>
         <Form>
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder='sample@email.com'
+            type='email'
+            title='email'
+            />
           <input 
-          placeholder='sample@email.com'
-          type='email'
-          title='email'
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder='password'
+            type='password'
+            title='password'
           />
-          <input 
-          placeholder='password'
-          type='password'
-          title='password'
-          />
-          <input 
-          type='submit'
-          value='Submit'
+          <input
+            onClick={handleLogin}
+            type='submit'
+            value='Submit'
           />
         </Form>
       </LoginInnerContainer>
