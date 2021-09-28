@@ -12,9 +12,11 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault()
+    setLoading(true)
     axios
       .post(
         'http://206.189.91.54//api/v1/auth/sign_in',
@@ -27,9 +29,11 @@ function Login() {
         //going to homepage
         console.log(res);
         history.push('/home');
+        setLoading(false)
       })
       .catch(err => {
         console.log(err);
+        setLoading(false)
       });
   }
 
@@ -57,7 +61,8 @@ function Login() {
           <input
             onClick={handleLogin}
             type='submit'
-            value='Submit'
+            value={loading ? "Loading..." : "Submit"}
+            disabled={loading}
           />
         </Form>
       </LoginInnerContainer>

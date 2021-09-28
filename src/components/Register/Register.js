@@ -6,15 +6,20 @@ import {
     LoginInnerContainer,
     Form,
 } from "../styles/Login.style"
+import {useHistory} from 'react-router-dom';
 
 
 function Register() {
 
     const [email, setEmail] = useState(''); //Email
     const [password, setPassword] = useState(''); // Password
+    const history = useHistory();
+    const [loading, setLoading] = useState(false);
 
       //Register Button
-    const handleRegister = () => {
+    const handleRegister = (e) => {
+        e.preventDefault()
+        setLoading(true)
         axios
         .post('http://206.189.91.54//api/v1/auth/',
             {
@@ -25,11 +30,13 @@ function Register() {
         )
         .then(res => {
             console.log(res);
-            
+            history.push("/slack-api");
+            setLoading(false);
         })
         .catch((err) => {
             console.log(err);
-            alert(`email taken`); 
+            alert(`email taken`);
+            setLoading(false) 
         });
     }
 
@@ -57,12 +64,14 @@ function Register() {
             <input
                 onClick={handleRegister}
                 type='submit'
-                value='Register'
+                value={loading ? "Loading..." : "Register"}
+                disabled={loading}
+
             />
             </Form>
         </LoginInnerContainer>
         <p>
-                    Already a user? <Link to="/slack-api" >Login </Link>
+            Already a user? <Link to="/slack-api" >Login </Link>
         </p>
     </LoginContainer>
 )
