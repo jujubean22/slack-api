@@ -1,31 +1,22 @@
 import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Header from "./components/Header/Header";
 import styled from "styled-components";
-import Sidebar from "./components/Sidebar/Sidebar";
-import SignIn from "./components/Login/SignIn";
+import Login from "./components/Login/Login"; 
+import Home from './components/Profile/Profile';
 
 function App() {
   const [user, setUser] = useState(false);
   return (
     <div className="app">
       <Router>
-        {!user ? (
-          <SignIn />
-        ) : (
+        {/* {!user ? (
+          <Login />
+        ) : ( */}
           <>
-            <Header />
-            <Appbody>
-              <Sidebar />
-              <Switch>
-                <Route path="/" exact>
-                  {/* Chat */}
-                </Route>
-              </Switch>
-            </Appbody>
+            <Home />
           </>
-        )} 
+        {/* )}  */}
       </Router>
     </div>
   );
@@ -33,7 +24,3 @@ function App() {
 
 export default App;
 
-const Appbody = styled.div`
-  display: flex;
-  height: 100vh;
-`;

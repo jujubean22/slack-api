@@ -3,9 +3,30 @@ import styled from "styled-components";
 
 
 
-function SignIn() {
-  const [email, setEmail] = useState(''); //Email
-  const [password, setPassword] = useState(''); //Password
+function Login() {
+  // const [email, setEmail] = useState(''); //Email
+  // const [password, setPassword] = useState(''); //Password
+
+  //Login Button
+    // const handleLogin = () => {
+    //   axios
+    //     .post('http://206.189.91.54//api/v1/auth/sign_in,
+    //       {
+    //         "email": email,
+    //         "password": password
+    //       }
+    //     )
+    //     .then(res => {
+    //       //going to homepage
+    //     })
+    //     .catch(err => [
+    //       console.log(err);
+    //       alert('wrong email or pass');
+    //     ])
+    // }
+
+
+
 
   return (
     <LoginContainer>
@@ -35,7 +56,7 @@ function SignIn() {
   )
 }
 
-export default SignIn
+export default Login;
 
 const LoginContainer = styled.div`
     background-color: #f8f8f8;
