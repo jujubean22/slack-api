@@ -7,15 +7,17 @@ import styled from "styled-components";
 function Home() {
   return (
     <div>
-      <Header />
-      <Appbody>
-        <Sidebar />
-        <Switch>
-          <Route path="/" exact>
-            {/* Chat */}
-          </Route>
-        </Switch>
-      </Appbody>
+      <Router>
+        <Header />
+        <Appbody>
+          <Sidebar />
+          <Switch>
+            <Route path="/" exact>
+              {/* Chat */}
+            </Route>
+          </Switch>
+        </Appbody>
+      </Router>
     </div>
   );
 }
