@@ -10,13 +10,7 @@ function App() {
   return (
     <div className="app">
       <Router>
-        {/* {!user ? (
-          <Login />
-        ) : ( */}
-          <>
-            <Home />
-          </>
-        {/* )}  */}
+        {!user ? (<Login />) : (<Home />)}
       </Router>
     </div>
   );
