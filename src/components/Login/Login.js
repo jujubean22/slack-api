@@ -1,9 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
+import axios from 'axios';
 
 
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const history = useHistory();
+
+  const handleLogin = () => {
+    axios
+      .post(
+        'http://206.189.91.54//api/v1/auth/sign_in',
+        {
+          "email": email,
+          "password": password
+        }
+      )
+      .then(res => {
+        //going to homepage
+        console.log(res);
+        history.push('/home');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
 
   return (
     <LoginContainer>
