@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import styled from "styled-components";
 import axios from 'axios';
-
-
+import { Link } from "react-router-dom";
+import { 
+  LoginContainer,
+  LoginInnerContainer,
+  Form
+} from "../styles/Login.style"
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault()
     axios
       .post(
         'http://206.189.91.54//api/v1/auth/sign_in',
@@ -29,7 +33,6 @@ function Login() {
       });
   }
 
-
   return (
     <LoginContainer>
       <LoginInnerContainer>
@@ -37,7 +40,7 @@ function Login() {
           src="https://logos-world.net/wp-content/uploads/2020/10/Slack-Logo-2019-present.jpg"
           alt="slack logo" 
         />
-        <h1>Sign up to Slack</h1>
+        <h1>Sign in to Slack</h1>
         <Form>
           <input
             onChange={(e) => setEmail(e.target.value)}
@@ -58,54 +61,12 @@ function Login() {
           />
         </Form>
       </LoginInnerContainer>
+      <p>
+                Not an User? <Link to="/Register" >Register </Link>
+      </p>
     </LoginContainer>
   )
 }
 
 export default Login;
 
-const LoginContainer = styled.div`
-    background-color: #f8f8f8;
-    height: 100vh;
-    display: grid;
-    place-items: center;
-`;
-
-const LoginInnerContainer = styled.div`
-    padding: 100px;
-    text-align: center;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-
-    > img{
-        object-fit: contain;
-        height: 100px;
-        margin-bottom: 10px;
-    }
-    > h1{
-    object-fit: contain;
-    height: 100px;
-    margin-bottom: 10px;
-    }
-`;
-
-
-const Form = styled.div`
-    display: flex;
-    flex-direction: column;
-
->input{
-    padding: 1vh;
-    margin: 1vh;
-    min-width: 25vw;
-}
->input[type=submit]{
-    padding: 1vh;
-    margin: 1vh;
-    min-width: 25vw;
-    color: white;
-    font-weight:100;
-    background-color: #5D2D5D;
-}
-`;
