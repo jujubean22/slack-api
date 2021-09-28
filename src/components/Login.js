@@ -6,7 +6,7 @@ import {
   LoginContainer,
   LoginInnerContainer,
   Form
-} from "../styles/Login.style"
+} from "./styles/Login.style"
 
 function Login() {
   const [email, setEmail] = useState('');
