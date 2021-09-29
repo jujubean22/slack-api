@@ -28,7 +28,7 @@ function Login() {
       .then(res => {
         //going to homepage
         console.log(res);
-        history.push('/home');
+        history.push('/');
         setLoading(false)
       })
       .catch(err => {
