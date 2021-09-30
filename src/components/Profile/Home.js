@@ -1,8 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router} from "react-router-dom";
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import styled from "styled-components";
+import Homepage from './Homepage';
 
 function Home() {
   return (
@@ -11,11 +12,7 @@ function Home() {
         <Header />
         <Appbody>
           <Sidebar />
-          <Switch>
-            <Route path="/" exact>
-              {/* Chat */}
-            </Route>
-          </Switch>
+          <Homepage />
         </Appbody>
       </Router>
     </div>

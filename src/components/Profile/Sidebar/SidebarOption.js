@@ -3,15 +3,17 @@ import styled from "styled-components";
 
 function SidebarOption({Icon, title, addChannelOption}) {
 
-    // const addChannel = () => {} 
+    const addChannel = () => {
+        // const channelName =prompt('Please enter a channel name: ');
+    } 
 
-    // const addChannel = () => {} 
+    const selectChannel = () => {} 
 
     return (
         <SidebarOptionContainer
-            // onClick={addChannelOption ? addChannel : selectChannel}
+            onClick={addChannelOption ? addChannel : selectChannel}
         >
-            {Icon && <Icon fontSize="small" style={{padding: 10}}/>}
+            {Icon && <Icon fontSize="small" style={{padding: '10'}}/>}
             {Icon ? (
                 <h3>{title}</h3>
             ) : (
