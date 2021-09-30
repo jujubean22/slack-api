@@ -6,7 +6,7 @@ import {
   LoginContainer,
   LoginInnerContainer,
   Form
-} from "../styles/Login.style"
+} from "./styles/Login.style"
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -62,11 +62,14 @@ function Login() {
         </Form>
       </LoginInnerContainer>
       <p>
-                Not an User? <Link to="/Register" >Register </Link>
+        Not an User? <Link to="/Register" >Register </Link>
       </p>
     </LoginContainer>
   )
 }
 
 export default Login;
+
+
+
 
