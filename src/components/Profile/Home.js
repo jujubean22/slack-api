@@ -14,8 +14,8 @@ function Home() {
           <Appbody>
             <Sidebar />
             <Switch>              
-              {/* <Route path='/'  component={Homepage} /> */}
-              <Route exact path='/chat' component={Chat} />
+              <Route path='/'  component={Homepage} />
+              {/* <Route exact path='/chat' component={Chat} /> */}
             </Switch>
           </Appbody>
       </Router>

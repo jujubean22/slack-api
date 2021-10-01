@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
+import { LoginContainer, LoginInnerContainer, Form} from "../styles/Login.style"
+import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from "react-router-dom";
-import { 
-  LoginContainer,
-  LoginInnerContainer,
-  Form
-} from "../styles/Login.style"
 
-function Login() {
+function Login({ handleSetLoginData }) {
+  //set up states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const history = useHistory();
+
+  //state for loading
   const [loading, setLoading] = useState(false);
 
+  //for history push
+  const history = useHistory();
+
+  //user login 
   const handleLogin = (e) => {
+    //to prevent refresh
     e.preventDefault()
     setLoading(true)
     axios
@@ -27,7 +30,8 @@ function Login() {
       )
       .then(res => {
         //going to homepage
-        console.log(res);
+        // console.log(res);
+        handleSetLoginData(res);
         history.push('/');
         setLoading(false)
       })
@@ -39,7 +43,7 @@ function Login() {
 
   return (
     <LoginContainer>
-      <LoginInnerContainer>
+      <LoginInnerContainer handeSetLoginData={handleSetLoginData}>
         <img
           src="https://logos-world.net/wp-content/uploads/2020/10/Slack-Logo-2019-present.jpg"
           alt="slack logo" 
