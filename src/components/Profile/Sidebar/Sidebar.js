@@ -12,8 +12,8 @@ import FileCopyIcon from "@material-ui/icons/FileCopy";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
+import EmailIcon from '@material-ui/icons/Email';
 import SidebarOption from "./SidebarOption";
-
 function Sidebar() {
     return (
         <SidebarContainer>
@@ -39,6 +39,9 @@ function Sidebar() {
             <SidebarOption Icon={ExpandMoreIcon} title="Channel" />
             <hr />
             <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
+            <hr />
+            <SidebarOption Icon={EmailIcon} addChannelOption title="Direct Messages" />
+            <hr />
         </SidebarContainer>
     
     );
