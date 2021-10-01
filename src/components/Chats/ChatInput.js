@@ -4,78 +4,99 @@ import styled from "styled-components";
 import axios from 'axios';
 
 
-function ChatInput() {
-    const [loginData, setLoginData] = useState("")
+function ChatInput({loginData}) {
     const [sendMessage, setSendMessage] = useState('')
 
+  useEffect(() => {
+    
+  }, []);
 
-    const handleMessage = (e) => {
-        e.preventDefault()
+  const getMessageObj = {
+    
+  }
 
-        const headers = {
-        'access-token': localStorage.getItem('access-token'),
-        'client': localStorage.getItem('client'),
-        'expiry': localStorage.getItem('expiry'),
-        'uid': localStorage.getItem('uid'),
-        }
+  const handleMessage = (e) => {
+    e.preventDefault()
 
-        const sendMessageObj = {
-        receiver_id: 765,
-        receiver_class: "User",
-        body: sendMessage,
-        headers: headers
-        }
-
-        const { receiver_id, receiver_class, body, headers:{ token, client, expiry, uid } } = sendMessageObj
-
-        axios.post("http://206.189.91.54//api/v1/messages", 
-        {
-        receiver_id,
-        receiver_class,
-        body
-        },
-        {
-        headers:{
-            "access-token": token,
-            "client": client,
-            "expiry": expiry,
-            "uid": uid,
-        }
-        })
-        .then(res => {
-        console.log(res)
-        })
-        .catch(err => console.log("Error Sending Message: ", err))
-
-        
-        axios.get("http://206.189.91.54//api/v1/messages", 
-        {
-        headers:{
-            "access-token": token,
-            "client": client,
-            "expiry": expiry,
-            "uid": uid,
-        },
-        params: {
-            receiver_id,
-            receiver_class
-        }
-        })
-        .then(res => {
-        console.log("this is the message data: ")
-        console.log(res.data)
-        })
-        .catch(err => console.log("Error Sending Message: ", err))
+    const headers = {
+    'token': loginData.headers['access-token'],
+    'client': loginData.headers.client,
+    'expiry': loginData.headers.expiry,
+    'uid': loginData.headers.uid
     }
 
-    return (
-        <ChatInputContainer>
-            <form >
-                <input type="text" placeholder={'room'} />
-                <Button hidden type='submit' onClick={handleMessage} >Send</Button>
-            </form>
-        </ChatInputContainer>
-    )
+    const sendMessageObj = {
+    receiver_id: 805,
+    receiver_class: "User",
+    body: sendMessage,
+    headers: headers
+    }
+
+    const { receiver_id, receiver_class, body, headers:{ token, client, expiry, uid } } = sendMessageObj
+
+    axios.post("http://206.189.91.54//api/v1/messages", 
+    {
+    receiver_id,
+    receiver_class,
+    body
+    },
+    {
+    headers:{
+        "access-token": token,
+        "client": client,
+        "expiry": expiry,
+        "uid": uid,
+    }
+    })
+    .then(res => {
+      console.log(res)
+      console.log(res.data.data.body)
+    })
+    .catch(err => console.log("Error Sending Message: ", err))
+
+    
+    axios.get("http://206.189.91.54//api/v1/messages", 
+    {
+    headers:{
+        "access-token": token,
+        "client": client,
+        "expiry": expiry,
+        "uid": uid,
+    },
+    params: {
+        receiver_id,
+        receiver_class
+    }
+    })
+    .then(res => {
+    console.log("this is the message data: ")
+    console.log(res.data)
+    })
+    .catch(err => console.log("Error Sending Message: ", err))
+  }
+
+  
+  const handleSendMessage = (e) => {
+    setSendMessage(e.target.value);
+  }
+
+  return (
+    <ChatInputContainer>
+      <form >
+        <input
+          type="text"
+          placeholder={'room'}
+          onSubmit={handleMessage}
+          onChange={handleSendMessage}
+        />
+        <Button
+          type='submit'
+          onClick={handleMessage}
+        > Send
+        </Button>
+      </form>
+    </ChatInputContainer>
+  )
 }
 
 export default ChatInput

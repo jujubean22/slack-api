@@ -2,7 +2,7 @@ import React from 'react'
 import styled from "styled-components";
 import ChatInput from './ChatInput';
 
-function Chat() {
+function Chat({ loginData }) {
     return (
         <ChatContainer>
             <>
@@ -20,7 +20,7 @@ function Chat() {
                 {/* <ChatMessages> */}
                     {/* list of msgs */}
                 {/* </ChatMessages> */}
-                <ChatInput/ >
+                <ChatInput loginData={loginData} />
             </>
         </ChatContainer>
     )

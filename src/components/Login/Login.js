@@ -30,7 +30,7 @@ function Login({ handleSetLoginData }) {
       )
       .then(res => {
         //going to homepage
-        // console.log(res);
+        console.log(res);
         handleSetLoginData(res);
         history.push('/');
         setLoading(false)

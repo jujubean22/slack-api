@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Homepage from './Homepage';
 import Chat from '../Chats/Chat';
 
-function Home() {
+function Home({loginData}) {
   return (
     <div>
       <Router>
@@ -14,7 +14,9 @@ function Home() {
           <Appbody>
             <Sidebar />
             <Switch>              
-              <Route path='/'  component={Homepage} />
+            <Route path='/'>
+              <Chat loginData={loginData}/>
+            </Route>
               {/* <Route exact path='/chat' component={Chat} /> */}
             </Switch>
           </Appbody>
