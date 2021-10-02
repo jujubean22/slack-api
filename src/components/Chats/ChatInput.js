@@ -4,75 +4,37 @@ import styled from "styled-components";
 import axios from 'axios';
 
 
-function ChatInput({loginData}) {
-    const [sendMessage, setSendMessage] = useState('')
+function ChatInput({loginData, handleIsRender}) {
+  const [sendMessage, setSendMessage] = useState('');
 
   useEffect(() => {
     
   }, []);
 
-  const getMessageObj = {
-    
-  }
-
   const handleMessage = (e) => {
     e.preventDefault()
 
-    const headers = {
-    'token': loginData.headers['access-token'],
-    'client': loginData.headers.client,
-    'expiry': loginData.headers.expiry,
-    'uid': loginData.headers.uid
-    }
+    axios.post("http://206.189.91.54//api/v1/messages",
+      {
+        receiver_id: 805,
+        receiver_class: "User",
+        body: sendMessage
+      },
+      {
+        headers: {
+          "access-token": loginData.headers['access-token'],
+          "client": loginData.headers.client,
+          "expiry": loginData.headers.expiry,
+          "uid": loginData.headers.uid,
+        }
+      })
+      .then(res => {
+        console.log(res);
+        handleIsRender();
+      })
+      .catch(err => console.log("Error Sending Message: ", err));
 
-    const sendMessageObj = {
-    receiver_id: 805,
-    receiver_class: "User",
-    body: sendMessage,
-    headers: headers
-    }
-
-    const { receiver_id, receiver_class, body, headers:{ token, client, expiry, uid } } = sendMessageObj
-
-    axios.post("http://206.189.91.54//api/v1/messages", 
-    {
-    receiver_id,
-    receiver_class,
-    body
-    },
-    {
-    headers:{
-        "access-token": token,
-        "client": client,
-        "expiry": expiry,
-        "uid": uid,
-    }
-    })
-    .then(res => {
-      console.log(res)
-      console.log(res.data.data.body)
-    })
-    .catch(err => console.log("Error Sending Message: ", err))
-
-    
-    axios.get("http://206.189.91.54//api/v1/messages", 
-    {
-    headers:{
-        "access-token": token,
-        "client": client,
-        "expiry": expiry,
-        "uid": uid,
-    },
-    params: {
-        receiver_id,
-        receiver_class
-    }
-    })
-    .then(res => {
-    console.log("this is the message data: ")
-    console.log(res.data)
-    })
-    .catch(err => console.log("Error Sending Message: ", err))
+    setSendMessage("");
   }
 
   
@@ -87,6 +49,7 @@ function ChatInput({loginData}) {
           type="text"
           placeholder={'room'}
           onSubmit={handleMessage}
+          value={sendMessage}
           onChange={handleSendMessage}
         />
         <Button
