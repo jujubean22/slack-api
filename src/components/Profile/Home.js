@@ -14,10 +14,12 @@ function Home({loginData}) {
           <Appbody>
             <Sidebar />
             <Switch>              
+            {/* <Route exact path='/' component={Chat}>
+              <Homepage />
+            </Route> */}
             <Route path='/'>
               <Chat loginData={loginData}/>
             </Route>
-              {/* <Route exact path='/chat' component={Chat} /> */}
             </Switch>
           </Appbody>
       </Router>
