@@ -8,12 +8,21 @@ function Chat({ loginData }) {
 
   const [chatData, setChatData] = useState("");
   const [isRender, setIsRender] = useState(false);
+  const chatRef = useRef(null)
 
   const handleIsRender = () => {
     setIsRender(!isRender);
   }
 
-  const chatRef = useRef(null)
+  const scrollToBottomSmooth = () => {
+    chatRef?.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  const scrollToBottom = () => {
+    chatRef?.current?.scrollIntoView()
+  }
+
+  useEffect(scrollToBottom, [chatData]);
 
   useEffect(() => {
     axios.get(`http://206.189.91.54//api/v1/messages?receiver_class=User&receiver_id=${765}`, 
@@ -31,7 +40,7 @@ function Chat({ loginData }) {
     })
     .catch(err => console.log("Error Sending Message: ", err))
 
-    chatRef?.current?.scrollIntoView();
+    scrollToBottomSmooth()
 
   }, [isRender]);
 
@@ -50,10 +59,10 @@ function Chat({ loginData }) {
           </HeaderRight>
         </ChatHeaderContainer>
         <ChatMessages>
-          <ChatBodyContainer chatData={chatData} />
+          <ChatBodyContainer chatData={chatData} chatRef={chatRef}/>
         </ChatMessages>
         
-        <ChatInput loginData={loginData} handleIsRender={handleIsRender}/>
+        <ChatInput loginData={loginData} handleIsRender={handleIsRender} />
       </>
     </ChatContainer>
   )

@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
 import axios from 'axios';
 
@@ -7,16 +7,12 @@ import axios from 'axios';
 function ChatInput({loginData, handleIsRender}) {
   const [sendMessage, setSendMessage] = useState('');
 
-  useEffect(() => {
-    
-  }, []);
-
   const handleMessage = (e) => {
     e.preventDefault()
 
     axios.post("http://206.189.91.54//api/v1/messages",
       {
-        receiver_id: 805,
+        receiver_id: 765,
         receiver_class: "User",
         body: sendMessage
       },
