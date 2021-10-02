@@ -63,10 +63,8 @@ export default Chat
 
 const ChatContainer = styled.div`
   width: 100vw;
-
   flex: 0.7;
   flex-grow: 1;
-  overflow-y: scroll;
   margin-top: 60px;
 `;
 
@@ -92,5 +90,6 @@ const HeaderRight = styled.div`
 `;
 
 const ChatMessages = styled.div`
-  padding: 100px;
+  padding: 3rem;
+  margin-bottom: 2rem;
 `;

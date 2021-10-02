@@ -16,8 +16,12 @@ function ChatBodyContainer({ chatData }) {
 export default ChatBodyContainer;
 const ChatBodyContainerStyle= styled.div`
   width: 100%;
-  height: 600px;
+  height: 42rem;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
+
+  // ::-webkit-scrollbar {
+  //   display: none;
+  // }
 `;
