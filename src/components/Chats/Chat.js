@@ -16,7 +16,7 @@ function Chat({ loginData }) {
   const chatRef = useRef(null)
 
   useEffect(() => {
-    axios.get(`http://206.189.91.54//api/v1/messages?receiver_class=User&receiver_id=${805}`, 
+    axios.get(`http://206.189.91.54//api/v1/messages?receiver_class=User&receiver_id=${765}`, 
     {
     headers:{
       "access-token": loginData.headers['access-token'],
@@ -62,35 +62,35 @@ function Chat({ loginData }) {
 export default Chat
 
 const ChatContainer = styled.div`
-    width: 100vw;
+  width: 100vw;
 
-    flex: 0.7;
-    flex-grow: 1;
-    overflow-y: scroll;
-    margin-top: 60px;
+  flex: 0.7;
+  flex-grow: 1;
+  overflow-y: scroll;
+  margin-top: 60px;
 `;
 
 const ChatHeaderContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    border-bottom: 1px solid lightgray;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid lightgray;
 `;
 
 const HeaderLeft = styled.div`
-    display: flex;
-    align-items: center;
-    text-transform: lowercase;
+  display: flex;
+  align-items: center;
+  text-transform: lowercase;
 `;
 const HeaderRight = styled.div`
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    > button {
-        margin: 1vh;
-    }
+  > button {
+    margin: 1vh;
+  }
 `;
 
 const ChatMessages = styled.div`
-    padding: 100px;
+  padding: 100px;
 `;

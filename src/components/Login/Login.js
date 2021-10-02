@@ -6,8 +6,8 @@ import axios from 'axios';
 
 function Login({ handleSetLoginData }) {
   //set up states
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('ayaya@gmail.com');
+  const [password, setPassword] = useState('123123');
 
   //state for loading
   const [loading, setLoading] = useState(false);
@@ -53,12 +53,14 @@ function Login({ handleSetLoginData }) {
           <input
             onChange={(e) => setEmail(e.target.value)}
             placeholder='sample@email.com'
+            value={email}
             type='email'
             title='email'
             />
           <input 
             onChange={(e) => setPassword(e.target.value)}
             placeholder='password'
+            value={password}
             type='password'
             title='password'
           />
