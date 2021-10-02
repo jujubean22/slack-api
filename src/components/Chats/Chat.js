@@ -16,18 +16,14 @@ function Chat({ loginData }) {
   const chatRef = useRef(null)
 
   useEffect(() => {
-    axios.get("http://206.189.91.54//api/v1/messages", 
+    axios.get(`http://206.189.91.54//api/v1/messages?receiver_class=User&receiver_id=${805}`, 
     {
     headers:{
       "access-token": loginData.headers['access-token'],
       "client": loginData.headers.client,
       "expiry": loginData.headers.expiry,
       "uid": loginData.headers.uid,
-    },
-    params: {
-        receiver_id: 805,
-        receiver_class: "User"
-    }
+      }
     })
     .then(res => {
       setChatData(res.data.data);

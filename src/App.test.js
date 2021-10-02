@@ -1,8 +1,14 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from '@testing-library/react'
+import App from './App'
+import { Link } from "react-router-dom";
+import Login from './components/Login'
+import { 
+  LoginContainer,
+  LoginInnerContainer,
+  Form
+} from "./components/styles/Login.style"
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+// test('renders login', () => {
+//   render(<Login/>)
+//     expect(screen.getByRole('textbox', {name: /email/i})).toBeInTheDocument()
+// })
