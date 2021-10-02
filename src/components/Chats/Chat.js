@@ -1,34 +1,73 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from "styled-components";
 import ChatInput from './ChatInput';
+import ChatBodyContainer from './ChatBodyContainer';
+import axios from 'axios';
 
 function Chat({ loginData }) {
-    return (
-        <ChatContainer>
-            <>
-                <ChatHeaderContainer>
-                    <HeaderLeft>  
-                        <h2>
-                            <strong>Sender</strong>
-                        </h2>
-                    </HeaderLeft>
-                    <HeaderRight>
-                        {/* <button> Add Member</button>
-                        <button> Member List</button> */}
-                    </HeaderRight>
-                </ChatHeaderContainer>
-                {/* <ChatMessages> */}
-                    {/* list of msgs */}
-                {/* </ChatMessages> */}
-                <ChatInput loginData={loginData} />
-            </>
-        </ChatContainer>
-    )
+
+  const [chatData, setChatData] = useState("");
+  const [isRender, setIsRender] = useState(false);
+
+  const handleIsRender = () => {
+    setIsRender(!isRender);
+  }
+
+  const chatRef = useRef(null)
+
+  useEffect(() => {
+    axios.get("http://206.189.91.54//api/v1/messages", 
+    {
+    headers:{
+      "access-token": loginData.headers['access-token'],
+      "client": loginData.headers.client,
+      "expiry": loginData.headers.expiry,
+      "uid": loginData.headers.uid,
+    },
+    params: {
+        receiver_id: 805,
+        receiver_class: "User"
+    }
+    })
+    .then(res => {
+      setChatData(res.data.data);
+      //console.log("Chat render:", chatData);
+    })
+    .catch(err => console.log("Error Sending Message: ", err))
+
+    chatRef?.current?.scrollIntoView();
+
+  }, [isRender]);
+
+  return (
+    <ChatContainer>
+      <>
+        <ChatHeaderContainer>
+          <HeaderLeft>  
+            <h2>
+              <strong>Sender</strong>
+            </h2>
+          </HeaderLeft>
+          <HeaderRight>
+            {/* <button> Add Member</button>
+            <button> Member List</button> */}
+          </HeaderRight>
+        </ChatHeaderContainer>
+        <ChatMessages>
+          <ChatBodyContainer chatData={chatData} />
+        </ChatMessages>
+        
+        <ChatInput loginData={loginData} handleIsRender={handleIsRender}/>
+      </>
+    </ChatContainer>
+  )
 }
 
 export default Chat
 
 const ChatContainer = styled.div`
+    width: 100vw;
+
     flex: 0.7;
     flex-grow: 1;
     overflow-y: scroll;
@@ -54,4 +93,8 @@ const HeaderRight = styled.div`
     > button {
         margin: 1vh;
     }
+`;
+
+const ChatMessages = styled.div`
+    padding: 100px;
 `;
