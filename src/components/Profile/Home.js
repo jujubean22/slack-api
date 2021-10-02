@@ -10,7 +10,7 @@ function Home({loginData}) {
   return (
     <div>
       <Router>
-        <Header />
+        <Header loginData={loginData}/>
           <Appbody>
             <Sidebar />
             <Switch>              
