@@ -17,11 +17,7 @@ import SidebarOption from "./SidebarOption";
 
 function Sidebar({channels, loginData}) {
 
-  console.log("Sidebar login data: ", loginData.data.data)
-  console.log("Sidebar channel data: ", channels.data.data)
-
   const { id, email } = loginData.data.data
-
 
   const renderChannels = channels.data.data
     ? channels.data.data.map((channel, index) => {
@@ -35,14 +31,17 @@ function Sidebar({channels, loginData}) {
       })
     : "";
 
+  const userName = email.split("@")[0]
+  const capitalizedUser = userName.charAt(0).toUpperCase() + userName.slice(1);
+
   return (
     <SidebarContainer>
       <SidebarHeader>
       <SidebarInfo>
-        <h2>Jujubean</h2>
+        <h2>{email}</h2>
         <h3>
         <FiberManualRecordIcon />
-        Julie Mae
+        {capitalizedUser}
         </h3>
       </SidebarInfo>
       <CreateIcon />
@@ -72,55 +71,59 @@ function Sidebar({channels, loginData}) {
 export default Sidebar;
 
 const SidebarContainer = styled.div`
-    background-color: var(--slack-color);
-    color: white;
-    flex: 0.5;
-    border-top: 1px solid #49274b;
-    max-width: 260px;
-    margin-top: 60px;
+  background-color: var(--slack-color);
+  color: white;
+  flex: 0.5;
+  border-top: 1px solid #49274b;
+  max-width: 260px;
+  margin-top: 60px;
+  overflow-y: auto;
 
-    >hr {
-        margin-top: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #49274b;
-    }
+  >hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #49274b;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SidebarHeader = styled.div`
+  display: flex;
+  border-bottom: 1px solid #49274b;
+  padding: 13px;
+
+  > .MuiSvgIcon-root {
+    padding: 8px;
+    color: #49274b;
+    font-size: 18px;
+    background-color: white;
+    border-radius: 1000px;
+  }
+  `;
+
+  const SidebarInfo = styled.div`
+  flex: 1;
+
+  > h2 {
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 5px;
+  }
+
+  > h3 {
     display: flex;
-    border-bottom: 1px solid #49274b;
-    padding: 13px;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
 
-    > .MuiSvgIcon-root {
-        padding: 8px;
-        color: #49274b;
-        font-size: 18px;
-        background-color: white;
-        border-radius: 1000px;
-    }
-    `;
-
-    const SidebarInfo = styled.div`
-    flex: 1;
-
-    > h2 {
-        font-size: 15px;
-        font-weight: 900;
-        margin-bottom: 5px;
-    }
-
-    > h3 {
-        display: flex;
-        font-size: 13px;
-        font-weight: 400;
-        margin-bottom: 5px;
-    }
-
-    > h3 > .MuiSvgIcon-root {
-        font-size: 14px;
-        font-weight: 400;
-        margin-top: 1px;
-        margin-right: 2px;
-        color: green;
-    }
-    `;
+  > h3 > .MuiSvgIcon-root {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 1px;
+    margin-right: 2px;
+    color: green;
+  }
+  `;

@@ -22,9 +22,9 @@ const ChatBodyContainerStyle= styled.div`
   display: flex;
   flex-direction: column;
 
-  // ::-webkit-scrollbar {
-  //   display: none;
-  // }
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ChatBottom = styled.div`
