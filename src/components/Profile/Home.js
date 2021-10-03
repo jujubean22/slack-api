@@ -9,15 +9,17 @@ import axios from 'axios'
 
 function Home({loginData}) {
 
+  console.log("Home.js renders")
+
   const [userHeaders, setUserHeaders] = useState("");
   const [isRender, setIsRender] = useState(false);
+  const [channels, setChannels] = useState("");
 
   const handleIsRender = () => {
     setIsRender(!isRender);
-  }
+  };
 
   useEffect(() => {
-
     const headers = {
       token: loginData.headers["access-token"],
       client: loginData.headers.client,
@@ -39,24 +41,29 @@ function Home({loginData}) {
       },
     })
     .then(res => {
+      setChannels(res)
       console.log("Channel render:", res);
     })
     .catch(err => console.log("Error Getting Channel: ", err))
 
   }, [isRender]);
+
+  if (!channels.data) {
+    return <div><h1>Loading...</h1></div>
+  }
   
   return (
     <div>
       <Router>
         <Header loginData={loginData}/>
           <Appbody>
-            <Sidebar />
+            <Sidebar channels={channels} loginData={loginData} />
             <Switch>              
             {/* <Route exact path='/' component={Chat}>
               <Homepage />
             </Route> */}
             <Route path='/'>
-              <Chat loginData={loginData} headers={userHeaders} handleIsRender={handleIsRender} />
+              <Chat loginData={loginData} headers={userHeaders}  />
             </Route>
             </Switch>
           </Appbody>
