@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import CreateIcon from "@material-ui/icons/Create";
@@ -14,37 +14,59 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
 import EmailIcon from '@material-ui/icons/Email';
 import SidebarOption from "./SidebarOption";
-function Sidebar() {
-    return (
-        <SidebarContainer>
-            <SidebarHeader>
-            <SidebarInfo>
-                <h2>Jujubean</h2>
-                <h3>
-                <FiberManualRecordIcon />
-                Julie Mae
-                </h3>
-            </SidebarInfo>
-            <CreateIcon />
-            </SidebarHeader>
-            <SidebarOption Icon={InsertCommentIcon} title="Threads" />
-            <SidebarOption Icon={InboxIcon} title="Mentions & Reactions" />
-            <SidebarOption Icon={DraftsIcon} title="Saved items" />
-            <SidebarOption Icon={BookmarkBorderIcon} title="Channel browser" />
-            <SidebarOption Icon={PeopleAltIcon} title="People & user groups" />
-            <SidebarOption Icon={AppsIcon} title="Apps" />
-            <SidebarOption Icon={FileCopyIcon} title="File browser" />
-            <SidebarOption Icon={ExpandLessIcon} title="Show less" />
-            <hr />
-            <SidebarOption Icon={ExpandMoreIcon} title="Channel" />
-            <hr />
-            <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
-            <hr />
-            <SidebarOption Icon={EmailIcon} addChannelOption title="Direct Messages" />
-            <hr />
-        </SidebarContainer>
-    
-    );
+
+function Sidebar({channels, loginData}) {
+
+  console.log("Sidebar login data: ", loginData.data.data)
+  console.log("Sidebar channel data: ", channels.data.data)
+
+  const { id, email } = loginData.data.data
+
+
+  const renderChannels = channels.data.data
+    ? channels.data.data.map((channel, index) => {
+        return (
+          <SidebarOption
+            key={index}
+            Icon={InsertCommentIcon}
+            title={channel.name}
+          />
+        );
+      })
+    : "";
+
+  return (
+    <SidebarContainer>
+      <SidebarHeader>
+      <SidebarInfo>
+        <h2>Jujubean</h2>
+        <h3>
+        <FiberManualRecordIcon />
+        Julie Mae
+        </h3>
+      </SidebarInfo>
+      <CreateIcon />
+      </SidebarHeader>
+      <SidebarOption Icon={InsertCommentIcon} title="Threads" />
+      <SidebarOption Icon={InboxIcon} title="Mentions & Reactions" />
+      <SidebarOption Icon={DraftsIcon} title="Saved items" />
+      <SidebarOption Icon={BookmarkBorderIcon} title="Channel browser" />
+      <SidebarOption Icon={PeopleAltIcon} title="People & user groups" />
+      <SidebarOption Icon={AppsIcon} title="Apps" />
+      <SidebarOption Icon={FileCopyIcon} title="File browser" />
+      <SidebarOption Icon={ExpandLessIcon} title="Show less" />
+      <hr />
+      <SidebarOption Icon={ExpandMoreIcon} title="Channel" />
+      <hr />
+      {renderChannels}
+      <hr />
+      <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
+      <hr />
+      <SidebarOption Icon={EmailIcon} addChannelOption title="Direct Messages" />
+      <hr />
+    </SidebarContainer>
+  
+  );
 }
 
 export default Sidebar;

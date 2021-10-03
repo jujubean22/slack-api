@@ -8,9 +8,6 @@ import Chat from '../Chats/Chat';
 import axios from 'axios'
 
 function Home({loginData}) {
-
-  console.log("Home.js renders")
-
   const [userHeaders, setUserHeaders] = useState("");
   const [isRender, setIsRender] = useState(false);
   const [channels, setChannels] = useState("");
@@ -42,7 +39,7 @@ function Home({loginData}) {
     })
     .then(res => {
       setChannels(res)
-      console.log("Channel render:", res);
+      //console.log("Channel render:", res);
     })
     .catch(err => console.log("Error Getting Channel: ", err))
 

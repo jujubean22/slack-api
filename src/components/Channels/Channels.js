@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Channel() {
+function Channels() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function Channel() {
   )
 }
 
-export default Channel
+export default Channels
