@@ -3,11 +3,18 @@ import styled from "styled-components";
 import ChatInput from './ChatInput';
 import ChatBodyContainer from './ChatBodyContainer';
 import axios from 'axios';
+import { useParams } from "react-router-dom"
 
 function Chat({ loginData, headers }) {
   const [chatData, setChatData] = useState("");
   const [isRender, setIsRender] = useState(false);
   const chatRef = useRef(null)
+  const [receiveType, setReceiveType] = useState("")
+
+  const params = useParams()
+  const { type, id } = params
+
+  const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
 
   const handleIsRender = () => {
     setIsRender(!isRender);
@@ -26,7 +33,8 @@ function Chat({ loginData, headers }) {
   useEffect(() => {
     const { token, client, expiry, uid  } = headers
 
-    axios.get(`http://206.189.91.54//api/v1/messages?receiver_class=User&receiver_id=${765}`, 
+    //Get User Message Data
+    axios.get(`http://206.189.91.54//api/v1/messages?receiver_class=${capitalizedType}&receiver_id=${parseInt(id)}`, 
     {
     headers:{
       "access-token": token,
@@ -35,11 +43,39 @@ function Chat({ loginData, headers }) {
       "uid": uid,
       }
     })
-    .then(res => {
-      setChatData(res.data.data);
-      //console.log("Chat render:", chatData);
-    })
+    .then(res => { setChatData(res.data.data) })
     .catch(err => console.log("Error Sending Message: ", err))
+
+    if(type==="user"){
+      //Get User Data
+      axios.get("/api/v1/users",
+      {
+        headers:{
+          "access-token": token,
+          "client": client,
+          "expiry": expiry,
+          "uid": uid,
+        }
+      })
+      .then(res => {
+        console.log(res.data.data.filter(data => data.id === id))
+      })
+    } else {
+      //Get Channel Data
+      axios.get(`/api/v1/channels/${id}`,
+      {
+        headers:{
+          "access-token": token,
+          "client": client,
+          "expiry": expiry,
+          "uid": uid,
+        }
+      })
+      .then(res => {
+        console.log(res)
+      })
+    }
+    
 
     scrollToBottomSmooth()
 
@@ -51,7 +87,7 @@ function Chat({ loginData, headers }) {
         <ChatHeaderContainer>
           <HeaderLeft>  
             <h2>
-              <strong>Sender</strong>
+              <strong>{receiveType} : {id}</strong>
             </h2>
           </HeaderLeft>
           <HeaderRight>

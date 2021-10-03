@@ -6,35 +6,35 @@ import AvatarRalph from "../../Assets/AvatarRalph.jpg"
 
 function Homepage() {
 return (
-    <div>
-        <Home>
-            <HomeInner>
-                <h1> Group 6 Slack App Clone</h1>
-                <Header>     
-                    <img src="https://avatars.slack-edge.com/2021-01-14/1620922289399_34e39fe253a871b90028_88.png" alt="" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Slack_icon_2019.svg/1200px-Slack_icon_2019.svg.png" alt="" />
-                    
-                </Header>
-                    <h1>Created by: </h1> <br />
-                <AvatarContainer>
-                    <JCarlo>
-                        <img src={AvatarJC} alt=""/>
-                        <h2>JC</h2>
-                    </JCarlo>
-                    <JulieV>
-                        <img src={AvatarJuju} alt=""/>
-                        <h2>Julie</h2>
-                    </JulieV>
-                    <RalphS>
-                        <img src={AvatarRalph} alt=""/>
-                        <h2>Ralph</h2>
-                    </RalphS>
-                    
-                </AvatarContainer>
-            </HomeInner>
-        </Home>
-    </div>
-    )
+  <div>
+    <Home>
+      <HomeInner>
+        <h1> Group 6 Slack App Clone</h1>
+        <Header>     
+          <img src="https://avatars.slack-edge.com/2021-01-14/1620922289399_34e39fe253a871b90028_88.png" alt="" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Slack_icon_2019.svg/1200px-Slack_icon_2019.svg.png" alt="" />
+            
+        </Header>
+          <h1>Created by: </h1> <br />
+        <AvatarContainer>
+            <JCarlo>
+              <img src={AvatarJC} alt=""/>
+              <h2>JC</h2>
+            </JCarlo>
+            <JulieV>
+              <img src={AvatarJuju} alt=""/>
+              <h2>Julie</h2>
+            </JulieV>
+            <RalphS>
+              <img src={AvatarRalph} alt=""/>
+              <h2>Ralph</h2>
+            </RalphS>
+            
+        </AvatarContainer>
+      </HomeInner>
+    </Home>
+  </div>
+  )
 }
 
 export default Homepage
