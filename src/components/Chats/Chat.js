@@ -4,13 +4,14 @@ import ChatInput from './ChatInput';
 import ChatBodyContainer from './ChatBodyContainer';
 import axios from 'axios';
 
-function Chat({ loginData }) {
+function Chat({ loginData, headers, handleIsRender }) {
 
   const [chatData, setChatData] = useState("");
   const [isRender, setIsRender] = useState(false);
   const chatRef = useRef(null)
 
-  const handleIsRender = () => {
+  const handleChatIsRender = () => {
+    handleIsRender()
     setIsRender(!isRender);
   }
 
@@ -25,13 +26,17 @@ function Chat({ loginData }) {
   useEffect(scrollToBottom, [chatData]);
 
   useEffect(() => {
+    const { token, client, expiry, uid  } = headers
+
+    console.log("Chat headers: ", headers)
+
     axios.get(`http://206.189.91.54//api/v1/messages?receiver_class=User&receiver_id=${765}`, 
     {
     headers:{
-      "access-token": loginData.headers['access-token'],
-      "client": loginData.headers.client,
-      "expiry": loginData.headers.expiry,
-      "uid": loginData.headers.uid,
+      "access-token": token,
+      "client": client,
+      "expiry": expiry,
+      "uid": uid,
       }
     })
     .then(res => {
@@ -62,7 +67,7 @@ function Chat({ loginData }) {
           <ChatBodyContainer chatData={chatData} chatRef={chatRef}/>
         </ChatMessages>
         
-        <ChatInput loginData={loginData} handleIsRender={handleIsRender} />
+        <ChatInput loginData={loginData} handleIsRender={handleChatIsRender} headers={headers}/>
       </>
     </ChatContainer>
   )

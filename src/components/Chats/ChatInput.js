@@ -4,8 +4,10 @@ import styled from "styled-components";
 import axios from 'axios';
 
 
-function ChatInput({loginData, handleIsRender}) {
+function ChatInput({loginData, handleIsRender, headers}) {
   const [sendMessage, setSendMessage] = useState('');
+
+  const { token, client, expiry, uid  } = headers
 
   const handleMessage = (e) => {
     e.preventDefault()
@@ -18,14 +20,14 @@ function ChatInput({loginData, handleIsRender}) {
       },
       {
         headers: {
-          "access-token": loginData.headers['access-token'],
-          "client": loginData.headers.client,
-          "expiry": loginData.headers.expiry,
-          "uid": loginData.headers.uid,
+          "access-token": token,
+          "client": client,
+          "expiry": expiry,
+          "uid": uid,
         }
       })
       .then(res => {
-        console.log(res);
+        console.log("Chat send render: ", res);
         handleIsRender();
       })
       .catch(err => console.log("Error Sending Message: ", err));
