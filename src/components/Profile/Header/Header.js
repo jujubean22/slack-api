@@ -7,20 +7,23 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import axios from 'axios'
 
 
-function Header({loginData}) {
+function Header({loginData, headers}) {
 
   const [allUsers, setAllUsers] = useState([])
   const [searching, setSearching] = useState("")
 
-  const viewAllUsers = () => {
+  const { id } = loginData.data.data
   
+  const viewAllUsers = () => {
+    const { token, client, expiry, uid  } = headers
+    
     axios.get('http://206.189.91.54//api/v1/users',
     {
       headers:{
-        "access-token": loginData.headers["access-token"],
-        "client": loginData.headers.client,
-        "expiry": loginData.headers.expiry,
-        "uid": loginData.headers.uid,
+        "access-token": token,
+        "client": client,
+        "expiry": expiry,
+        "uid": uid,
       }
     })
     .then(res => {
@@ -49,9 +52,9 @@ function Header({loginData}) {
   return (
     <HeaderContainer>
       <HeaderLeft>
-        <HeaderAvatar 
-        //ADD onClick 
-        />
+        <Image>
+          <img src={`https://picsum.photos/id/${id}/40`} alt=""/> 
+        </Image>
         <AccessTimeIcon />
       </HeaderLeft>
 
@@ -129,6 +132,13 @@ const HeaderAvatar = styled(Avatar)`
   cursor: pointer;
   :hover {
     opacity: 0.8;
+  }
+`;
+
+const Image = styled.div`
+  overflow: hidden;
+  > img {
+    border-radius: 50%;
   }
 `;
 

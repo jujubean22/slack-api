@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import CreateIcon from "@material-ui/icons/Create";
@@ -14,6 +14,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
 import EmailIcon from '@material-ui/icons/Email';
 import SidebarOption from "./SidebarOption";
+import { useHistory, NavLink } from "react-router-dom";
 
 function Sidebar({channels, loginData}) {
 
@@ -22,11 +23,15 @@ function Sidebar({channels, loginData}) {
   const renderChannels = channels.data.data
     ? channels.data.data.map((channel, index) => {
         return (
-          <SidebarOption
-            key={index}
-            Icon={InsertCommentIcon}
-            title={channel.name}
-          />
+          <NavLink 
+            style={{textDecoration: 'none', color: 'white'}} 
+            to={`/channel/${channel.id}`}>
+            <SidebarOption
+              key={index}
+              Icon={InsertCommentIcon}
+              title={channel.name}
+            />
+          </NavLink>
         );
       })
     : "";
@@ -38,7 +43,8 @@ function Sidebar({channels, loginData}) {
     <SidebarContainer>
       <SidebarHeader>
       <SidebarInfo>
-        <h2>{email}</h2>
+        <h2>{email} : {id}</h2>
+        <h2></h2>
         <h3>
         <FiberManualRecordIcon />
         {capitalizedUser}

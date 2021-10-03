@@ -9,12 +9,7 @@ import axios from 'axios'
 
 function Home({loginData}) {
   const [userHeaders, setUserHeaders] = useState("");
-  const [isRender, setIsRender] = useState(false);
   const [channels, setChannels] = useState("");
-
-  const handleIsRender = () => {
-    setIsRender(!isRender);
-  };
 
   useEffect(() => {
     const headers = {
@@ -43,7 +38,7 @@ function Home({loginData}) {
     })
     .catch(err => console.log("Error Getting Channel: ", err))
 
-  }, [isRender]);
+  }, []);
 
   if (!channels.data) {
     return <div><h1>Loading...</h1></div>
@@ -52,15 +47,15 @@ function Home({loginData}) {
   return (
     <div>
       <Router>
-        <Header loginData={loginData}/>
+        <Header loginData={loginData} headers={userHeaders}/>
           <Appbody>
             <Sidebar channels={channels} loginData={loginData} />
             <Switch>              
-            {/* <Route exact path='/' component={Chat}>
+            <Route exact path='/' component={Homepage}>
               <Homepage />
-            </Route> */}
-            <Route path='/'>
-              <Chat loginData={loginData} headers={userHeaders}  />
+            </Route>
+            <Route path='/:type/:id'>
+              <Chat loginData={loginData} headers={userHeaders} />
             </Route>
             </Switch>
           </Appbody>
