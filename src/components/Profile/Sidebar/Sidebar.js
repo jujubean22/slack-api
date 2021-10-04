@@ -60,7 +60,6 @@ function Sidebar({channels, loginData, recentUsers}) {
       <SidebarHeader>
       <SidebarInfo>
         <h2>{email} : {id}</h2>
-        <h2></h2>
         <h3>
         <FiberManualRecordIcon />
         {capitalizedUser}
@@ -76,15 +75,14 @@ function Sidebar({channels, loginData, recentUsers}) {
       <SidebarOption Icon={AppsIcon} title="Apps" />
       <SidebarOption Icon={FileCopyIcon} title="File browser" />
       <SidebarOption Icon={ExpandLessIcon} title="Show less" />
-      <hr />
+      <hr/>
       <SidebarOption Icon={ExpandMoreIcon} title="Channel" />
-      <hr />
+      <hr/>
       {renderChannels}
-      <hr />
       <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
-      <hr />
+      <hr/>
       <SidebarOption Icon={EmailIcon} addChannelOption title="Direct Messages" />
-      <hr />
+      <hr/>
       {renderRecentUsers}
     </SidebarContainer>
   

@@ -1,16 +1,12 @@
 import React from 'react';
 import styled from "styled-components";
-import Moment from 'react-moment'
+import Moment from 'react-moment';
 
 function ChatBody({data}) {
 
   const { body, created_at, sender: { id, email } } = data;
 
   return (
-<<<<<<< HEAD
-    <div>
-    </div>
-=======
     <ChatBodyContainerStyle>
       <Image>
         <img src={`https://picsum.photos/id/${id}/40`} alt=""/> 
@@ -25,7 +21,6 @@ function ChatBody({data}) {
         </ChatBodyStyle>
       </ChatBodySubContainerStyle>
     </ChatBodyContainerStyle>
->>>>>>> 96482e61074b4a6de9033c7d78a7b61ba8b00835
   );
 };
 
