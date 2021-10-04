@@ -8,13 +8,10 @@ function Login({ handleSetLoginData }) {
   //set up states
   const [email, setEmail] = useState('ayaya@gmail.com');
   const [password, setPassword] = useState('123123');
-
   //state for loading
   const [loading, setLoading] = useState(false);
-
   //for history push
   const history = useHistory();
-
   //user login 
   const handleLogin = (e) => {
     //to prevent refresh

@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from "styled-components";
-import Moment from 'react-moment'
+import Moment from 'react-moment';
 
 function ChatBody({data}) {
 
-  const { body, created_at, sender: {id, email} } = data
+  const { body, created_at, sender: { id, email } } = data;
 
   return (
     <ChatBodyContainerStyle>

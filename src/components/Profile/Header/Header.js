@@ -4,13 +4,13 @@ import { Avatar } from "@material-ui/core";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import SearchIcon from '@material-ui/icons/Search';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import axios from 'axios'
+import axios from 'axios';
 
 
 function Header({loginData, headers}) {
 
-  const [allUsers, setAllUsers] = useState([])
-  const [searching, setSearching] = useState("")
+  const [allUsers, setAllUsers] = useState([]);
+  const [searching, setSearching] = useState("");
 
   const { id } = loginData.data.data
   

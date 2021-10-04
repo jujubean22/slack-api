@@ -1,39 +1,40 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import { userRegister, userLogin } from '../../API';
 import { LoginContainer,LoginInnerContainer,Form,} from "../styles/Login.style"
 import {useHistory} from 'react-router-dom';
 
 
 function Register() {
-
     const [email, setEmail] = useState(''); //Email
     const [password, setPassword] = useState(''); // Password
-    const history = useHistory();
-    const [loading, setLoading] = useState(false);
-
-      //Register Button
+    const [loading, setLoading] = useState(false); //Loading 
+    const history = useHistory(); // push history
+    
+    //Register Button
     const handleRegister = (e) => {
-        e.preventDefault()
-        setLoading(true)
-        axios
-        .post('http://206.189.91.54//api/v1/auth/',
-            {
-            "email": email,
-            "password": password,
-            "password_confirmation": password
-            }
-        )
-        .then(res => {
-            console.log(res);
-            history.push("/slack-api");
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.log(err);
-            alert(`email taken`);
-            setLoading(false) 
-        });
+    //prevent page refresh
+    e.preventDefault()
+    //set loading to true
+    setLoading(true)
+    
+    const data = {
+      email,
+      password,
+      password_confirmation: password
+    };
+
+    //Register API
+    userRegister(data)
+      .then(() => {
+        history.push('/slack-api'); //push to login
+        setLoading(false);
+      })
+      .catch(() => {
+        alert(`email already taken`);
+        setLoading(false);
+      }
+      );
     }
 
     return (
@@ -62,7 +63,6 @@ function Register() {
                 type='submit'
                 value={loading ? "Loading..." : "Register"}
                 disabled={loading}
-
             />
             </Form>
         </LoginInnerContainer>
@@ -71,7 +71,7 @@ function Register() {
         </p>
     </LoginContainer>
 )
-}
+};
 
 
 export default Register
