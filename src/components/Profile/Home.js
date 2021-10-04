@@ -10,6 +10,7 @@ import axios from 'axios'
 function Home({loginData}) {
   const [userHeaders, setUserHeaders] = useState("");
   const [channels, setChannels] = useState("");
+  const [recentUsers, setRecentUsers] = useState("");
 
   useEffect(() => {
     const headers = {
@@ -38,6 +39,20 @@ function Home({loginData}) {
     })
     .catch(err => console.log("Error Getting Channel: ", err))
 
+    axios.get("http://206.189.91.54//api/v1/users/recent/",
+    {
+      headers:{
+        "access-token": token,
+        "client": client,
+        "expiry": expiry,
+        "uid": uid,
+      },
+    })
+    .then(res => {
+      setRecentUsers(res.data.data)
+    })
+    .catch(err => console.log("Error Getting Recent Users: ", err))
+
   }, []);
 
   if (!channels.data) {
@@ -49,7 +64,7 @@ function Home({loginData}) {
       <Router>
         <Header loginData={loginData} headers={userHeaders}/>
           <Appbody>
-            <Sidebar channels={channels} loginData={loginData} />
+            <Sidebar channels={channels} loginData={loginData} recentUsers={recentUsers}/>
             <Switch>              
             <Route exact path='/' component={Homepage}>
               <Homepage />

@@ -16,18 +16,18 @@ import EmailIcon from '@material-ui/icons/Email';
 import SidebarOption from "./SidebarOption";
 import { useHistory, NavLink } from "react-router-dom";
 
-function Sidebar({channels, loginData}) {
+function Sidebar({channels, loginData, recentUsers}) {
 
   const { id, email } = loginData.data.data
 
   const renderChannels = channels.data.data
-    ? channels.data.data.map((channel, index) => {
+    ? channels.data.data.map((channel, i) => {
         return (
           <NavLink 
             style={{textDecoration: 'none', color: 'white'}} 
             to={`/channel/${channel.id}`}>
             <SidebarOption
-              key={index}
+              key={i}
               Icon={InsertCommentIcon}
               title={channel.name}
             />
@@ -35,6 +35,22 @@ function Sidebar({channels, loginData}) {
         );
       })
     : "";
+
+  const renderRecentUsers = recentUsers
+  ? recentUsers.map((user, i) => {
+      return (
+        <NavLink 
+          style={{textDecoration: 'none', color: 'white'}} 
+          to={`/user/${user.id}`}>
+          <SidebarOption
+            key={i}
+            Icon={InsertCommentIcon}
+            title={user.uid}
+          />
+        </NavLink>
+      );
+    })
+  : "";
 
   const userName = email.split("@")[0]
   const capitalizedUser = userName.charAt(0).toUpperCase() + userName.slice(1);
@@ -69,6 +85,7 @@ function Sidebar({channels, loginData}) {
       <hr />
       <SidebarOption Icon={EmailIcon} addChannelOption title="Direct Messages" />
       <hr />
+      {renderRecentUsers}
     </SidebarContainer>
   
   );
