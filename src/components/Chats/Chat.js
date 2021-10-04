@@ -10,7 +10,7 @@ function Chat({ loginData, headers, handleIsRender }) {
   const [chatData, setChatData] = useState("");
   const [isRender, setIsRender] = useState(false);
   const chatRef = useRef(null)
-  const [receiveType, setReceiveType] = useState("")
+  const [receiver, setReceiver] = useState("")
 
   const params = useParams()
   const { type, id } = params
@@ -63,7 +63,7 @@ function Chat({ loginData, headers, handleIsRender }) {
         //console.log("User DATA: ", res.data.data.filter(data => data.id === parseInt(id)))
         const userData = res.data.data.filter(data => data.id === parseInt(id))
         //console.log(userData[0].email)
-        setReceiveType(userData[0].email)
+        setReceiver(userData[0].email)
       })
     } else {
       //Get Channel Data
@@ -77,7 +77,7 @@ function Chat({ loginData, headers, handleIsRender }) {
         }
       }).then(res => {
         //console.log("Channel DATA: ",res)
-        setReceiveType(res.data.data.name)
+        setReceiver(res.data.data.name)
       })
     }
 
@@ -85,7 +85,7 @@ function Chat({ loginData, headers, handleIsRender }) {
 
   }, [id, isRender]);
 
-  //if(!receiveType) return <></>
+  //if(!receiver) return <></>
 
   return (
     <ChatContainer>
@@ -93,7 +93,7 @@ function Chat({ loginData, headers, handleIsRender }) {
         <ChatHeaderContainer>
           <HeaderLeft>  
             <h2>
-              <strong>{type === "channel" ? receiveType : receiveType} : {id}</strong>
+              <strong>{type === "channel" ? receiver : receiver}</strong>
             </h2>
           </HeaderLeft>
           <HeaderRight>

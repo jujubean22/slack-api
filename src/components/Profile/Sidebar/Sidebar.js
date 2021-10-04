@@ -19,7 +19,7 @@ import { useHistory, NavLink } from "react-router-dom";
 function Sidebar({channels, loginData, recentUsers, isRender, loginUserData}) {
 
   const userID = loginUserData && loginUserData.data ? loginUserData.data.id : null;
-  const { id, email } = loginData.data.data
+  const { email } = loginData.data.data
 
   const renderChannels = channels.data.data
     ? channels.data.data.map((channel, index) => {
@@ -32,7 +32,6 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData}) {
               Icon={InsertCommentIcon}
               title={channel.name}
             />
-            {console.log(index)}
           </NavLink>
         );
       })
@@ -50,7 +49,6 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData}) {
             Icon={InsertCommentIcon}
             title={user.uid}
           />
-          {console.log(index)}
         </NavLink>
       );
     })
@@ -65,12 +63,8 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData}) {
     <SidebarContainer>
       <SidebarHeader>
       <SidebarInfo>
-<<<<<<< HEAD
         <h2>{email}</h2>
         <h2></h2>
-=======
-        <h2>{email} : {id}</h2>
->>>>>>> 8ffdd1cfb5b038b707358f68768fb1c0f3b84a26
         <h3>
         <FiberManualRecordIcon />
         {capitalizedUser}
