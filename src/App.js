@@ -17,13 +17,13 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
-          <Route exact path='/register'>
+          <Route path='/register'>
             <Register handleSetLoginData={handleSetLoginData} />
           </Route>
-          <Route exact path='/slack-api'>
+          <Route path='/slack-api'>
             <Login handleSetLoginData={handleSetLoginData} />
           </Route>
-          <Route exact path='/'>
+          <Route path='/'>
             {
               loginData ? <Home loginData={loginData} /> : <Redirect to='/slack-api'/>
             }

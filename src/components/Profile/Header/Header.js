@@ -5,6 +5,7 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import SearchIcon from '@material-ui/icons/Search';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import axios from 'axios';
+import SearchBox from '../../Search/SearchBox'
 
 
 function Header({loginData, headers}) {
@@ -66,7 +67,7 @@ function Header({loginData, headers}) {
         <HelpOutlineIcon />
       </HeaderRight>
       <UsersSearched> 
-        {searching ? searchUserList : ""}
+        {searching ? <SearchBox allUsers={allUsers} /> : ""}
       </UsersSearched>
     </HeaderContainer>
 )
@@ -144,6 +145,7 @@ const Image = styled.div`
 
 const UsersSearched = styled.div`
   position: absolute;
+  background: gray;
   top: 8rem;
   right: 10rem;
   color: black;

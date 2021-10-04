@@ -32,7 +32,7 @@ function ChatInput({ handleIsRender, headers}) {
         }
       })
       .then(res => {
-        // console.log("Chat send render: ", res);
+        console.log("Chat send render: ", res);
         handleIsRender();
       })
       .catch(err => console.log("Error Sending Message: ", err));
