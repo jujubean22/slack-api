@@ -4,52 +4,18 @@ import { Avatar } from "@material-ui/core";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import SearchIcon from '@material-ui/icons/Search';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import axios from 'axios';
 import SearchBox from '../../Search/SearchBox'
 
 
 function Header({loginData, headers}) {
-
-  const [allUsers, setAllUsers] = useState([]);
-  const [searching, setSearching] = useState("");
+  const [toggleSearch, setToggleSearch] = useState(false)
 
   const { id } = loginData.data.data
+
+  const handleToggleSearchBox = () => {
+    setToggleSearch(!toggleSearch)
+  }
   
-  const viewAllUsers = () => {
-    const { token, client, expiry, uid  } = headers
-    
-    axios.get('http://206.189.91.54//api/v1/users',
-    {
-      headers:{
-        "access-token": token,
-        "client": client,
-        "expiry": expiry,
-        "uid": uid,
-      }
-    })
-    .then(res => {
-      const userArray = res.data.data
-      const resArray = userArray.filter(u => u.email.includes(searching))
-      setAllUsers(resArray)
-      //console.log(resArray)
-    })
-    .catch(err => err)
-  }
-
-  const handleSearch = (e) => {
-    setSearching(e.target.value);
-    viewAllUsers()
-  }
-
-  //generate UI for searches
-  const searchUserList = allUsers.map(user => {
-    return(
-      <div key={user.id}>
-        <h3>{user.email}</h3>
-      </div>
-    )
-  })
-
   return (
     <HeaderContainer>
       <HeaderLeft>
@@ -61,14 +27,19 @@ function Header({loginData, headers}) {
 
       <HeaderSearch>
         <SearchIcon />
-        <input type="text" placeholder="SEARCH" onChange={handleSearch}/>
+        <button onClick={handleToggleSearchBox}>
+          <span>SEARCH</span>
+        </button>
       </HeaderSearch> 
       <HeaderRight>
         <HelpOutlineIcon />
       </HeaderRight>
-      <UsersSearched> 
-        {searching ? <SearchBox allUsers={allUsers} /> : ""}
-      </UsersSearched>
+      {toggleSearch ? (
+        <SearchBox 
+          handleToggleSearchBox={handleToggleSearchBox}
+          headers={headers}
+        />
+      ) : null}
     </HeaderContainer>
 )
 }
@@ -84,14 +55,15 @@ const HeaderSearch = styled.div`
   padding: 0 50px;
   color: grey;
   border: 1px gray solid;
-
-  > input {
+  
+  > button {
     background-color: transparent;
     border: none;
     text-align: center;
     min-width: 30vw ;
-    outline:0;
+    outline: 0;
     color: white;
+    cursor: pointer;
   }
 `;
 
@@ -141,14 +113,4 @@ const Image = styled.div`
   > img {
     border-radius: 50%;
   }
-`;
-
-const UsersSearched = styled.div`
-  position: absolute;
-  background: gray;
-  top: 8rem;
-  right: 10rem;
-  color: black;
-  height: 100%;
-  width: 50%;
 `;

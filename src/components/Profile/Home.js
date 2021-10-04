@@ -14,8 +14,9 @@ function Home({loginData}) {
   const [isRender, setIsRender] = useState(false);
   const [loginUserData, setloginUserData] = useState("");
 
+
   const handleIsRender = () => {
-    setIsRender(!isRender);
+    setIsRender(!isRender)
   }
 
   useEffect(() => {
@@ -69,7 +70,10 @@ function Home({loginData}) {
   return (
     <div>
       <Router>
-        <Header loginData={loginData} headers={userHeaders}/>
+        <Header 
+          loginData={loginData} 
+          headers={userHeaders}
+          />
           <Appbody>
             <Sidebar 
               channels={channels} 
@@ -83,7 +87,11 @@ function Home({loginData}) {
               <Homepage />
             </Route>
             <Route path='/:type/:id'>
-              <Chat loginData={loginData} headers={userHeaders} handleIsRender={handleIsRender} />
+              <Chat 
+                loginData={loginData} 
+                headers={userHeaders} 
+                handleIsRender={handleIsRender} 
+                />
             </Route>
             </Switch>
           </Appbody>
