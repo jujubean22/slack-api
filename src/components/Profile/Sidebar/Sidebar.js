@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import CreateIcon from "@material-ui/icons/Create";
@@ -16,41 +16,47 @@ import EmailIcon from '@material-ui/icons/Email';
 import SidebarOption from "./SidebarOption";
 import { useHistory, NavLink } from "react-router-dom";
 
-function Sidebar({channels, loginData, recentUsers}) {
+function Sidebar({channels, loginData, recentUsers, isRender, loginUserData}) {
 
+  const userID = loginUserData && loginUserData.data ? loginUserData.data.id : null;
   const { id, email } = loginData.data.data
 
   const renderChannels = channels.data.data
-    ? channels.data.data.map((channel, i) => {
+    ? channels.data.data.map((channel, index) => {
         return (
           <NavLink 
             style={{textDecoration: 'none', color: 'white'}} 
             to={`/channel/${channel.id}`}>
             <SidebarOption
-              key={i}
+              key={index}
               Icon={InsertCommentIcon}
               title={channel.name}
             />
+            {console.log(index)}
           </NavLink>
         );
       })
     : "";
 
   const renderRecentUsers = recentUsers
-  ? recentUsers.map((user, i) => {
+  ? recentUsers.map((user, index) => {
+    if (user.id !== userID)
       return (
         <NavLink 
           style={{textDecoration: 'none', color: 'white'}} 
           to={`/user/${user.id}`}>
           <SidebarOption
-            key={i}
+            key={index}
             Icon={InsertCommentIcon}
             title={user.uid}
           />
+          {console.log(index)}
         </NavLink>
       );
     })
   : "";
+
+  useEffect(() => {}, [isRender]);
 
   const userName = email.split("@")[0]
   const capitalizedUser = userName.charAt(0).toUpperCase() + userName.slice(1);
@@ -59,7 +65,7 @@ function Sidebar({channels, loginData, recentUsers}) {
     <SidebarContainer>
       <SidebarHeader>
       <SidebarInfo>
-        <h2>{email} : {id}</h2>
+        <h2>{email}</h2>
         <h2></h2>
         <h3>
         <FiberManualRecordIcon />
