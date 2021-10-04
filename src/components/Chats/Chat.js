@@ -3,35 +3,81 @@ import styled from "styled-components";
 import ChatInput from './ChatInput';
 import ChatBodyContainer from './ChatBodyContainer';
 import axios from 'axios';
+import { useParams } from "react-router-dom"
 
-function Chat({ loginData }) {
-
+function Chat({ loginData, headers }) {
   const [chatData, setChatData] = useState("");
   const [isRender, setIsRender] = useState(false);
+  const chatRef = useRef(null)
+  const [receiveType, setReceiveType] = useState("")
+
+  const params = useParams()
+  const { type, id } = params
+
+  const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
 
   const handleIsRender = () => {
     setIsRender(!isRender);
   }
 
-  const chatRef = useRef(null)
+  const scrollToBottomSmooth = () => {
+    chatRef?.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  const scrollToBottom = () => {
+    chatRef?.current?.scrollIntoView()
+  }
+
+  useEffect(scrollToBottom, [chatData]);
 
   useEffect(() => {
-    axios.get(`http://206.189.91.54//api/v1/messages?receiver_class=User&receiver_id=${805}`, 
+    const { token, client, expiry, uid  } = headers
+
+    //Get User Message Data
+    axios.get(`http://206.189.91.54//api/v1/messages?receiver_class=${capitalizedType}&receiver_id=${parseInt(id)}`, 
     {
     headers:{
-      "access-token": loginData.headers['access-token'],
-      "client": loginData.headers.client,
-      "expiry": loginData.headers.expiry,
-      "uid": loginData.headers.uid,
+      "access-token": token,
+      "client": client,
+      "expiry": expiry,
+      "uid": uid,
       }
     })
-    .then(res => {
-      setChatData(res.data.data);
-      //console.log("Chat render:", chatData);
-    })
+    .then(res => { setChatData(res.data.data) })
     .catch(err => console.log("Error Sending Message: ", err))
 
-    chatRef?.current?.scrollIntoView();
+    if(type==="user"){
+      //Get User Data
+      axios.get("/api/v1/users",
+      {
+        headers:{
+          "access-token": token,
+          "client": client,
+          "expiry": expiry,
+          "uid": uid,
+        }
+      })
+      .then(res => {
+        console.log(res.data.data.filter(data => data.id === id))
+      })
+    } else {
+      //Get Channel Data
+      axios.get(`/api/v1/channels/${id}`,
+      {
+        headers:{
+          "access-token": token,
+          "client": client,
+          "expiry": expiry,
+          "uid": uid,
+        }
+      })
+      .then(res => {
+        console.log(res)
+      })
+    }
+    
+
+    scrollToBottomSmooth()
 
   }, [isRender]);
 
@@ -41,7 +87,7 @@ function Chat({ loginData }) {
         <ChatHeaderContainer>
           <HeaderLeft>  
             <h2>
-              <strong>Sender</strong>
+              <strong>{receiveType} : {id}</strong>
             </h2>
           </HeaderLeft>
           <HeaderRight>
@@ -50,10 +96,10 @@ function Chat({ loginData }) {
           </HeaderRight>
         </ChatHeaderContainer>
         <ChatMessages>
-          <ChatBodyContainer chatData={chatData} />
+          <ChatBodyContainer chatData={chatData} chatRef={chatRef}/>
         </ChatMessages>
         
-        <ChatInput loginData={loginData} handleIsRender={handleIsRender}/>
+        <ChatInput loginData={loginData} handleIsRender={handleIsRender} headers={headers}/>
       </>
     </ChatContainer>
   )
@@ -62,35 +108,34 @@ function Chat({ loginData }) {
 export default Chat
 
 const ChatContainer = styled.div`
-    width: 100vw;
-
-    flex: 0.7;
-    flex-grow: 1;
-    overflow-y: scroll;
-    margin-top: 60px;
+  width: 100vw;
+  flex: 0.7;
+  flex-grow: 1;
+  margin-top: 60px;
 `;
 
 const ChatHeaderContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    border-bottom: 1px solid lightgray;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid lightgray;
 `;
 
 const HeaderLeft = styled.div`
-    display: flex;
-    align-items: center;
-    text-transform: lowercase;
+  display: flex;
+  align-items: center;
+  text-transform: lowercase;
 `;
 const HeaderRight = styled.div`
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    > button {
-        margin: 1vh;
-    }
+  > button {
+    margin: 1vh;
+  }
 `;
 
 const ChatMessages = styled.div`
-    padding: 100px;
+  padding: 3rem;
+  margin-bottom: 2rem;
 `;

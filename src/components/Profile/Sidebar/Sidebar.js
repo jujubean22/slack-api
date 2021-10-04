@@ -14,91 +14,139 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
 import EmailIcon from '@material-ui/icons/Email';
 import SidebarOption from "./SidebarOption";
-function Sidebar() {
-    return (
-        <SidebarContainer>
-            <SidebarHeader>
-            <SidebarInfo>
-                <h2>Jujubean</h2>
-                <h3>
-                <FiberManualRecordIcon />
-                Julie Mae
-                </h3>
-            </SidebarInfo>
-            <CreateIcon />
-            </SidebarHeader>
-            <SidebarOption Icon={InsertCommentIcon} title="Threads" />
-            <SidebarOption Icon={InboxIcon} title="Mentions & Reactions" />
-            <SidebarOption Icon={DraftsIcon} title="Saved items" />
-            <SidebarOption Icon={BookmarkBorderIcon} title="Channel browser" />
-            <SidebarOption Icon={PeopleAltIcon} title="People & user groups" />
-            <SidebarOption Icon={AppsIcon} title="Apps" />
-            <SidebarOption Icon={FileCopyIcon} title="File browser" />
-            <SidebarOption Icon={ExpandLessIcon} title="Show less" />
-            <hr />
-            <SidebarOption Icon={ExpandMoreIcon} title="Channel" />
-            <hr />
-            <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
-            <hr />
-            <SidebarOption Icon={EmailIcon} addChannelOption title="Direct Messages" />
-            <hr />
-        </SidebarContainer>
-    
-    );
+import { useHistory, NavLink } from "react-router-dom";
+
+function Sidebar({channels, loginData, recentUsers}) {
+
+  const { id, email } = loginData.data.data
+
+  const renderChannels = channels.data.data
+    ? channels.data.data.map((channel, i) => {
+        return (
+          <NavLink 
+            style={{textDecoration: 'none', color: 'white'}} 
+            to={`/channel/${channel.id}`}>
+            <SidebarOption
+              key={i}
+              Icon={InsertCommentIcon}
+              title={channel.name}
+            />
+          </NavLink>
+        );
+      })
+    : "";
+
+  const renderRecentUsers = recentUsers
+  ? recentUsers.map((user, i) => {
+      return (
+        <NavLink 
+          style={{textDecoration: 'none', color: 'white'}} 
+          to={`/user/${user.id}`}>
+          <SidebarOption
+            key={i}
+            Icon={InsertCommentIcon}
+            title={user.uid}
+          />
+        </NavLink>
+      );
+    })
+  : "";
+
+  const userName = email.split("@")[0]
+  const capitalizedUser = userName.charAt(0).toUpperCase() + userName.slice(1);
+
+  return (
+    <SidebarContainer>
+      <SidebarHeader>
+      <SidebarInfo>
+        <h2>{email} : {id}</h2>
+        <h2></h2>
+        <h3>
+        <FiberManualRecordIcon />
+        {capitalizedUser}
+        </h3>
+      </SidebarInfo>
+      <CreateIcon />
+      </SidebarHeader>
+      <SidebarOption Icon={InsertCommentIcon} title="Threads" />
+      <SidebarOption Icon={InboxIcon} title="Mentions & Reactions" />
+      <SidebarOption Icon={DraftsIcon} title="Saved items" />
+      <SidebarOption Icon={BookmarkBorderIcon} title="Channel browser" />
+      <SidebarOption Icon={PeopleAltIcon} title="People & user groups" />
+      <SidebarOption Icon={AppsIcon} title="Apps" />
+      <SidebarOption Icon={FileCopyIcon} title="File browser" />
+      <SidebarOption Icon={ExpandLessIcon} title="Show less" />
+      <hr />
+      <SidebarOption Icon={ExpandMoreIcon} title="Channel" />
+      <hr />
+      {renderChannels}
+      <hr />
+      <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
+      <hr />
+      <SidebarOption Icon={EmailIcon} addChannelOption title="Direct Messages" />
+      <hr />
+      {renderRecentUsers}
+    </SidebarContainer>
+  
+  );
 }
 
 export default Sidebar;
 
 const SidebarContainer = styled.div`
-    background-color: var(--slack-color);
-    color: white;
-    flex: 0.5;
-    border-top: 1px solid #49274b;
-    max-width: 260px;
-    margin-top: 60px;
+  background-color: var(--slack-color);
+  color: white;
+  flex: 0.5;
+  border-top: 1px solid #49274b;
+  max-width: 260px;
+  margin-top: 60px;
+  overflow-y: auto;
 
-    >hr {
-        margin-top: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #49274b;
-    }
+  >hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #49274b;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SidebarHeader = styled.div`
+  display: flex;
+  border-bottom: 1px solid #49274b;
+  padding: 13px;
+
+  > .MuiSvgIcon-root {
+    padding: 8px;
+    color: #49274b;
+    font-size: 18px;
+    background-color: white;
+    border-radius: 1000px;
+  }
+  `;
+
+  const SidebarInfo = styled.div`
+  flex: 1;
+
+  > h2 {
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 5px;
+  }
+
+  > h3 {
     display: flex;
-    border-bottom: 1px solid #49274b;
-    padding: 13px;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
 
-    > .MuiSvgIcon-root {
-        padding: 8px;
-        color: #49274b;
-        font-size: 18px;
-        background-color: white;
-        border-radius: 1000px;
-    }
-    `;
-
-    const SidebarInfo = styled.div`
-    flex: 1;
-
-    > h2 {
-        font-size: 15px;
-        font-weight: 900;
-        margin-bottom: 5px;
-    }
-
-    > h3 {
-        display: flex;
-        font-size: 13px;
-        font-weight: 400;
-        margin-bottom: 5px;
-    }
-
-    > h3 > .MuiSvgIcon-root {
-        font-size: 14px;
-        font-weight: 400;
-        margin-top: 1px;
-        margin-right: 2px;
-        color: green;
-    }
-    `;
+  > h3 > .MuiSvgIcon-root {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 1px;
+    margin-right: 2px;
+    color: green;
+  }
+  `;
