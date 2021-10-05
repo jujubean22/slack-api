@@ -35,11 +35,11 @@ function SearchBox({headers, handleToggleSearchBox}) {
 
   const searchUserList = allUsers.map((user, index) => {
     return(
-      <NavLink to={`/user/${user.id}`} onClick={handleToggleSearchBox}>
+      <LinkElement to={`/user/${user.id}`} onClick={handleToggleSearchBox}>
         <SearchBoxResults key={index}>
           <p>{user.email}</p>
         </SearchBoxResults>
-      </NavLink>
+      </LinkElement>
     )
   })
   
@@ -63,9 +63,9 @@ export default SearchBox;
 const SearchBoxContainer = styled.div`
   position: absolute;
   width: 60vw;
-  height: 100%;
+  height: 20rem;
   top: 1rem;
-  left: 10rem;
+  left: 20rem;
   display: flex;
   padding-top: .5rem;
   align-items: flex-start;
@@ -79,9 +79,9 @@ const SearchBoxContainer = styled.div`
 `
 
 const HeaderSearch = styled.div`
-  background-color: gray;
+  background-color: white;
   height: 6vh;
-  width: 100%;
+  width: 83%;
   padding-left: 4rem;
   padding-right: 1rem;
   display: flex;
@@ -100,6 +100,7 @@ const HeaderSearch = styled.div`
   }
 
   > p {
+    color: black;
     cursor: pointer;
   }
 `;
@@ -110,12 +111,17 @@ const SearchBoxResult = styled.div`
   overflow-y: scroll;
 `
 
+const LinkElement = styled(NavLink)`
+  text-decoration: none;
+`
+
 const SearchBoxResults = styled.div`
   display: flex;
   align-items: center;
   padding: 1rem;
   padding-left: 3rem;
   cursor: pointer;
+  background: white;
 
   > p {
     font-size: 1rem;
