@@ -97,16 +97,18 @@ export const getUser = ({ id, headers: { token, client, expiry, uid } }) => {
 
 //Get Channel
 export const getChannel = ({ headers: { token, client, expiry, uid } }) => {
-  return axios.get(`http://206.189.91.54//api/v1/channels`, {
-    headers: {
-      "access-token": token,
-      "client": client,
-      "expiry": expiry,
-      "uid": uid
-    }
-  })
-    .then(res => res)
-    .catch(err => err)
+  return axios.get(`http://206.189.91.54//api/v1/channels`,
+    {
+      headers: {
+        "access-token": token,
+        "client": client,
+        "expiry": expiry,
+        "uid": uid
+      }
+    })
+      .then(res => res)
+      .then(result => result)
+      .catch(err => err)
 };
 
 //Get Channel via ID

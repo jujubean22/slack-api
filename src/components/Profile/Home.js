@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { getChannel } from '../../API';
+import { getChannel, getRecentDm } from '../../API';
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import styled from "styled-components";
@@ -19,10 +19,11 @@ function Home({ loginData }) {
 
 
   const handleIsRender = () => {
-    setIsRender(!isRender)
-  }
+    setIsRender(!isRender);
+  };
 
   useEffect(() => {
+    //get header from loginData
     const headers = {
       token: loginData.headers["access-token"],
       client: loginData.headers.client,
@@ -30,32 +31,24 @@ function Home({ loginData }) {
       uid: loginData.headers.uid,
     };
 
-    setUserHeaders(headers)
-    setloginUserData(loginData.data)
+    const channelData = { headers }
+
+    setUserHeaders(headers);
+    setloginUserData(loginData.data);
 
     //get channels
-    getChannel(headers) 
+    getChannel(channelData) 
       .then(res => {
         setChannels(res)
-        //console.log("Channel render:", res);
       })
       .catch(err => console.log("Error Getting Channel: ", err))
 
     //recently DMs
-    axios.get("http://206.189.91.54//api/v1/users/recent/",
-    {
-      headers:{
-        "access-token": token,
-        "client": client,
-        "expiry": expiry,
-        "uid": uid,
-      },
-    })
-    .then(res => {
-      setRecentUsers(res.data.data)
-    })
-    .catch(err => console.log("Error Getting Recent Users: ", err))
-
+    getRecentDm(channelData)
+      .then(res => {
+        setRecentUsers(res.data.data)
+      })
+      .catch(err => console.log("Error Getting Recent Users: ", err))
   }, [isRender]);
 
   if (!channels.data || !recentUsers) {
