@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Homepage from './Homepage';
 import Chat from '../Chats/Chat';
 import axios from 'axios'
+import NewMessage from '../NewMessage/NewMessage';
 
 function Home({loginData}) {
   const [userHeaders, setUserHeaders] = useState("");
@@ -83,16 +84,19 @@ function Home({loginData}) {
               loginUserData={loginUserData}
               />
             <Switch>              
-            <Route exact path='/' component={Homepage}>
-              <Homepage />
-            </Route>
-            <Route path='/:type/:id'>
-              <Chat 
-                loginData={loginData} 
-                headers={userHeaders} 
-                handleIsRender={handleIsRender} 
-                />
-            </Route>
+              <Route exact path='/' component={Homepage}>
+                <Homepage />
+              </Route>
+              <Route path='/:type/:id'>
+                <Chat 
+                  loginData={loginData} 
+                  headers={userHeaders} 
+                  handleIsRender={handleIsRender} 
+                  />
+              </Route>
+              <Router exact path="/new-message">
+                <NewMessage headers={userHeaders} />
+              </Router>
             </Switch>
           </Appbody>
       </Router>

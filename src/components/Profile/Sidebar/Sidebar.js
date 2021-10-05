@@ -14,12 +14,17 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
 import EmailIcon from '@material-ui/icons/Email';
 import SidebarOption from "./SidebarOption";
-import { NavLink } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
 
 function Sidebar({channels, loginData, recentUsers, isRender, loginUserData}) {
 
   const userID = loginUserData && loginUserData.data ? loginUserData.data.id : null;
   const { email } = loginData.data.data
+  const history = useHistory();
+
+  const newMessageHistory = () => {
+    history.push(`/new-message`);
+  };
 
   const renderChannels = channels.data.data
     ? channels.data.data.map((channel, index) => {
@@ -70,7 +75,7 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData}) {
         {capitalizedUser}
         </h3>
       </SidebarInfo>
-      <CreateIcon />
+      <CreateIconStyle onClick={newMessageHistory}/>
       </SidebarHeader>
       <SidebarOption Icon={InsertCommentIcon} title="Threads" />
       <SidebarOption Icon={InboxIcon} title="Mentions & Reactions" />
@@ -153,3 +158,7 @@ const SidebarHeader = styled.div`
     color: green;
   }
   `;
+
+  const CreateIconStyle = styled(CreateIcon)`
+    cursor: pointer;
+  `
