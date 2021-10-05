@@ -35,7 +35,7 @@ function SearchBox({headers, handleToggleSearchBox}) {
     })
     .then(res => {
       const userArray = res.data.data
-      const resArray = userArray.filter(u => u.email.includes(searching))
+      const resArray = userArray.filter( u => u.email.includes(searching))
       setAllUsers(resArray)
       //console.log(resArray)
     })

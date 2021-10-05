@@ -15,6 +15,7 @@ function Chat({ loginData, headers, handleIsRender }) {
   const params = useParams();
   const { type, id } = params;
 
+  //capitalize the first letter 
   const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
 
   const handleChatIsRender = () => {
@@ -67,7 +68,7 @@ function Chat({ loginData, headers, handleIsRender }) {
         })
     }
 scrollToBottomSmooth();
-}, [id, isRender]);
+}, [id, isRender]); 
 
   return (
     <ChatContainer>
