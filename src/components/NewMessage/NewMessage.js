@@ -117,13 +117,20 @@ const LinkElement = styled(NavLink)`
   text-decoration: none;
 `
 
+const SearchBoxResult = styled.div`
+  width: 90%;
+  padding-left: 3rem;
+  max-height: 30rem;
+  overflow-y: scroll;
+`
+
 const SearchBoxResults = styled.div`
   display: flex;
   align-items: center;
   padding: 1rem;
   padding-left: 3rem;
   cursor: pointer;
-  background: white;
+  background: #F7F7F7;
 
   > p {
     font-size: 1rem;
@@ -140,10 +147,4 @@ const SearchBoxResults = styled.div`
       color: white;
     }
   }
-`
-
-const SearchBoxResult = styled.div`
-  width: 100%;
-  max-height: 30rem;
-  overflow-y: scroll;
 `

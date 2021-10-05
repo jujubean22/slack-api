@@ -94,9 +94,9 @@ function Home({loginData}) {
                   handleIsRender={handleIsRender} 
                   />
               </Route>
-              <Router exact path="/new-message">
+              <Route exact path="/new-message">
                 <NewMessage headers={userHeaders} />
-              </Router>
+              </Route>
             </Switch>
           </Appbody>
       </Router>
