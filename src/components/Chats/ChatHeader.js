@@ -1,32 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useParams } from "react-router-dom";
+import { getChannelData } from '../../API';
 import styled from "styled-components";
-import axios from 'axios';
-import { useParams } from "react-router-dom"
 
-function ChatHeader({receiver, headers}) {
-
+function ChatHeader({ receiver, headers }) {
+  //state
   const [channelMembers, setChannelMembers] = useState([]);
-  
+  //parameter for URL
   const params = useParams();
   const { type, id } = params;
-  const { token, client, expiry, uid  } = headers
+  //data obj
+  const getDataObj = {
+    id: parseInt(id),
+    headers
+  }
 
   const viewUserChannelOwned = () => {
-
-    axios.get(`http://206.189.91.54//api/v1/channels/${id}`,
-    {
-      headers:{
-        "access-token": token,
-        "client": client,
-        "expiry": expiry,
-        "uid": uid,
-      }
-    })
-    .then(res => {
-      setChannelMembers(res.data.data.channel_members)
-      //console.log(res.data.data.channel_members)
-    })
-    .catch(err => err)
+    getChannelData(getDataObj)
+      .then(res => {
+        setChannelMembers(res.data.data.channel_members)
+      })
+      .catch(err => err)
   }
 
   const memberList = channelMembers.map((user, index) => {
@@ -45,8 +39,8 @@ function ChatHeader({receiver, headers}) {
         </h2>
       </HeaderLeft>
       <HeaderRight>
-        <button onClick={viewUserChannelOwned}> Member List</button>
-        <button> Add Member</button>
+        <button onClick={viewUserChannelOwned}>Member List</button>
+        <button>Add Member</button>
       </HeaderRight>
       <MemberList>
         {memberList}
