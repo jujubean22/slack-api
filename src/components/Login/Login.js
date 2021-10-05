@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { LoginContainer, LoginInnerContainer, Form} from "../styles/Login.style"
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { userLogin } from '../../API';
 
 function Login({ handleSetLoginData }) {
   //set up states
@@ -13,29 +13,24 @@ function Login({ handleSetLoginData }) {
   //for history push
   const history = useHistory();
   //user login 
+
   const handleLogin = (e) => {
     //to prevent refresh
     e.preventDefault()
     setLoading(true)
-    axios
-      .post(
-        'http://206.189.91.54//api/v1/auth/sign_in',
-        {
-          "email": email,
-          "password": password
-        }
-      )
+
+    const data = {
+      email, password 
+    }
+
+    //User Login
+    userLogin(data)
       .then(res => {
-        //going to homepage
-        console.log(res);
         handleSetLoginData(res);
         history.push('/');
         setLoading(false)
       })
-      .catch(err => {
-        console.log(err);
-        setLoading(false)
-      });
+      .catch(err => err);
   }
 
   return (
