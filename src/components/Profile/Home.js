@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { getChannel } from '../../API';
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import styled from "styled-components";
@@ -8,7 +9,8 @@ import Chat from '../Chats/Chat';
 import axios from 'axios'
 import NewMessage from '../NewMessage/NewMessage';
 
-function Home({loginData}) {
+function Home({ loginData }) {
+  //state
   const [userHeaders, setUserHeaders] = useState("");
   const [channels, setChannels] = useState("");
   const [recentUsers, setRecentUsers] = useState("");
@@ -31,23 +33,15 @@ function Home({loginData}) {
     setUserHeaders(headers)
     setloginUserData(loginData.data)
 
-    const { token, client, expiry, uid  } = headers
+    //get channels
+    getChannel(headers) 
+      .then(res => {
+        setChannels(res)
+        //console.log("Channel render:", res);
+      })
+      .catch(err => console.log("Error Getting Channel: ", err))
 
-    axios.get("http://206.189.91.54//api/v1/channels",
-    {
-      headers:{
-        "access-token": token,
-        "client": client,
-        "expiry": expiry,
-        "uid": uid,
-      },
-    })
-    .then(res => {
-      setChannels(res)
-      //console.log("Channel render:", res);
-    })
-    .catch(err => console.log("Error Getting Channel: ", err))
-
+    //recently DMs
     axios.get("http://206.189.91.54//api/v1/users/recent/",
     {
       headers:{
