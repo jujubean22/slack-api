@@ -4,6 +4,7 @@ import ChatInput from './ChatInput';
 import ChatBodyContainer from './ChatBodyContainer';
 import { getMessage, getUser, getChannelData } from '../../API';
 import { useParams } from "react-router-dom"
+import ChatHeader from './ChatHeader';
 
 function Chat({ loginData, headers, handleIsRender }) {
   const [chatData, setChatData] = useState("");
@@ -72,22 +73,19 @@ scrollToBottomSmooth();
   return (
     <ChatContainer>
       <>
-        <ChatHeaderContainer>
-          <HeaderLeft>  
-            <h2>
-              <strong>{type === "channel" ? receiver : receiver}</strong>
-            </h2>
-          </HeaderLeft>
-          <HeaderRight>
-            {/* <button> Add Member</button>
-            <button> Member List</button> */}
-          </HeaderRight>
-        </ChatHeaderContainer>
+        <ChatHeader 
+          receiver={receiver} 
+          headers={headers}
+        />
         <ChatMessages>
           <ChatBodyContainer chatData={chatData} chatRef={chatRef}/>
         </ChatMessages>
         
-        <ChatInput loginData={loginData} handleIsRender={handleChatIsRender} headers={headers}/>
+        <ChatInput 
+          loginData={loginData} 
+          handleIsRender={handleChatIsRender} 
+          headers={headers}
+        />
       </>
     </ChatContainer>
   )
@@ -100,27 +98,6 @@ const ChatContainer = styled.div`
   flex: 0.7;
   flex-grow: 1;
   margin-top: 60px;
-`;
-
-const ChatHeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  border-bottom: 1px solid lightgray;
-`;
-
-const HeaderLeft = styled.div`
-  display: flex;
-  align-items: center;
-  text-transform: lowercase;
-`;
-const HeaderRight = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  > button {
-    margin: 1vh;
-  }
 `;
 
 const ChatMessages = styled.div`
