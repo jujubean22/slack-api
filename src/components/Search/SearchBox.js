@@ -33,59 +33,103 @@ function SearchBox({headers, handleToggleSearchBox}) {
     viewAllUsers()
   }
 
-  const searchUserList = allUsers.map(user => {
+  const searchUserList = allUsers.map((user, index) => {
     return(
       <NavLink to={`/user/${user.id}`} onClick={handleToggleSearchBox}>
-        <div key={user.id}>
-          <h3>{user.email}</h3>
-        </div>
+        <SearchBoxResults key={index}>
+          <p>{user.email}</p>
+        </SearchBoxResults>
       </NavLink>
     )
   })
   
   return (
-    <div>
-      <HeaderSearch>
-        <input type="text" placeholder="SEARCH" onChange={handleSearch}/>
-      </HeaderSearch> 
-      <UsersSearched>
-        {searchUserList}
-      </UsersSearched>
-      
-    </div>
+    <SearchBoxContainer>
+      <div>
+        <HeaderSearch>
+          <input type="text" placeholder="SEARCH" onChange={handleSearch}/>
+          <p onClick={handleToggleSearchBox}>x</p>
+        </HeaderSearch> 
+        <SearchBoxResult>
+          {searchUserList}
+        </SearchBoxResult>
+      </div>
+    </SearchBoxContainer>
   )
 }
 
 export default SearchBox;
 
-const HeaderSearch = styled.div`
+const SearchBoxContainer = styled.div`
   position: absolute;
+  width: 60vw;
+  height: 100%;
   top: 1rem;
-  right: 10rem;
-  opacity: 1;
-  border-radius: 6px;
-  text-align: center;
+  left: 10rem;
   display: flex;
-  padding: 0 50px;
-  color: grey;
-  border: 1px gray solid;
+  padding-top: .5rem;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: hidden;
+  
+  > div {
+    width: 60%;
+    border-radius: .5rem;
+  }
+`
+
+const HeaderSearch = styled.div`
+  background-color: gray;
+  height: 6vh;
+  width: 100%;
+  padding-left: 4rem;
+  padding-right: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px gray solid;
   
   > input {
     background-color: transparent;
     border: none;
     text-align: center;
-    min-width: 30vw ;
+    color: black;
     outline: 0;
-    color: white;
+    font-weight: bolder;
+    font-size: 1rem;
+  }
+
+  > p {
+    cursor: pointer;
   }
 `;
 
-const UsersSearched = styled.div`
-  position: absolute;
-  background: gray;
-  top: 8rem;
-  right: 10rem;
-  color: black;
-  height: 100%;
-  width: 50%;
-`;
+const SearchBoxResult = styled.div`
+  width: 100%;
+  max-height: 30rem;
+  overflow-y: scroll;
+`
+
+const SearchBoxResults = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  padding-left: 3rem;
+  cursor: pointer;
+
+  > p {
+    font-size: 1rem;
+    font-weight: bolder;
+    padding-left: 1rem;
+    letter-spacing: .2px;
+    color: black;
+  }
+
+  :hover {
+    background-color: #135999;
+
+    > p {
+      color: white;
+    }
+  }
+`
