@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
@@ -6,6 +6,20 @@ import { NavLink } from 'react-router-dom';
 function SearchBox({headers, handleToggleSearchBox}) {
   const [allUsers, setAllUsers] = useState([]);
   const [searching, setSearching] = useState("");
+
+  const searchBoxRef = useRef()
+
+  useEffect(() => {
+    const hideSearchBox = (e) => {
+      if(searchBoxRef.current.contains(e.target)) return
+      handleToggleSearchBox()
+    }
+    document.body.addEventListener("click", hideSearchBox, { capture: true })
+
+    return () => {
+      document.body.removeEventListener("click", hideSearchBox, { capture: true })
+    }
+  }, [])
 
   const viewAllUsers = () => {
     const { token, client, expiry, uid  } = headers
@@ -45,7 +59,7 @@ function SearchBox({headers, handleToggleSearchBox}) {
   
   return (
     <SearchBoxContainer>
-      <div>
+      <div ref={searchBoxRef}>
         <HeaderSearch>
           <input type="text" placeholder="SEARCH" onChange={handleSearch}/>
           <p onClick={handleToggleSearchBox}>x</p>
