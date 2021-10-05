@@ -41,7 +41,7 @@ export default Homepage
 
 const Home = styled.div`
   margin-top: 5%;
-  margin-left: 15%;
+  margin-left: 38%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -86,7 +86,7 @@ const AvatarContainer = styled.div`
   >img{
     height: 20rem;
     width: 20rem;
-    margin: 5vh;
+    margin: 1rem;
     border: 1px solid black;
     border-radius: 30vh;
   }
@@ -96,7 +96,7 @@ const JCarlo = styled.div`
   >img{
     height: 20rem;
     width: 20rem;
-    margin: 5vh;
+    margin: 1rem;
     border-radius: 30vh;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 1px 2px rgba(0, 0, 0, 0.75);
 
@@ -108,9 +108,9 @@ const JCarlo = styled.div`
 const JulieV = styled.div`
   text-align: center;
   >img{
-    height: 40vh;
-    width: 40vh;
-    margin: 5vh;
+    height: 20rem;
+    width: 20rem;
+    margin: 1rem;
     border-radius: 30vh;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 1px 2px rgba(0, 0, 0, 0.75);
 
@@ -122,9 +122,9 @@ const JulieV = styled.div`
 const RalphS = styled.div`
   text-align: center;
   >img{
-    height: 40vh;
-    width: 40vh;
-    margin: 5vh;
+    height: 20rem;
+    width: 20rem;
+    margin: 1rem;
     border-radius: 30vh;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 1px 2px rgba(0, 0, 0, 0.75);
 }

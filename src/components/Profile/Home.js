@@ -11,6 +11,13 @@ function Home({loginData}) {
   const [userHeaders, setUserHeaders] = useState("");
   const [channels, setChannels] = useState("");
   const [recentUsers, setRecentUsers] = useState("");
+  const [isRender, setIsRender] = useState(false);
+  const [loginUserData, setloginUserData] = useState("");
+
+
+  const handleIsRender = () => {
+    setIsRender(!isRender)
+  }
 
   useEffect(() => {
     const headers = {
@@ -21,6 +28,7 @@ function Home({loginData}) {
     };
 
     setUserHeaders(headers)
+    setloginUserData(loginData.data)
 
     const { token, client, expiry, uid  } = headers
 
@@ -53,24 +61,37 @@ function Home({loginData}) {
     })
     .catch(err => console.log("Error Getting Recent Users: ", err))
 
-  }, []);
+  }, [isRender]);
 
-  if (!channels.data) {
+  if (!channels.data || !recentUsers) {
     return <div><h1>Loading...</h1></div>
   }
   
   return (
     <div>
       <Router>
-        <Header loginData={loginData} headers={userHeaders}/>
+        <Header 
+          loginData={loginData} 
+          headers={userHeaders}
+          />
           <Appbody>
-            <Sidebar channels={channels} loginData={loginData} recentUsers={recentUsers}/>
+            <Sidebar 
+              channels={channels} 
+              loginData={loginData} 
+              recentUsers={recentUsers} 
+              isRender={isRender}
+              loginUserData={loginUserData}
+              />
             <Switch>              
             <Route exact path='/' component={Homepage}>
               <Homepage />
             </Route>
             <Route path='/:type/:id'>
-              <Chat loginData={loginData} headers={userHeaders} />
+              <Chat 
+                loginData={loginData} 
+                headers={userHeaders} 
+                handleIsRender={handleIsRender} 
+                />
             </Route>
             </Switch>
           </Appbody>

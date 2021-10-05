@@ -2,20 +2,25 @@ import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
 import styled from "styled-components";
 import axios from 'axios';
+import { useParams } from "react-router-dom"
 
 
-function ChatInput({loginData, handleIsRender, headers}) {
+function ChatInput({ handleIsRender, headers}) {
   const [sendMessage, setSendMessage] = useState('');
 
   const { token, client, expiry, uid  } = headers
+
+  const params = useParams()
+  const { type, id } = params
+  const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
 
   const handleMessage = (e) => {
     e.preventDefault()
 
     axios.post("http://206.189.91.54//api/v1/messages",
       {
-        receiver_id: 765,
-        receiver_class: "User",
+        receiver_id: parseInt(id),
+        receiver_class: capitalizedType,
         body: sendMessage
       },
       {
@@ -27,7 +32,7 @@ function ChatInput({loginData, handleIsRender, headers}) {
         }
       })
       .then(res => {
-        // console.log("Chat send render: ", res);
+        console.log("Chat send render: ", res);
         handleIsRender();
       })
       .catch(err => console.log("Error Sending Message: ", err));

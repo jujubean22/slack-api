@@ -4,20 +4,22 @@ import ChatInput from './ChatInput';
 import ChatBodyContainer from './ChatBodyContainer';
 import axios from 'axios';
 import { useParams } from "react-router-dom"
+import { ContactSupportOutlined } from '@material-ui/icons';
 
-function Chat({ loginData, headers }) {
+function Chat({ loginData, headers, handleIsRender }) {
   const [chatData, setChatData] = useState("");
   const [isRender, setIsRender] = useState(false);
   const chatRef = useRef(null)
-  const [receiveType, setReceiveType] = useState("")
+  const [receiver, setReceiver] = useState("")
 
   const params = useParams()
   const { type, id } = params
 
   const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
 
-  const handleIsRender = () => {
+  const handleChatIsRender = () => {
     setIsRender(!isRender);
+    handleIsRender()
   }
 
   const scrollToBottomSmooth = () => {
@@ -48,7 +50,7 @@ function Chat({ loginData, headers }) {
 
     if(type==="user"){
       //Get User Data
-      axios.get("/api/v1/users",
+      axios.get(`http://206.189.91.54//api/v1/users`,
       {
         headers:{
           "access-token": token,
@@ -58,11 +60,14 @@ function Chat({ loginData, headers }) {
         }
       })
       .then(res => {
-        console.log(res.data.data.filter(data => data.id === id))
+        //console.log("User DATA: ", res.data.data.filter(data => data.id === parseInt(id)))
+        const userData = res.data.data.filter(data => data.id === parseInt(id))
+        //console.log(userData[0].email)
+        setReceiver(userData[0].email)
       })
     } else {
       //Get Channel Data
-      axios.get(`/api/v1/channels/${id}`,
+      axios.get(`http://206.189.91.54//api/v1/channels/${parseInt(id)}`,
       {
         headers:{
           "access-token": token,
@@ -70,16 +75,17 @@ function Chat({ loginData, headers }) {
           "expiry": expiry,
           "uid": uid,
         }
-      })
-      .then(res => {
-        console.log(res)
+      }).then(res => {
+        //console.log("Channel DATA: ",res)
+        setReceiver(res.data.data.name)
       })
     }
-    
 
     scrollToBottomSmooth()
 
-  }, [isRender]);
+  }, [id, isRender]);
+
+  //if(!receiver) return <></>
 
   return (
     <ChatContainer>
@@ -87,7 +93,7 @@ function Chat({ loginData, headers }) {
         <ChatHeaderContainer>
           <HeaderLeft>  
             <h2>
-              <strong>{receiveType} : {id}</strong>
+              <strong>{type === "channel" ? receiver : receiver}</strong>
             </h2>
           </HeaderLeft>
           <HeaderRight>
@@ -99,7 +105,7 @@ function Chat({ loginData, headers }) {
           <ChatBodyContainer chatData={chatData} chatRef={chatRef}/>
         </ChatMessages>
         
-        <ChatInput loginData={loginData} handleIsRender={handleIsRender} headers={headers}/>
+        <ChatInput loginData={loginData} handleIsRender={handleChatIsRender} headers={headers}/>
       </>
     </ChatContainer>
   )
