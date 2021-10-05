@@ -4,7 +4,6 @@ import ChatInput from './ChatInput';
 import ChatBodyContainer from './ChatBodyContainer';
 import axios from 'axios';
 import { useParams } from "react-router-dom"
-import { ContactSupportOutlined } from '@material-ui/icons';
 
 function Chat({ loginData, headers, handleIsRender }) {
   const [chatData, setChatData] = useState("");

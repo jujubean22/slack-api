@@ -14,7 +14,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
 import EmailIcon from '@material-ui/icons/Email';
 import SidebarOption from "./SidebarOption";
-import { useHistory, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Sidebar({channels, loginData, recentUsers, isRender, loginUserData}) {
 
