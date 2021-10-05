@@ -2,17 +2,18 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from "styled-components";
 import ChatInput from './ChatInput';
 import ChatBodyContainer from './ChatBodyContainer';
-import axios from 'axios';
+import { getMessage, getUser, getChannelData } from '../../API';
 import { useParams } from "react-router-dom"
 
 function Chat({ loginData, headers, handleIsRender }) {
   const [chatData, setChatData] = useState("");
+  const [receiver, setReceiver] = useState("");
   const [isRender, setIsRender] = useState(false);
-  const chatRef = useRef(null)
-  const [receiver, setReceiver] = useState("")
+  const chatRef = useRef(null);
 
-  const params = useParams()
-  const { type, id } = params
+  //parameter from URL
+  const params = useParams();
+  const { type, id } = params;
 
   const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
 
@@ -21,70 +22,52 @@ function Chat({ loginData, headers, handleIsRender }) {
     handleIsRender()
   }
 
+  //Smooth scrolling to bottom
   const scrollToBottomSmooth = () => {
     chatRef?.current?.scrollIntoView({ behavior: "smooth" })
   }
 
+  //Scroll to bottom on chat
   const scrollToBottom = () => {
     chatRef?.current?.scrollIntoView()
   }
 
   useEffect(scrollToBottom, [chatData]);
 
-  useEffect(() => {
-    const { token, client, expiry, uid  } = headers
+  //Message Object Data
+  const getMessageObj = {
+    receiver_class: capitalizedType,
+    receiver_id: parseInt(id),
+    headers
+  };
 
+  const getDataObj = {
+    id: parseInt(id),
+    headers
+  }
+
+
+  useEffect(() => {
     //Get User Message Data
-    axios.get(`http://206.189.91.54//api/v1/messages?receiver_class=${capitalizedType}&receiver_id=${parseInt(id)}`, 
-    {
-    headers:{
-      "access-token": token,
-      "client": client,
-      "expiry": expiry,
-      "uid": uid,
-      }
-    })
-    .then(res => { setChatData(res.data.data) })
-    .catch(err => console.log("Error Sending Message: ", err))
+    getMessage(getMessageObj)
+      .then(res => { setChatData(res.data.data)})
+      .catch(err => console.log("Error Sending Message: ", err))
 
     if(type==="user"){
       //Get User Data
-      axios.get(`http://206.189.91.54//api/v1/users`,
-      {
-        headers:{
-          "access-token": token,
-          "client": client,
-          "expiry": expiry,
-          "uid": uid,
-        }
-      })
-      .then(res => {
-        //console.log("User DATA: ", res.data.data.filter(data => data.id === parseInt(id)))
-        const userData = res.data.data.filter(data => data.id === parseInt(id))
-        //console.log(userData[0].email)
-        setReceiver(userData[0].email)
+      getUser(getDataObj)
+      .then(result => {
+        setReceiver(result[0].email)
       })
     } else {
       //Get Channel Data
-      axios.get(`http://206.189.91.54//api/v1/channels/${parseInt(id)}`,
-      {
-        headers:{
-          "access-token": token,
-          "client": client,
-          "expiry": expiry,
-          "uid": uid,
-        }
-      }).then(res => {
-        //console.log("Channel DATA: ",res)
-        setReceiver(res.data.data.name)
-      })
+      getChannelData(getDataObj)
+        .then(res => {
+          setReceiver(res.data.data.name)
+        })
     }
-
-    scrollToBottomSmooth()
-
-  }, [id, isRender]);
-
-  //if(!receiver) return <></>
+scrollToBottomSmooth();
+}, [id, isRender]);
 
   return (
     <ChatContainer>

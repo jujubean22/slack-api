@@ -19,7 +19,8 @@ export const userLogin = ({ email, password }) => {
 };
 
 //Send Message 
-export const sendMessage = ({ receiver_id, receiver_class, body, headers: { token, client, expiry, uid }
+export const sendMessage = ({
+  receiver_id, receiver_class, body, headers: { token, client, expiry, uid }
 }) => {
   return axios.post('http://206.189.91.54//api/v1/messages',
     {
@@ -38,4 +39,74 @@ export const sendMessage = ({ receiver_id, receiver_class, body, headers: { toke
     .then(res => res)
     .then(result => result)
     .catch(err => err)
+};
+
+//Get Messages
+export const getMessage = ({
+  receiver_class, receiver_id, headers: { token, client, expiry, uid }
+}) => {
+  return axios.get('http://206.189.91.54//api/v1/messages',
+    {
+      headers: {
+        'access-token': token,
+        'client': client,
+        'expiry': expiry,
+        'uid': uid
+      },
+      params: {
+        receiver_class,
+        receiver_id
+      }
+    })
+  .then(response => response)
+  .then(result => result)
+  .catch(err => err)
+};
+
+//Get All User Data
+export const getAllUsers = ({ token, client, expiry, uid }) => {
+  return axios.get(`http://206.189.91.54//api/v1/users`, {
+    headers: {
+      "access-token": token,
+      "client": client,
+      "expiry": expiry,
+      "uid": uid
+    }
+  })
+    .then(res => res)
+    .then(result => result)
+    .catch(err => err)
+};
+
+//Get user via id
+export const getUser = ({ id, headers: { token, client, expiry, uid } }) => {
+  return axios.get('http://206.189.91.54//api/v1/users', {
+    headers: {
+      "access-token": token,
+      "client": client,
+      "expiry": expiry,
+      "uid": uid
+    }
+  })
+    .then(res => res)
+    .then(result => {
+      return result.data.data.filter(data => data.id === id)
+    })
+    .catch(err => err)
+};
+
+//Get Channel 
+export const getChannelData = ({ id, headers: { token, client, expiry, uid } }) => {
+  return axios.get(`http://206.189.91.54//api/v1/channels/${id}`,
+    {
+      headers: {
+        "access-token": token,
+        "client": client,
+        "expiry": expiry,
+        "uid": uid
+      }
+    })
+      .then(res => res)
+      .then(result => result)
+      .catch(err => err)
 };
