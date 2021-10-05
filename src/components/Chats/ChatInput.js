@@ -1,49 +1,47 @@
 import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
 import styled from "styled-components";
-import axios from 'axios';
-import { useParams } from "react-router-dom"
+import { sendMessage } from '../../API';
+import { useParams } from "react-router-dom";
 
 
 function ChatInput({ handleIsRender, headers}) {
-  const [sendMessage, setSendMessage] = useState('');
+  const [chatMessage, setChatMessage] = useState('');
 
-  const { token, client, expiry, uid  } = headers
+  //get parameter from URL
+  const params = useParams();
+  const { type, id } = params;
 
-  const params = useParams()
-  const { type, id } = params
   const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
+  
+  //message objects 
+  const messageObj = {
+    receiver_id: parseInt(id),
+    receiver_class: capitalizedType,
+    body: chatMessage,
+    headers
+  }
 
+  //Message input
+  const handleSendMessage = (e) => {
+    setChatMessage(e.target.value);
+  }
+  
+  //
   const handleMessage = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    axios.post("http://206.189.91.54//api/v1/messages",
-      {
-        receiver_id: parseInt(id),
-        receiver_class: capitalizedType,
-        body: sendMessage
-      },
-      {
-        headers: {
-          "access-token": token,
-          "client": client,
-          "expiry": expiry,
-          "uid": uid,
-        }
-      })
+    //Send Message API 
+    sendMessage(messageObj)
       .then(res => {
-        console.log("Chat send render: ", res);
         handleIsRender();
       })
-      .catch(err => console.log("Error Sending Message: ", err));
-
-    setSendMessage("");
+      .catch(err => console.log('Error Sending Message: ', err));
+    
+    //Set input to blank
+    setChatMessage("");
   }
 
-  
-  const handleSendMessage = (e) => {
-    setSendMessage(e.target.value);
-  }
 
   return (
     <ChatInputContainer>
@@ -52,7 +50,7 @@ function ChatInput({ handleIsRender, headers}) {
           type="text"
           placeholder={'room'}
           onSubmit={handleMessage}
-          value={sendMessage}
+          value={chatMessage}
           onChange={handleSendMessage}
         />
         <Button

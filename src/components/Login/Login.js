@@ -19,9 +19,7 @@ function Login({ handleSetLoginData }) {
     e.preventDefault()
     setLoading(true)
 
-    const data = {
-      email, password 
-    }
+    const data = { email, password }
 
     //User Login
     userLogin(data)
