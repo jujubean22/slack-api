@@ -125,3 +125,17 @@ export const getChannelData = ({ id, headers: { token, client, expiry, uid } }) 
       .catch(err => err)
 };
 
+//Get Recent Messages
+export const getRecentDm = ({ headers: { token, client, expiry, uid } }) => {
+  return axios.get(`http://206.189.91.54//api/v1/users/recent/`, {
+    headers: {
+      "access-token": token,
+      "client": client,
+      "expiry": expiry,
+      "uid": uid
+    }
+  })
+    .then(res => res)
+    .catch(err => err)
+};
+
