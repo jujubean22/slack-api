@@ -3,8 +3,8 @@ import axios from "axios"
 import React, { useState, useEffect } from 'react';
 
 function AddChannel({loginData}) {
-const [addChannel, setAddChannel] = useState('')
-const [usersDataArray, setUsersDataArray] = useState([])
+  const [channelName, setChannelName] = useState('');
+  const [usersDataArray, setUsersDataArray] = useState([]);
 
 const createChannel = (e) => {
   e.preventDefault();
@@ -18,7 +18,7 @@ const createChannel = (e) => {
     setUsersDataArray(loginData.data.data.id)
   
     const addNewChannel = {
-      name: addChannel,
+      name: channelName,
       user_ids: [usersDataArray],
       headers: headers,
     }  
@@ -61,8 +61,7 @@ const createChannel = (e) => {
   }
 
   const handleGetChannel = (e) => {
-    e.preventDefault();
-    setAddChannel(e.target.value);
+    setChannelName(e.target.value);
   }
 
   return (
@@ -72,7 +71,7 @@ const createChannel = (e) => {
           <AddChannelInput 
             placeholder='Add Channel Name' 
             onChange={handleGetChannel} 
-            value = {addChannel}
+            value = {channelName}
           />    
           </AddChannelForm>
       </AddChannelContainer>
