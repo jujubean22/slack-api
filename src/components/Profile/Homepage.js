@@ -41,7 +41,7 @@ export default Homepage
 
 const Home = styled.div`
   margin-top: 5%;
-  margin-left: 38%;
+  margin-left: 40%;
   display: flex;
   justify-content: space-between;
   align-items: center;
