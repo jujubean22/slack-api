@@ -8,7 +8,7 @@ import Homepage from './Homepage';
 import Chat from '../Chats/Chat';
 import axios from 'axios'
 import NewMessage from '../NewMessage/NewMessage';
-import AddChannel from '../Channels/AddChannel';
+import AddChannel from './Sidebar/Channels/AddChannel';
 
 function Home({ loginData }) {
   //state
@@ -70,6 +70,8 @@ function Home({ loginData }) {
               recentUsers={recentUsers} 
               isRender={isRender}
               loginUserData={loginUserData}
+              headers={userHeaders}
+              handleIsRender = {handleIsRender}
               />
             <Switch>              
               <Route exact path='/' component={Homepage}>
@@ -82,11 +84,6 @@ function Home({ loginData }) {
                   handleIsRender={handleIsRender} 
                   />
               </Route>
-              {/* <Route exact path='/' component={AddChannel}>
-                <AddChannel 
-                  loginData={loginData} 
-                />
-              </Route> */}
               <Route exact path="/new-message">
                 <NewMessage headers={userHeaders} />
               </Route>

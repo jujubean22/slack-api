@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import CreateIcon from "@material-ui/icons/Create";
@@ -15,9 +15,19 @@ import AddIcon from "@material-ui/icons/Add";
 import EmailIcon from '@material-ui/icons/Email';
 import SidebarOption from "./SidebarOption";
 import { useHistory, NavLink } from "react-router-dom";
+import AddChannel from "./Channels/AddChannel";
 
-function Sidebar({channels, loginData, recentUsers, isRender, loginUserData}) {
+function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, headers, handleIsRender }) {
 
+  //calling add channel modal
+  const [toggleAddChannel, setToggleAddChannel] = useState(false)
+
+  const handleToggleAddChannel = () => {
+    setToggleAddChannel(!toggleAddChannel)
+    console.log(toggleAddChannel)
+  }
+
+  //new message
   const userID = loginUserData && loginUserData.data ? loginUserData.data.id : null;
   const { email } = loginData.data.data
   const history = useHistory();
@@ -89,9 +99,21 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData}) {
       <SidebarOption Icon={ExpandMoreIcon} title="Channel" />
       <hr/>
       {renderChannels}
-      <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
+      <SidebarOption 
+      Icon={AddIcon} 
+      title="Add Channel" 
+      onClick={handleToggleAddChannel}
+      />
+
+      {toggleAddChannel ? (
+      <AddChannel 
+        handleIsRender={handleIsRender}
+        loginData={loginData} 
+        headers={headers}
+        handleToggleAddChannel = {handleToggleAddChannel}
+      /> ): null} 
       <hr/>
-      <SidebarOption Icon={EmailIcon} addChannelOption title="Direct Messages" />
+      <SidebarOption Icon={EmailIcon} title="Direct Messages" />
       <hr/>
       {renderRecentUsers}
     </SidebarContainer>
