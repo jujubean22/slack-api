@@ -2,12 +2,18 @@ import styled from 'styled-components'
 import axios from "axios"
 import React, { useState, useEffect } from 'react';
 
-function AddChannel({loginData}) {
+function AddChannel({ loginData }) {
+  //state
   const [channelName, setChannelName] = useState('');
   const [usersDataArray, setUsersDataArray] = useState([]);
 
-const createChannel = (e) => {
-  e.preventDefault();
+  //channel name value
+  const handleGetChannel = (e) => {
+    setChannelName(e.target.value);
+  }
+
+  const createChannel = (e) => {
+    e.preventDefault();
     const headers = {
       token: loginData.headers["access-token"],
       client: loginData.headers.client,
@@ -16,7 +22,7 @@ const createChannel = (e) => {
     }
 
     setUsersDataArray(loginData.data.data.id)
-  
+
     const addNewChannel = {
       name: channelName,
       user_ids: [usersDataArray],
@@ -57,12 +63,9 @@ const createChannel = (e) => {
       console.log(res)
     })
     .catch(error => error)
-
   }
 
-  const handleGetChannel = (e) => {
-    setChannelName(e.target.value);
-  }
+  
 
   return (
     <AddChannelOuterContainer>

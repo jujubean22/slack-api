@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
-import { userRegister } from '../../API';
+import { userRegister } from '../../api/API';
 import { LoginContainer,LoginInnerContainer,Form,} from "../styles/Login.style"
 import {useHistory} from 'react-router-dom';
 
