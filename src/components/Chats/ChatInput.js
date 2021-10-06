@@ -42,10 +42,9 @@ function ChatInput({ handleIsRender, headers}) {
     setChatMessage("");
   }
 
-
-  return (
+    return (
     <ChatInputContainer>
-      <form >
+        <form >
         <input
           type="text"
           placeholder={'room'}
@@ -54,27 +53,27 @@ function ChatInput({ handleIsRender, headers}) {
           onChange={handleSendMessage}
         />
         <Button
-          type='submit'
-          onClick={handleMessage}
+            type='submit'
+            onClick={handleMessage}
         > Send
         </Button>
-      </form>
+        </form>
     </ChatInputContainer>
-  )
-}
+    )
+    }
 
-export default ChatInput
+    export default ChatInput
 
-const ChatInputContainer = styled.div`
-  border-radius: 20px;
+    const ChatInputContainer = styled.div`
+    border-radius: 20px;
 
-  > form {
+    > form {
     position: relative;
     display: flex;
     justify-content: center;
-  }
+    }
 
-  >form >input{
+    >form >input{
     position: fixed;
     bottom: 2rem;
     width: 70%;
@@ -82,8 +81,8 @@ const ChatInputContainer = styled.div`
     border-radius: 3px;
     padding: 1rem;
     outline: none;
-  }
-  >form >button{
+    }
+    >form >button{
     display: none;
-  }
-`;
+    }
+    `;
