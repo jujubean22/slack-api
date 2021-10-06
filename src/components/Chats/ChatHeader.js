@@ -1,21 +1,13 @@
-<<<<<<< Updated upstream
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { getChannelData } from '../../api/API';
-=======
-import React, { useState, useEffect } from 'react'
->>>>>>> Stashed changes
 import styled from "styled-components";
+import axios from "axios"
 
 function ChatHeader({ receiver, headers }) {
   //state
   const [channelMembers, setChannelMembers] = useState([]);
-<<<<<<< Updated upstream
   //parameter for URL
-=======
-  const [allUsers, setAllUsers] = useState([]);
-  
->>>>>>> Stashed changes
   const params = useParams();
   const { type, id } = params;
   //data obj
@@ -25,30 +17,14 @@ function ChatHeader({ receiver, headers }) {
   }
 
   const viewUserChannelOwned = () => {
-<<<<<<< Updated upstream
     getChannelData(getDataObj)
       .then(res => {
         setChannelMembers(res.data.data.channel_members)
       })
       .catch(err => err)
-=======
-
-    axios.get(`http://206.189.91.54//api/v1/channels/${id}`,
-    {
-      headers:{
-        "access-token": token,
-        "client": client,
-        "expiry": expiry,
-        "uid": uid,
-      }
-    })
-    .then(res => {
-      setChannelMembers(res.data.data.channel_members)
-      console.log(res)
-    })
-    .catch(err => err)
->>>>>>> Stashed changes
   }
+
+  const { token, client, expiry, uid } = headers
 
   useEffect(() => {
     if (channelMembers){
