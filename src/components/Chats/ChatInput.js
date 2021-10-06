@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
 import styled from "styled-components";
-import { sendMessage } from '../../API';
+import { sendMessage } from '../../api/API';
 import { useParams } from "react-router-dom";
 
 

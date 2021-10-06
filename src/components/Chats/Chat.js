@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from "styled-components";
 import ChatInput from './ChatInput';
 import ChatBodyContainer from './ChatBodyContainer';
-import { getMessage, getUser, getChannelData } from '../../API';
+import { getMessage, getUser, getChannelData } from '../../api/API';
 import { useParams } from "react-router-dom"
 import ChatHeader from './ChatHeader';
 

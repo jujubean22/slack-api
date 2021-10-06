@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { LoginContainer, LoginInnerContainer, Form} from "../styles/Login.style"
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-import { userLogin } from '../../API';
+import { userLogin } from '../../api/API';
 
 function Login({ handleSetLoginData }) {
   //set up states

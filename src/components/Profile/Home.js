@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { getChannel, getRecentDm } from '../../API';
+import { getChannel, getRecentDm } from '../../api/API';
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import styled from "styled-components";

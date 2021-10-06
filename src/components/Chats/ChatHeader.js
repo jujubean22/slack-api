@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
-import { getChannelData } from '../../API';
+import { getChannelData } from '../../api/API';
 import styled from "styled-components";
 
 function ChatHeader({ receiver, headers }) {
