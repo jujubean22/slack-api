@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { getChannelData } from '../../api/API';
 import styled from "styled-components";
+import axios from "axios"
 
 function ChatHeader({ receiver, headers }) {
   //state
@@ -22,6 +23,8 @@ function ChatHeader({ receiver, headers }) {
       })
       .catch(err => err)
   }
+
+  const { token, client, expiry, uid } = headers
 
   useEffect(() => {
     if (channelMembers){
