@@ -13,14 +13,17 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
 import EmailIcon from '@material-ui/icons/Email';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import SidebarOption from "./SidebarOption";
 import { useHistory, NavLink } from "react-router-dom";
+import { getOwnedChannel } from '../../../api/API';
 import AddChannel from "./Channels/AddChannel";
 
-function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, headers, handleIsRender }) {
+function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, headers, handleIsRender, channelOwned }) {
 
   //calling add channel modal
-  const [toggleAddChannel, setToggleAddChannel] = useState(false)
+  const [toggleAddChannel, setToggleAddChannel] = useState(false);
+  const [data, setData] = useState();
 
   const handleToggleAddChannel = () => {
     setToggleAddChannel(!toggleAddChannel)
@@ -29,13 +32,30 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, hea
 
   //new message
   const userID = loginUserData && loginUserData.data ? loginUserData.data.id : null;
-  const { email } = loginData.data.data
+  const { email } = loginData.data.data;
   const history = useHistory();
 
   const newMessageHistory = () => {
     history.push(`/new-message`);
   };
 
+  //Render Owned Channel 
+  const renderOwnedChannel = channelOwned.map((channel, i) => {
+    return (
+      <NavLink
+        style={{ textDecoration: 'none', color: 'white' }}
+        to={`/channel/${channel}`}
+      >
+        <SidebarOption
+          key={i}
+          Icon={ChatBubbleIcon}
+          title={channel.name}
+        />
+      </NavLink>
+    )
+  });
+
+  //Render all channel 
   const renderChannels = channels.data.data
     ? channels.data.data.map((channel, index) => {
         return (
@@ -52,6 +72,7 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, hea
       })
     : "";
 
+  //Recent messages
   const renderRecentUsers = recentUsers
   ? recentUsers.map((user, index) => {
     if (user.id !== userID)
@@ -67,7 +88,7 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, hea
         </NavLink>
       );
     })
-  : "";
+    : "";
 
   useEffect(() => {}, [isRender]);
 
@@ -79,7 +100,6 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, hea
       <SidebarHeader>
       <SidebarInfo>
         <h2>{email}</h2>
-        <h2></h2>
         <h3>
         <FiberManualRecordIcon />
         {capitalizedUser}
@@ -95,16 +115,15 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, hea
       <SidebarOption Icon={AppsIcon} title="Apps" />
       <SidebarOption Icon={FileCopyIcon} title="File browser" />
       <SidebarOption Icon={ExpandLessIcon} title="Show less" />
+      <hr />
+      
       <hr/>
-      <SidebarOption Icon={ExpandMoreIcon} title="Channel" />
-      <hr/>
-      {renderChannels}
+      {/* {renderChannels} */}
       <SidebarOption 
       Icon={AddIcon} 
       title="Add Channel" 
       onClick={handleToggleAddChannel}
       />
-
       {toggleAddChannel ? (
       <AddChannel 
         handleIsRender={handleIsRender}
@@ -112,10 +131,15 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, hea
         headers={headers}
         handleToggleAddChannel = {handleToggleAddChannel}
       /> ): null} 
-      <hr/>
-      <SidebarOption Icon={EmailIcon} title="Direct Messages" />
-      <hr/>
+      <SidebarOption Icon={PeopleAltIcon} title="Channels Owned" />
+      {renderOwnedChannel}
+      <hr />
+      <SidebarOption Icon={PeopleAltIcon} title="Channel Joined" />
+      {renderChannels}
+      <hr /><hr />
+      <SidebarOption Icon={ExpandMoreIcon} title="Direct Messages" />
       {renderRecentUsers}
+      
     </SidebarContainer>
   
   );
