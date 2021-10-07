@@ -7,6 +7,8 @@ import axios from "axios"
 function ChatHeader({ receiver, headers }) {
   //state
   const [channelMembers, setChannelMembers] = useState([]);
+  const [channelMemberInfo, setChannelMemberInfo] = useState([]);
+  const [allUsers, setAllUsers] = useState([])
   //parameter for URL
   const params = useParams();
   const { type, id } = params;
@@ -17,14 +19,32 @@ function ChatHeader({ receiver, headers }) {
   }
 
   const viewUserChannelOwned = () => {
-    getChannelData(getDataObj)
+
+  }
+
+  const { token, client, expiry, uid } = headers
+
+  useEffect(() => {
+    axios.get('http://206.189.91.54//api/v1/users',
+    {
+      headers:{
+        "access-token": token,
+        "client": client,
+        "expiry": expiry,
+        "uid": uid,
+      }
+    })
+    .then(res => {
+      setAllUsers(res.data.data)
+      getChannelData(getDataObj)
       .then(res => {
         setChannelMembers(res.data.data.channel_members)
       })
       .catch(err => err)
-  }
+    })
+    .catch(err => err)
 
-  const { token, client, expiry, uid } = headers
+  }, [id])
 
   useEffect(() => {
       if (channelMembers){
@@ -52,10 +72,10 @@ function ChatHeader({ receiver, headers }) {
       }
     }, [channelMembers])
 
-  const memberList = channelMembers.map((user, index) => {
+  const memberList = channelMemberInfo.map((user, index) => {
     return(
       <div key={index}>
-        <p>{user.user_id}</p>
+        <p>{user.email}</p>
       </div>
     )
   })
