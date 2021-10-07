@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { getChannel, getRecentDm } from '../../api/API  ';
+import { getChannel, getRecentDm } from '../../api/API';
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import styled from "styled-components";
 import Homepage from './Homepage';
 import Chat from '../Chats/Chat';
-import axios from 'axios'
 import NewMessage from '../NewMessage/NewMessage';
-import AddChannel from './Sidebar/Channels/AddChannel';
 
 function Home({ loginData }) {
   //state

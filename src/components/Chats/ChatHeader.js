@@ -47,30 +47,12 @@ function ChatHeader({ receiver, headers }) {
   }, [id])
 
   useEffect(() => {
-      if (channelMembers){
-        channelMembers.map(user => {
-          axios.get('http://206.189.91.54//api/v1/users',
-          {
-            headers:{
-              "access-token": token,
-              "client": client,
-              "expiry": expiry,
-              "uid": uid,
-            }
-          })
-          .then(res => {
-            const userArray = res.data.data
-            console.log(userArray[4].id)
-            const resArray = userArray.filter(u => u.email.includes('user12@example.com'))
-            //setAllUsers(resArray)
-            //console.log(resArray)
-          })
-          .catch(err => err)
-
-          //console.log(user.user_id)
-        })
-      }
-    }, [channelMembers])
+    setChannelMemberInfo([])
+    channelMembers.forEach(member => {
+      const kahitano = allUsers.find(user => user.id === member.user_id)
+      setChannelMemberInfo(prev => [...prev, kahitano])
+    })
+  }, [channelMembers])
 
   const memberList = channelMemberInfo.map((user, index) => {
     return(
