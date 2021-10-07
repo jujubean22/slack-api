@@ -9,6 +9,8 @@ function ChatHeader({ receiver, headers }) {
   const [channelMembers, setChannelMembers] = useState([]);
   const [channelMemberInfo, setChannelMemberInfo] = useState([]);
   const [allUsers, setAllUsers] = useState([])
+  const [toggleViewMembers, setToggleViewMembers] = useState(false)
+
   //parameter for URL
   const params = useParams();
   const { type, id } = params;
@@ -18,8 +20,8 @@ function ChatHeader({ receiver, headers }) {
     headers
   }
 
-  const viewUserChannelOwned = () => {
-
+  const handleToggleViewMembers = () => {
+    setToggleViewMembers(!toggleViewMembers)
   }
 
   const { token, client, expiry, uid } = headers
@@ -70,12 +72,17 @@ function ChatHeader({ receiver, headers }) {
         </h2>
       </HeaderLeft>
       <HeaderRight>
-        <button onClick={viewUserChannelOwned}>Member List</button>
+        <button onClick={handleToggleViewMembers}>Member List</button>
         <button>Add Member</button>
       </HeaderRight>
-      <MemberList>
-        {memberList}
-      </MemberList>
+      {toggleViewMembers 
+        ? 
+        <MemberList>
+          {memberList}
+        </MemberList>
+        : ""
+      }
+      
     </ChatHeaderContainer>
   )
 }
