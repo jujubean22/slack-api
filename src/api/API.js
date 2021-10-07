@@ -141,3 +141,17 @@ export const getRecentDm = ({ headers: { token, client, expiry, uid } }) => {
     .catch(err => err)
 };
 
+
+//Get user owned channel
+export const getOwnedChannel = ({ headers: { token, client, expiry, uid } }) => {
+  return axios.get(`http://206.189.91.54//api/v1/channel/owned`, {
+    headers: {
+      "access-token": token,
+      "client": client,
+      "expiry": expiry,
+      "uid": uid
+    }
+  })
+    .then(res => res)
+    .catch(err => err)
+};

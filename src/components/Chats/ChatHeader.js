@@ -27,31 +27,30 @@ function ChatHeader({ receiver, headers }) {
   const { token, client, expiry, uid } = headers
 
   useEffect(() => {
-    if (channelMembers){
-      channelMembers.map(user => {
-        axios.get('http://206.189.91.54//api/v1/users',
-        {
-          headers:{
-            "access-token": token,
-            "client": client,
-            "expiry": expiry,
-            "uid": uid,
-          }
-        })
-        .then(res => {
-          const userArray = res.data.data
-          //console.log(userArray)
-          //console.log(userArray[4].id)
-          const resArray = userArray.filter(u => u.email.includes('user12@example.com'))
-          //setAllUsers(resArray)
-          //console.log(resArray)
-        })
-        .catch(err => err)
+      if (channelMembers){
+        channelMembers.map(user => {
+          axios.get('http://206.189.91.54//api/v1/users',
+          {
+            headers:{
+              "access-token": token,
+              "client": client,
+              "expiry": expiry,
+              "uid": uid,
+            }
+          })
+          .then(res => {
+            const userArray = res.data.data
+            console.log(userArray[4].id)
+            const resArray = userArray.filter(u => u.email.includes('user12@example.com'))
+            //setAllUsers(resArray)
+            //console.log(resArray)
+          })
+          .catch(err => err)
 
-        //console.log(user.user_id)
-      })
-    }
-  }, [channelMembers])
+          //console.log(user.user_id)
+        })
+      }
+    }, [channelMembers])
 
   const memberList = channelMembers.map((user, index) => {
     return(
