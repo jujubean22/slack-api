@@ -68,8 +68,8 @@ function Chat({ loginData, headers, handleIsRender }) {
           setReceiver(res.data.data.name)
         })
     }
-scrollToBottomSmooth();
-}, [id, isRender]); 
+  scrollToBottomSmooth();
+  }, [id, isRender]); 
 
   return (
     <ChatContainer>

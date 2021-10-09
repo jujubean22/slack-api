@@ -44,7 +44,7 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, hea
     return (
       <NavLink
         style={{ textDecoration: 'none', color: 'white' }}
-        to={`/channel/${channel}`}
+        to={`/channel/${channel.id}`}
       >
         <SidebarOption
           key={i}
