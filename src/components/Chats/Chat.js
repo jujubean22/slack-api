@@ -6,7 +6,7 @@ import { getMessage, getUser, getChannelData } from '../../api/API';
 import { useParams } from "react-router-dom"
 import ChatHeader from './ChatHeader';
 
-function Chat({ loginData, headers, handleIsRender }) {
+function Chat({ loginData, headers, handleIsRender, homeIsRender }) {
   const [chatData, setChatData] = useState("");
   const [receiver, setReceiver] = useState("");
   const [isRender, setIsRender] = useState(false);
@@ -78,6 +78,7 @@ function Chat({ loginData, headers, handleIsRender }) {
           receiver={receiver} 
           headers={headers}
           handleIsRender={handleIsRender}
+          homeIsRender={homeIsRender}
         />
         <ChatMessages>
           <ChatBodyContainer chatData={chatData} chatRef={chatRef}/>

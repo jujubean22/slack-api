@@ -4,7 +4,7 @@ import { getChannelData, getAllUsers, addMemberToTheChannel } from '../../api/AP
 import styled from "styled-components";
 import AddMember from '../AddMember';
 
-function ChatHeader({ receiver, headers, handleIsRender }) {
+function ChatHeader({ receiver, headers, handleIsRender, homeIsRender }) {
   //state
   const [channelMembers, setChannelMembers] = useState([]);
   const [channelMemberInfo, setChannelMemberInfo] = useState([]);
@@ -65,13 +65,13 @@ function ChatHeader({ receiver, headers, handleIsRender }) {
     })
     .catch(err => err)
 
-  }, [id])
+  }, [id, homeIsRender])
 
   useEffect(() => {
     setChannelMemberInfo([])
     channelMembers.forEach(member => {
-      const kahitano = allUsers.find(user => user.id === member.user_id)
-      setChannelMemberInfo(prev => [...prev, kahitano])
+      const membersInfo = allUsers.find(user => user.id === member.user_id)
+      setChannelMemberInfo(prev => [...prev, membersInfo])
     })
   }, [channelMembers])
 
