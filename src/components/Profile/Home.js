@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { getChannel, getRecentDm } from '../../api/API';
+import { getChannel, getRecentDm, getOwnedChannel } from '../../api/API';
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import styled from "styled-components";
@@ -12,6 +12,7 @@ function Home({ loginData }) {
   //state
   const [userHeaders, setUserHeaders] = useState("");
   const [channels, setChannels] = useState("");
+  const [channelOwned, setChannelOwned] = useState('');
   const [recentUsers, setRecentUsers] = useState("");
   const [isRender, setIsRender] = useState(false);
   const [loginUserData, setloginUserData] = useState("");
@@ -48,6 +49,12 @@ function Home({ loginData }) {
         setRecentUsers(res.data.data)
       })
       .catch(err => console.log("Error Getting Recent Users: ", err))
+    
+    //get owned channels
+    getOwnedChannel(channelData)
+      .then(res => setChannelOwned(res.data.data))
+      .catch(err => err);
+    
   }, [isRender]);
 
   if (!channels.data || !recentUsers) {
@@ -65,12 +72,13 @@ function Home({ loginData }) {
             <Sidebar 
               channels={channels} 
               loginData={loginData} 
-              recentUsers={recentUsers} 
+              recentUsers={recentUsers}
+              channelOwned={channelOwned}
               isRender={isRender}
               loginUserData={loginUserData}
               headers={userHeaders}
               handleIsRender = {handleIsRender}
-              />
+            />
             <Switch>              
               <Route exact path='/' component={Homepage}>
                 <Homepage />
