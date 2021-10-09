@@ -13,7 +13,6 @@ function Header({loginData, headers}) {
 
   const handleToggleSearchBox = () => {
     setToggleSearch(!toggleSearch)
-    console.log(toggleSearch)
   }
   
   return (

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getChannelData } from '../../api/API';
 import styled from "styled-components";
 import axios from "axios"
+import AddMember from '../AddMember';
 
 function ChatHeader({ receiver, headers }) {
   //state
@@ -10,6 +11,8 @@ function ChatHeader({ receiver, headers }) {
   const [channelMemberInfo, setChannelMemberInfo] = useState([]);
   const [allUsers, setAllUsers] = useState([])
   const [toggleViewMembers, setToggleViewMembers] = useState(false)
+  const [toggleAddMembers, setToggleAddMembers] = useState(false)
+  const [addUserArray, setAddUserArray] = useState([])
 
   //parameter for URL
   const params = useParams();
@@ -22,6 +25,14 @@ function ChatHeader({ receiver, headers }) {
 
   const handleToggleViewMembers = () => {
     setToggleViewMembers(!toggleViewMembers)
+  }
+
+  const handleToggleAddMembers = () => {
+    setToggleAddMembers(!toggleAddMembers)
+  }
+
+  const handleAddMemberstoArray = (id) => {
+    console.log(id)
   }
 
   const { token, client, expiry, uid } = headers
@@ -73,12 +84,23 @@ function ChatHeader({ receiver, headers }) {
       </HeaderLeft>
       <HeaderRight>
         <button onClick={handleToggleViewMembers}>Member List</button>
-        <button>Add Member</button>
+        <button onClick={handleToggleAddMembers}>Add Member</button>
       </HeaderRight>
       {toggleViewMembers 
         ? 
         <MemberList>
           {memberList}
+        </MemberList>
+        : ""
+      }
+      {toggleAddMembers 
+        ? 
+        <MemberList>
+          <AddMember 
+            headers={headers} 
+            handleToggleAddMembers={handleToggleAddMembers}
+            handleAddMemberstoArray={handleAddMemberstoArray}
+          />
         </MemberList>
         : ""
       }
@@ -113,9 +135,10 @@ const HeaderRight = styled.div`
 const MemberList = styled.div`
   position: absolute;
   background: gray;
-  height: 20rem;
-  width: 10rem;
+  height: 40rem;
+  width: 30rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: .5rem;
 `
