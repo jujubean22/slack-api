@@ -30,8 +30,8 @@ function ChatHeader({ receiver, headers }) {
     setToggleAddMembers(!toggleAddMembers)
   }
 
-  const handleAddMemberstoArray = (id) => {
-    console.log(id)
+  const handleAddMemberstoArray = (data) => {
+    console.log(data)
   }
 
   useEffect(() => {

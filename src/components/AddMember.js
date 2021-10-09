@@ -6,26 +6,64 @@ function AddMember({headers, handleToggleAddMembers, handleAddMemberstoArray}) {
 
   const [allUsers, setAllUsers] = useState([]);
   const [searching, setSearching] = useState("");
+  const [warning, setWarning] = useState(false);
+  const [toggleSearchUserList, setSearchUserList] = useState(false);
+  const [clickedUserData, setClickedUserData] = useState([])
+
+  const removeAddedUser = (id) => {
+    const updatedList = clickedUserData.filter(user => user.id !== id)
+    setClickedUserData(updatedList)
+  }
+
+  const clickedUser = (data) => {
+    setSearching("")
+    setSearchUserList(false)
+
+    // Checking if there's already a user in the array
+    const isUserinArray = [...clickedUserData]
+    const found = isUserinArray.some(user => user.id === data.id)
+    if(found) return setWarning(true) 
+
+    // Since state was previously empty, we need to add it to an array first
+    const updatedClickedUserArray = [...clickedUserData, data]
+    setWarning(false)
+    setClickedUserData(updatedClickedUserArray)
+    //console.log(clickedUserData)
+  }
 
   const userSearchDetails = (id) => {
+    const getUserObj = {
+      id,
+      headers
+    }
 
+    getUser(getUserObj)
+      .then(res => {
+        //console.log(res[0])
+        clickedUser(res[0])
+      })
+      .catch(err => console.log(err))
   }
 
   const viewAllUsers = () => {
     
     getAllUsers(headers)
-    .then(res => {
-      const userArray = res.data.data
-      const resArray = userArray.filter( u => u.email.includes(searching))
-      setAllUsers(resArray)
-    })
-    .catch(err => err)
+      .then(res => {
+        const userArray = res.data.data
+        const resArray = userArray.filter( u => u.email.includes(searching))
+        setAllUsers(resArray)
+      })
+      .catch(err => err)
   }
 
   const handleSearch = (e) => {
     setSearching(e.target.value);
     viewAllUsers()
   }
+
+  const handleSearchUserList = () => {
+    setSearchUserList(!toggleSearchUserList);
+  };
 
   const searchUserList = allUsers.map((user, index) => {
     return(
@@ -37,15 +75,37 @@ function AddMember({headers, handleToggleAddMembers, handleAddMemberstoArray}) {
     )
   })
 
+  const displayAddedUsers = clickedUserData.map((user) => {
+    return(
+      <div>
+        <h3>{user.email}</h3>
+        <p onClick={() => removeAddedUser(user.id)}>x</p>
+      </div>
+    )
+  })
+
+  
   return (
     <AddMemberContainer>
       <HeaderSearch>
-          <input type="text" placeholder="SEARCH" onChange={handleSearch}/>
+          <input 
+            type="text" 
+            placeholder="SEARCH" 
+            onChange={handleSearch}
+            onClick={handleSearchUserList}
+            value={searching}
+          />
           <p onClick={handleToggleAddMembers}>x</p>
-        </HeaderSearch> 
+          {warning ? <label>User is already added</label> : ""}
+      </HeaderSearch>
+      {toggleSearchUserList ? 
         <SearchBoxResult>
           {searchUserList}
         </SearchBoxResult>
+      : "" }
+      <div>
+        {displayAddedUsers}
+      </div>
     </AddMemberContainer>
   )
 }
