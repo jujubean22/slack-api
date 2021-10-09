@@ -53,7 +53,7 @@ function SearchBox({headers, handleToggleSearchBox}) {
       <div ref={searchBoxRef}>
         <HeaderSearch>
           <input type="text" placeholder="SEARCH" onChange={handleSearch}/>
-          <p onClick={handleToggleSearchBox}>x</p>
+          <p onClick={handleToggleSearchBox}>X</p>
         </HeaderSearch> 
         <SearchBoxResult>
           {searchUserList}
@@ -67,32 +67,33 @@ export default SearchBox;
 
 const SearchBoxContainer = styled.div`
   position: absolute;
-  width: 60vw;
-  height: 20rem;
-  top: 1rem;
-  left: 20rem;
+  width: 100%;
+  /* height: 20rem; */
+  top: 20%;
+  left: 0;
   display: flex;
-  padding-top: .5rem;
+  padding-top: 0;
   align-items: flex-start;
   justify-content: center;
   overflow-y: hidden;
-  
+  margin: auto;
   > div {
-    width: 60%;
+    width: 90%;
     border-radius: .5rem;
   }
 `
 
 const HeaderSearch = styled.div`
   background-color: white;
-  height: 6vh;
-  width: 83%;
-  padding-left: 4rem;
-  padding-right: 1rem;
+  height: 4vh;
+  width: 90%;
+  /* padding-left: 4rem;
+  padding-right: 1rem; */
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   border-bottom: 1px gray solid;
+  border-radius:10vw;
   
   > input {
     background-color: transparent;
@@ -102,6 +103,7 @@ const HeaderSearch = styled.div`
     outline: 0;
     font-weight: bolder;
     font-size: 1rem;
+    width: 100%;
   }
 
   > p {
@@ -111,7 +113,7 @@ const HeaderSearch = styled.div`
 `;
 
 const SearchBoxResult = styled.div`
-  width: 100%;
+  width: 90%;
   max-height: 30rem;
   overflow-y: scroll;
 `
@@ -127,6 +129,8 @@ const SearchBoxResults = styled.div`
   padding-left: 3rem;
   cursor: pointer;
   background: white;
+  border-radius:10vw;
+
 
   > p {
     font-size: 1rem;
@@ -144,3 +148,84 @@ const SearchBoxResults = styled.div`
     }
   }
 `
+
+
+// const SearchBoxContainer = styled.div`
+//   position: absolute;
+//   width: 60vw;
+//   height: 20rem;
+//   top: 1rem;
+//   left: 20rem;
+//   display: flex;
+//   padding-top: .5rem;
+//   align-items: flex-start;
+//   justify-content: center;
+//   overflow-y: hidden;
+  
+//   > div {
+//     width: 60%;
+//     border-radius: .5rem;
+//   }
+// `
+
+// const HeaderSearch = styled.div`
+//   background-color: white;
+//   height: 6vh;
+//   width: 83%;
+//   padding-left: 4rem;
+//   padding-right: 1rem;
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+//   border-bottom: 1px gray solid;
+  
+//   > input {
+//     background-color: transparent;
+//     border: none;
+//     text-align: center;
+//     color: black;
+//     outline: 0;
+//     font-weight: bolder;
+//     font-size: 1rem;
+//   }
+
+//   > p {
+//     color: black;
+//     cursor: pointer;
+//   }
+// `;
+
+// const SearchBoxResult = styled.div`
+//   width: 100%;
+//   max-height: 30rem;
+//   overflow-y: scroll;
+// `
+
+// const LinkElement = styled(NavLink)`
+//   text-decoration: none;
+// `
+
+// const SearchBoxResults = styled.div`
+//   display: flex;
+//   align-items: center;
+//   padding: 1rem;
+//   padding-left: 3rem;
+//   cursor: pointer;
+//   background: white;
+
+//   > p {
+//     font-size: 1rem;
+//     font-weight: bolder;
+//     padding-left: 1rem;
+//     letter-spacing: .2px;
+//     color: black;
+//   }
+
+//   :hover {
+//     background-color: #135999;
+
+//     > p {
+//       color: white;
+//     }
+//   }
+// `

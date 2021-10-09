@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { getChannel, getRecentDm, getOwnedChannel } from '../../api/API';
-import Header from './Header/Header';
-import Sidebar from './Sidebar/Sidebar';
+import { getChannel, getRecentDm, getOwnedChannel } from "../../api/API";
+import Header from "./Header/Header";
+import Sidebar from "./Sidebar/Sidebar";
 import styled from "styled-components";
-import Homepage from './Homepage';
-import Chat from '../Chats/Chat';
-import NewMessage from '../NewMessage/NewMessage';
-
+import Homepage from "./Homepage";
+import Chat from "../Chats/Chat";
+import NewMessage from "../NewMessage/NewMessage";
 function Home({ loginData }) {
   //state
   const [userHeaders, setUserHeaders] = useState("");
@@ -16,7 +15,6 @@ function Home({ loginData }) {
   const [recentUsers, setRecentUsers] = useState("");
   const [isRender, setIsRender] = useState(false);
   const [loginUserData, setloginUserData] = useState("");
-
 
   const handleIsRender = () => {
     setIsRender(!isRender);
@@ -31,42 +29,53 @@ function Home({ loginData }) {
       uid: loginData.headers.uid,
     };
 
-    const channelData = { headers }
+    const channelData = { headers };
 
     setUserHeaders(headers);
     setloginUserData(loginData.data);
 
     //get channels
-    getChannel(channelData) 
-      .then(res => {
-        setChannels(res)
+    getChannel(channelData)
+      .then((res) => {
+        setChannels(res);
       })
-      .catch(err => console.log("Error Getting Channel: ", err))
+      .catch((err) => console.log("Error Getting Channel: ", err));
 
     //recently DMs
     getRecentDm(channelData)
-      .then(res => {
-        setRecentUsers(res.data.data)
+      .then((res) => {
+        setRecentUsers(res.data.data);
       })
-      .catch(err => console.log("Error Getting Recent Users: ", err))
-    
+      .catch((err) => console.log("Error Getting Recent Users: ", err));
+
     //get owned channels
     getOwnedChannel(channelData)
-      .then(res => setChannelOwned(res.data.data))
-      .catch(err => err);
-    
+      .then((res) => setChannelOwned(res.data.data))
+      .catch((err) => err);
   }, [isRender]);
 
   if (!channels.data || !recentUsers) {
-    return <div><h1>Loading...</h1></div>
+    return (
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    );
   }
-  
+
   return (
     <div>
       <Router>
-        <Header 
-          loginData={loginData} 
-          headers={userHeaders}
+        <Header loginData={loginData} headers={userHeaders} />
+        <Appbody>
+          <Sidebar
+            channels={channels}
+            loginData={loginData}
+            recentUsers={recentUsers}
+            channelOwned={channelOwned}
+            isRender={isRender}
+            loginUserData={loginUserData}
+            headers={userHeaders}
+            handleIsRender={handleIsRender}
           />
           <Appbody>
             <Sidebar 
@@ -107,5 +116,3 @@ const Appbody = styled.div`
   display: flex;
   height: 100vh;
 `;
-
-
