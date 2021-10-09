@@ -90,10 +90,12 @@ function ChatHeader({ receiver, headers, handleIsRender, homeIsRender }) {
           <strong>{type === "channel" ? receiver : receiver}</strong>
         </h2>
       </HeaderLeft>
-      <HeaderRight>
-        <button onClick={handleToggleViewMembers}>Member List</button>
-        <button onClick={handleToggleAddMembers}>Add Member</button>
-      </HeaderRight>
+      {type === "channel" ? 
+        <HeaderRight>
+          <button onClick={handleToggleViewMembers}>Member List</button>
+          <button onClick={handleToggleAddMembers}>Add Member</button>
+        </HeaderRight>
+      : ""}
       {toggleViewMembers 
         ? 
         <MemberList>
@@ -121,8 +123,9 @@ export default ChatHeader
 
 const ChatHeaderContainer = styled.div`
   display: flex;
+  height: 3rem;
   justify-content: space-between;
-  padding: 20px;
+  padding: 1rem;
   border-bottom: 1px solid lightgray;
 `;
 
