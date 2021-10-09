@@ -11,8 +11,8 @@ import NewMessage from '../NewMessage/NewMessage';
 function Home({ loginData }) {
   //state
   const [userHeaders, setUserHeaders] = useState("");
-  const [channels, setChannels] = useState("");
-  const [channelOwned, setChannelOwned] = useState('');
+  const [channels, setChannels] = useState([]);
+  const [channelOwned, setChannelOwned] = useState([]);
   const [recentUsers, setRecentUsers] = useState("");
   const [isRender, setIsRender] = useState(false);
   const [loginUserData, setloginUserData] = useState("");

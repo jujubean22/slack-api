@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import { getChannelData } from '../../api/API';
+import { getChannelData, getAllUsers } from '../../api/API';
 import styled from "styled-components";
-import axios from "axios"
 import AddMember from '../AddMember';
 
 function ChatHeader({ receiver, headers }) {
@@ -35,18 +34,8 @@ function ChatHeader({ receiver, headers }) {
     console.log(id)
   }
 
-  const { token, client, expiry, uid } = headers
-
   useEffect(() => {
-    axios.get('http://206.189.91.54//api/v1/users',
-    {
-      headers:{
-        "access-token": token,
-        "client": client,
-        "expiry": expiry,
-        "uid": uid,
-      }
-    })
+    getAllUsers(headers)
     .then(res => {
       setAllUsers(res.data.data)
       getChannelData(getDataObj)
