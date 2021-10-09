@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import { getAllUsers, getUser } from '../api/API'
 
-function AddMember({headers, handleToggleAddMembers, handleAddMemberstoArray}) {
+function AddMember({headers, handleToggleAddMembers, handleAddMemberstoArray=null}) {
 
   const [allUsers, setAllUsers] = useState([]);
   const [searching, setSearching] = useState("");
@@ -28,7 +28,9 @@ function AddMember({headers, handleToggleAddMembers, handleAddMemberstoArray}) {
     const updatedClickedUserArray = [...clickedUserData, data]
     setWarning(false)
     setClickedUserData(updatedClickedUserArray)
-    //console.log(clickedUserData)
+
+    // This is where you add the array data to Chatheader
+    if(handleAddMemberstoArray !==null) handleAddMemberstoArray(updatedClickedUserArray)
   }
 
   const userSearchDetails = (id) => {
