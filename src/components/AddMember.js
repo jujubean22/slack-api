@@ -1,24 +1,19 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import styled from 'styled-components';
+import { getAllUsers, getUser } from '../api/API'
 
 function AddMember({headers, handleToggleAddMembers, handleAddMemberstoArray}) {
 
   const [allUsers, setAllUsers] = useState([]);
   const [searching, setSearching] = useState("");
 
+  const userSearchDetails = (id) => {
+
+  }
+
   const viewAllUsers = () => {
-    const { token, client, expiry, uid  } = headers
     
-    axios.get('http://206.189.91.54//api/v1/users',
-    {
-      headers:{
-        "access-token": token,
-        "client": client,
-        "expiry": expiry,
-        "uid": uid,
-      }
-    })
+    getAllUsers(headers)
     .then(res => {
       const userArray = res.data.data
       const resArray = userArray.filter( u => u.email.includes(searching))
@@ -34,7 +29,7 @@ function AddMember({headers, handleToggleAddMembers, handleAddMemberstoArray}) {
 
   const searchUserList = allUsers.map((user, index) => {
     return(
-      <LinkElement onClick={() => handleAddMemberstoArray(user.id)}>
+      <LinkElement onClick={() => userSearchDetails(user.id)}>
         <SearchBoxResults key={index}>
           <p>{user.email}</p>
         </SearchBoxResults>
@@ -43,7 +38,7 @@ function AddMember({headers, handleToggleAddMembers, handleAddMemberstoArray}) {
   })
 
   return (
-    <div>
+    <AddMemberContainer>
       <HeaderSearch>
           <input type="text" placeholder="SEARCH" onChange={handleSearch}/>
           <p onClick={handleToggleAddMembers}>x</p>
@@ -51,12 +46,15 @@ function AddMember({headers, handleToggleAddMembers, handleAddMemberstoArray}) {
         <SearchBoxResult>
           {searchUserList}
         </SearchBoxResult>
-    </div>
+    </AddMemberContainer>
   )
 }
 
 export default AddMember
 
+const AddMemberContainer = styled.div`
+  
+`
 
 const HeaderSearch = styled.div`
   background-color: white;
@@ -87,9 +85,10 @@ const HeaderSearch = styled.div`
 `;
 
 const SearchBoxResult = styled.div`
-  width: 100%;
+  width: 26rem;
   max-height: 30rem;
   overflow-y: scroll;
+  overflow-x: hidden;
   border-radius: 0.5rem;
 `
 

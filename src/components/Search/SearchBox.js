@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { getAllUsers } from '../../api/API'
 
 function SearchBox({headers, handleToggleSearchBox}) {
   const [allUsers, setAllUsers] = useState([]);
@@ -22,17 +22,8 @@ function SearchBox({headers, handleToggleSearchBox}) {
   }, [])
 
   const viewAllUsers = () => {
-    const { token, client, expiry, uid  } = headers
     
-    axios.get('http://206.189.91.54//api/v1/users',
-    {
-      headers:{
-        "access-token": token,
-        "client": client,
-        "expiry": expiry,
-        "uid": uid,
-      }
-    })
+    getAllUsers(headers)
     .then(res => {
       const userArray = res.data.data
       const resArray = userArray.filter( u => u.email.includes(searching))

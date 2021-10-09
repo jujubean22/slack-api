@@ -141,4 +141,5 @@ const MemberList = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: .5rem;
+  transform: translateX(10rem);
 `
