@@ -77,6 +77,7 @@ function Chat({ loginData, headers, handleIsRender }) {
         <ChatHeader 
           receiver={receiver} 
           headers={headers}
+          handleIsRender={handleIsRender}
         />
         <ChatMessages>
           <ChatBodyContainer chatData={chatData} chatRef={chatRef}/>

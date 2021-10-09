@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import { getAllUsers, getUser } from '../api/API'
 
-function AddMember({headers, handleToggleAddMembers, handleAddMemberstoArray=null}) {
+function AddMember({
+  headers, handleToggleAddMembers, 
+  handleSubmitAddedMembers, handleAddMemberstoArray=null}) {
 
   const [allUsers, setAllUsers] = useState([]);
   const [searching, setSearching] = useState("");
@@ -108,6 +110,7 @@ function AddMember({headers, handleToggleAddMembers, handleAddMemberstoArray=nul
       <div>
         {displayAddedUsers}
       </div>
+      <button onClick={handleSubmitAddedMembers}>Add Members!</button>
     </AddMemberContainer>
   )
 }

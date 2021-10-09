@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import { getChannelData, getAllUsers } from '../../api/API';
+import { getChannelData, getAllUsers, addMemberToTheChannel } from '../../api/API';
 import styled from "styled-components";
 import AddMember from '../AddMember';
 
-function ChatHeader({ receiver, headers }) {
+function ChatHeader({ receiver, headers, handleIsRender }) {
   //state
   const [channelMembers, setChannelMembers] = useState([]);
   const [channelMemberInfo, setChannelMemberInfo] = useState([]);
@@ -31,7 +31,26 @@ function ChatHeader({ receiver, headers }) {
   }
 
   const handleAddMemberstoArray = (data) => {
-    console.log(data)
+    setAddUserArray(data)
+    //console.log(data)
+  }
+
+  const handleSubmitAddedMembers = () => {
+    handleToggleAddMembers(false)
+    addUserArray.map(users => {
+      let AddedMembersArrayObj = {
+        id: parseInt(id),
+        member_id: users.id,
+        headers
+      }
+      console.log(AddedMembersArrayObj)
+      addMemberToTheChannel(AddedMembersArrayObj)
+        .then(res => {
+          console.log("User Added Succesful!", res)
+          handleIsRender()
+        })
+        .catch(err => console.log(err))
+    })
   }
 
   useEffect(() => {
@@ -87,7 +106,7 @@ function ChatHeader({ receiver, headers }) {
         <MemberList>
           <AddMember 
             headers={headers} 
-            handleToggleAddMembers={handleToggleAddMembers}
+            handleSubmitAddedMembers={handleSubmitAddedMembers}
             handleAddMemberstoArray={handleAddMemberstoArray}
           />
         </MemberList>
