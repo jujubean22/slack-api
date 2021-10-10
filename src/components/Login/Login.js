@@ -6,7 +6,7 @@ import { userLogin } from '../../api/API';
 
 function Login({ handleSetLoginData }) {
   //set up states
-  const [email, setEmail] = useState('ayaya@gmail.com');
+  const [email, setEmail] = useState('ralph@gmail.com');
   const [password, setPassword] = useState('123123');
   //state for loading
   const [loading, setLoading] = useState(false);

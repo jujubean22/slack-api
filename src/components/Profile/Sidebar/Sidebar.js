@@ -16,14 +16,13 @@ import EmailIcon from '@material-ui/icons/Email';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import SidebarOption from "./SidebarOption";
 import { useHistory, NavLink } from "react-router-dom";
-import { getOwnedChannel } from '../../../api/API';
 import AddChannel from "./Channels/AddChannel";
 
-function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, headers, handleIsRender, channelOwned }) {
+function Sidebar({channelsJoined, loginData, recentUsers, 
+  loginUserData, headers, handleIsRender, channelsOwned }) {
 
   //calling add channel modal
   const [toggleAddChannel, setToggleAddChannel] = useState(false);
-  const [data, setData] = useState();
 
   const handleToggleAddChannel = () => {
     setToggleAddChannel(!toggleAddChannel)
@@ -40,12 +39,11 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, hea
   };
 
   //Render Owned Channel 
-  const renderOwnedChannel = channelOwned.map((channel, i) => {
+  const renderOwnedChannel = channelsOwned.map((channel, i) => {
     return (
       <NavLink
         style={{ textDecoration: 'none', color: 'white' }}
-        to={`/channel/${channel.id}`}
-      >
+        to={`/channel/${channel.id}`}>
         <SidebarOption
           key={i}
           Icon={ChatBubbleIcon}
@@ -56,8 +54,9 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, hea
   });
 
   //Render all channel 
-  const renderChannels = channels.data.data
-    ? channels.data.data.map((channel, index) => {
+  const renderChannels = channelsJoined.data.data
+    ? channelsJoined.data.data.map((channel, index) => {
+      if (userID !== channel.owner_id)
         return (
           <NavLink 
             style={{textDecoration: 'none', color: 'white'}} 
@@ -68,29 +67,27 @@ function Sidebar({channels, loginData, recentUsers, isRender, loginUserData, hea
               title={channel.name}
             />
           </NavLink>
-        );
+        )
       })
-    : "";
+    : ""
 
   //Recent messages
   const renderRecentUsers = recentUsers
-  ? recentUsers.map((user, index) => {
-    if (user.id !== userID)
-      return (
-        <NavLink 
-          style={{textDecoration: 'none', color: 'white'}} 
-          to={`/user/${user.id}`}>
-          <SidebarOption
-            key={index}
-            Icon={InsertCommentIcon}
-            title={user.uid}
-          />
-        </NavLink>
-      );
-    })
-    : "";
-
-  useEffect(() => {}, [isRender]);
+    ? recentUsers.map((user, index) => {
+      if (user.id !== userID)
+        return (
+          <NavLink 
+            style={{textDecoration: 'none', color: 'white'}} 
+            to={`/user/${user.id}`}>
+            <SidebarOption
+              key={index}
+              Icon={InsertCommentIcon}
+              title={user.uid}
+            />
+          </NavLink>
+        )
+      })
+    : ""
 
   const userName = email.split("@")[0]
   const capitalizedUser = userName.charAt(0).toUpperCase() + userName.slice(1);

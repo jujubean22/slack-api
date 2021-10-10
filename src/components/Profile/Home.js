@@ -12,7 +12,7 @@ function Home({ loginData }) {
   //state
   const [userHeaders, setUserHeaders] = useState("");
   const [channels, setChannels] = useState([]);
-  const [channelOwned, setChannelOwned] = useState([]);
+  const [channelsOwned, setChannelOwned] = useState([]);
   const [recentUsers, setRecentUsers] = useState("");
   const [isRender, setIsRender] = useState(false);
   const [loginUserData, setloginUserData] = useState("");
@@ -70,11 +70,10 @@ function Home({ loginData }) {
           />
           <Appbody>
             <Sidebar 
-              channels={channels} 
+              channelsJoined={channels} 
               loginData={loginData} 
               recentUsers={recentUsers}
-              channelOwned={channelOwned}
-              isRender={isRender}
+              channelsOwned={channelsOwned}
               loginUserData={loginUserData}
               headers={userHeaders}
               handleIsRender = {handleIsRender}
