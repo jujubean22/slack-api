@@ -43,7 +43,7 @@ function ChatHeader({ receiver, headers, handleIsRender, homeIsRender }) {
         member_id: users.id,
         headers
       }
-      console.log(AddedMembersArrayObj)
+      //console.log(AddedMembersArrayObj)
       addMemberToTheChannel(AddedMembersArrayObj)
         .then(res => {
           console.log("User Added Succesful!", res)

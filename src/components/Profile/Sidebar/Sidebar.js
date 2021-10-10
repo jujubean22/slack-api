@@ -17,16 +17,35 @@ import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import SidebarOption from "./SidebarOption";
 import { useHistory, NavLink } from "react-router-dom";
 import AddChannel from "./Channels/AddChannel";
+import "./Sidebar.css";
 
 function Sidebar({channelsJoined, loginData, recentUsers, 
   loginUserData, headers, handleIsRender, channelsOwned }) {
 
-  //calling add channel modal
-  const [toggleAddChannel, setToggleAddChannel] = useState(false);
+  const [togDropdown, setTogDropdown] = useState(true)
+  const [toggleAddChannel, setToggleAddChannel] = useState(false)
+  const [togChannelOwnedDropdown, setTogChannelOwnedDropdown] = useState(true)
+  const [togChannelJoinedDropdown, setTogChannelJoinedDropdown] = useState(true)
+  const [togRecentUsersDropdown, setTogRecentUsersDropdown] = useState(true)
+
+  const handleToggleDropdown = () => {
+    setTogDropdown(!togDropdown)
+  }
 
   const handleToggleAddChannel = () => {
     setToggleAddChannel(!toggleAddChannel)
-    console.log(toggleAddChannel)
+  }
+
+  const handleToggleChannelOwnedDropdown = () => {
+    setTogChannelOwnedDropdown(!togChannelOwnedDropdown)
+  }
+
+  const handleToggleChannelJoinedDropdown = () => {
+    setTogChannelJoinedDropdown(!togChannelJoinedDropdown)
+  }
+
+  const handleTogRecentUsersDropdown = () => {
+    setTogRecentUsersDropdown(!togRecentUsersDropdown)
   }
 
   //new message
@@ -35,7 +54,7 @@ function Sidebar({channelsJoined, loginData, recentUsers,
   const history = useHistory();
 
   const newMessageHistory = () => {
-    history.push(`/new-message`);
+    history.push(`/new-message`)
   };
 
   //Render Owned Channel 
@@ -81,7 +100,7 @@ function Sidebar({channelsJoined, loginData, recentUsers,
             to={`/user/${user.id}`}>
             <SidebarOption
               key={index}
-              Icon={InsertCommentIcon}
+              Icon={PeopleAltIcon}
               title={user.uid}
             />
           </NavLink>
@@ -104,42 +123,77 @@ function Sidebar({channelsJoined, loginData, recentUsers,
       </SidebarInfo>
       <CreateIconStyle onClick={newMessageHistory}/>
       </SidebarHeader>
-      <SidebarOption Icon={InsertCommentIcon} title="Threads" />
-      <SidebarOption Icon={InboxIcon} title="Mentions & Reactions" />
-      <SidebarOption Icon={DraftsIcon} title="Saved items" />
-      <SidebarOption Icon={BookmarkBorderIcon} title="Channel browser" />
-      <SidebarOption Icon={PeopleAltIcon} title="People & user groups" />
-      <SidebarOption Icon={AppsIcon} title="Apps" />
-      <SidebarOption Icon={FileCopyIcon} title="File browser" />
-      <SidebarOption Icon={ExpandLessIcon} title="Show less" />
-      <hr />
-      
-      <hr/>
-      {/* {renderChannels} */}
+      <div className={togDropdown
+        ? `sidebar-channels` : `sidebar-channels hidden`}>
+        <SidebarOption Icon={InsertCommentIcon} title="Threads" />
+        <SidebarOption Icon={InboxIcon} title="Mentions & Reactions" />
+        <SidebarOption Icon={DraftsIcon} title="Saved items" />
+        <SidebarOption Icon={BookmarkBorderIcon} title="Channel browser" />
+        <SidebarOption Icon={PeopleAltIcon} title="People & user groups" />
+        <SidebarOption Icon={AppsIcon} title="Apps" />
+        <SidebarOption Icon={FileCopyIcon} title="File browser" />
+      </div>
       <SidebarOption 
-      Icon={AddIcon} 
-      title="Add Channel" 
-      onClick={handleToggleAddChannel}
+        Icon={togDropdown
+          ? ExpandLessIcon
+          : ExpandMoreIcon} 
+        title={togDropdown ? `Show less` : `Show more`}
+        onClick={handleToggleDropdown}
       />
-      {toggleAddChannel ? (
-      <AddChannel 
-        handleIsRender={handleIsRender}
-        loginData={loginData} 
-        headers={headers}
-        handleToggleAddChannel = {handleToggleAddChannel}
-      /> ): null} 
-      <SidebarOption Icon={PeopleAltIcon} title="Channels Owned" />
-      {renderOwnedChannel}
       <hr />
-      <SidebarOption Icon={PeopleAltIcon} title="Channel Joined" />
-      {renderChannels}
-      <hr /><hr />
-      <SidebarOption Icon={ExpandMoreIcon} title="Direct Messages" />
-      {renderRecentUsers}
+      <SidebarOption 
+        Icon={AddIcon} 
+        title="Add Channel" 
+        onClick={handleToggleAddChannel}
+      />
+      <hr/>
+      {toggleAddChannel ? (
+        <AddChannel 
+          handleIsRender={handleIsRender}
+          loginData={loginData} 
+          headers={headers}
+          handleToggleAddChannel = {handleToggleAddChannel}
+        /> 
+      ): null} 
+      <SidebarOption 
+        Icon={togChannelOwnedDropdown
+          ? ExpandMoreIcon
+          : ExpandLessIcon} 
+        title="Channels Owned" 
+        onClick={handleToggleChannelOwnedDropdown}
+      />
+      <div className={togChannelOwnedDropdown 
+        ? `sidebar-channels` : `sidebar-channels hidden`}>
+        {renderOwnedChannel}
+      </div>
+      <hr />
+      <SidebarOption 
+        Icon={togChannelJoinedDropdown
+          ? ExpandMoreIcon
+          : ExpandLessIcon} 
+        title="Channels Joined" 
+        onClick={handleToggleChannelJoinedDropdown}
+      />
+      <div className={togChannelJoinedDropdown 
+        ? `sidebar-channels` : `sidebar-channels hidden`}>
+        {renderChannels}
+      </div>
+      <hr />
+      <SidebarOption 
+        Icon={togRecentUsersDropdown
+          ? ExpandMoreIcon
+          : ExpandLessIcon} 
+        title="Direct Messages" 
+        onClick={handleTogRecentUsersDropdown}
+      />
+      <div className={togRecentUsersDropdown 
+        ? `sidebar-channels` : `sidebar-channels hidden`}>
+        {renderRecentUsers}
+      </div>
       
     </SidebarContainer>
   
-  );
+  )
 }
 
 export default Sidebar;
@@ -177,31 +231,31 @@ const SidebarHeader = styled.div`
   }
   `;
 
-  const SidebarInfo = styled.div`
-  flex: 1;
+const SidebarInfo = styled.div`
+flex: 1;
 
-  > h2 {
-    font-size: 15px;
-    font-weight: 900;
-    margin-bottom: 5px;
-  }
+> h2 {
+  font-size: 15px;
+  font-weight: 900;
+  margin-bottom: 5px;
+}
 
-  > h3 {
-    display: flex;
-    font-size: 13px;
-    font-weight: 400;
-    margin-bottom: 5px;
-  }
+> h3 {
+  display: flex;
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
 
-  > h3 > .MuiSvgIcon-root {
-    font-size: 14px;
-    font-weight: 400;
-    margin-top: 1px;
-    margin-right: 2px;
-    color: green;
-  }
-  `;
+> h3 > .MuiSvgIcon-root {
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 1px;
+  margin-right: 2px;
+  color: green;
+}
+`;
 
-  const CreateIconStyle = styled(CreateIcon)`
-    cursor: pointer;
-  `
+const CreateIconStyle = styled(CreateIcon)`
+  cursor: pointer;
+`
