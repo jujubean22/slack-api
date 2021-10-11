@@ -70,8 +70,8 @@ function AddMember({
 
   const searchUserList = allUsers.map((user, index) => {
     return(
-      <LinkElement onClick={() => userSearchDetails(user.id)}>
-        <SearchBoxResults key={index}>
+      <LinkElement onClick={() => userSearchDetails(user.id)} key={index}>
+        <SearchBoxResults>
           <p>{user.email}</p>
         </SearchBoxResults>
       </LinkElement>

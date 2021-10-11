@@ -49,7 +49,10 @@ function Sidebar({channelsJoined, recentUsers, loginUserData,
   }
   
   //new message
-  const userID = loginUserData && loginUserData.data ? loginUserData.data.id : null;
+  //const userID = loginUserData && loginUserData.data ? loginUserData.data.id : null;
+  //Get the id in local storage
+  const userID  = parseInt(localStorage.getItem('id'))
+  //console.log(userID)
   const email  = localStorage.getItem('email')
   const history = useHistory();
   
