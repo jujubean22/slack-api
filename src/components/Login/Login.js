@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LoginContainer, LoginInnerContainer, Form} from "../styles/Login.style"
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import { userLogin } from '../../api/API';
 
-function Login({ handleSetLoginData }) {
+function Login() {
   //set up states
   const [email, setEmail] = useState('ayaya2@gmail.com');
   const [password, setPassword] = useState('123123');
@@ -15,7 +15,6 @@ function Login({ handleSetLoginData }) {
   //user login 
 
   const handleLogin = (e) => {
-    //to prevent refresh
     e.preventDefault()
     setLoading(true)
 
@@ -24,13 +23,16 @@ function Login({ handleSetLoginData }) {
     //User Login
     userLogin(data)
       .then(res => {
+        localStorage.setItem('id', res.data.data.id);
+        localStorage.setItem('email', res.data.data.email);
         localStorage.setItem('access-token', res.headers['access-token']);
         localStorage.setItem('client', res.headers['client']);
         localStorage.setItem('expiry', res.headers['expiry']);
         localStorage.setItem('uid', res.headers['uid']);
-        handleSetLoginData(res)
-        history.push('/');
+        history.push('/home');
         setLoading(false)
+        // console.log(res.data.data.id)
+        // console.log(res.data.data.email)
       })
       .catch(err => err);
   }

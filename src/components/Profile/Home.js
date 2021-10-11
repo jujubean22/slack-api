@@ -8,25 +8,19 @@ import Homepage from './Homepage';
 import Chat from '../Chats/Chat';
 import NewMessage from '../NewMessage/NewMessage';
 
-function Home({ loginData }) {
+function Home() {
   //state
   const [userHeaders, setUserHeaders] = useState("");
   const [channels, setChannels] = useState([]);
   const [channelsOwned, setChannelOwned] = useState([]);
   const [recentUsers, setRecentUsers] = useState("");
   const [isRender, setIsRender] = useState(false);
-  const [loginUserData, setloginUserData] = useState("");
   
-
-
   const handleIsRender = () => {
     setIsRender(!isRender);
   };
 
   useEffect(() => {
-    //get header from loginData
-    setloginUserData(loginData)
-
     const headers = {
       token: localStorage.getItem('access-token'),
       client : localStorage.getItem('client'),
@@ -71,13 +65,11 @@ function Home({ loginData }) {
     <div>
       <Router>
         <Header 
-          loginData={loginData} 
           headers={userHeaders}
           />
           <Appbody>
             <Sidebar 
               channelsJoined={channels} 
-              loginData={loginUserData} 
               recentUsers={recentUsers}
               channelsOwned={channelsOwned}
               headers={userHeaders}
@@ -87,7 +79,6 @@ function Home({ loginData }) {
               <Route path='/home' component={Homepage}/>
               <Route path='/:type/:id'>
                 <Chat 
-                  loginData={loginUserData} 
                   headers={userHeaders} 
                   />
               </Route>

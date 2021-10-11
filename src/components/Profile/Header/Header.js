@@ -6,10 +6,10 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import SearchBox from '../../Search/SearchBox'
 
 
-function Header({loginData, headers}) {
+function Header({ headers }) {
   const [toggleSearch, setToggleSearch] = useState(false)
 
-  const { id } = loginData.data.data
+  const id  = localStorage.getItem('id')
 
   const handleToggleSearchBox = () => {
     setToggleSearch(!toggleSearch)

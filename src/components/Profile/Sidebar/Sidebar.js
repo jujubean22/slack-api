@@ -19,8 +19,8 @@ import { useHistory, NavLink } from "react-router-dom";
 import AddChannel from "./Channels/AddChannel";
 import "./Sidebar.css";
 
-function Sidebar({channelsJoined, loginData, recentUsers, 
-  loginUserData, headers, channelsOwned, handleIsRender }) {
+function Sidebar({channelsJoined, recentUsers, loginUserData, 
+  headers, channelsOwned, handleIsRender }) {
 
   const [togDropdown, setTogDropdown] = useState(true)
   const [toggleAddChannel, setToggleAddChannel] = useState(false)
@@ -50,7 +50,7 @@ function Sidebar({channelsJoined, loginData, recentUsers,
   
   //new message
   const userID = loginUserData && loginUserData.data ? loginUserData.data.id : null;
-  const { email } = loginData.data.data;
+  const email  = localStorage.getItem('email')
   const history = useHistory();
   
   //Logout
