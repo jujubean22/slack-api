@@ -20,7 +20,7 @@ import AddChannel from "./Channels/AddChannel";
 import "./Sidebar.css";
 
 function Sidebar({channelsJoined, loginData, recentUsers, 
-  loginUserData, headers, handleIsRender, channelsOwned }) {
+  loginUserData, headers, channelsOwned, handleIsRender }) {
 
   const [togDropdown, setTogDropdown] = useState(true)
   const [toggleAddChannel, setToggleAddChannel] = useState(false)
@@ -56,25 +56,27 @@ function Sidebar({channelsJoined, loginData, recentUsers,
   const newMessageHistory = () => {
     history.push(`/new-message`)
   };
-
+  
   //Render Owned Channel 
-  const renderOwnedChannel = channelsOwned.map((channel, i) => {
-    return (
-      <NavLink
-        style={{ textDecoration: 'none', color: 'white' }}
-        to={`/channel/${channel.id}`}>
-        <SidebarOption
-          key={i}
-          Icon={ChatBubbleIcon}
-          title={channel.name}
-        />
-      </NavLink>
-    )
-  });
+  const renderOwnedChannel = channelsOwned
+    ? channelsOwned.map((channel, i) => {
+      return (
+        <NavLink
+          style={{ textDecoration: 'none', color: 'white' }}
+          to={`/channel/${channel.id}`}>
+          <SidebarOption
+            key={i}
+            Icon={ChatBubbleIcon}
+            title={channel.name}
+          />
+        </NavLink>
+      )
+    })
+    : ""
 
   //Render all channel 
-  const renderChannels = channelsJoined.data.data
-    ? channelsJoined.data.data.map((channel, index) => {
+  const renderChannels = channelsJoined
+    ? channelsJoined.map((channel, index) => {
       if (userID !== channel.owner_id)
         return (
           <NavLink 
@@ -149,10 +151,10 @@ function Sidebar({channelsJoined, loginData, recentUsers,
       <hr/>
       {toggleAddChannel ? (
         <AddChannel 
-          handleIsRender={handleIsRender}
           loginData={loginData} 
           headers={headers}
           handleToggleAddChannel = {handleToggleAddChannel}
+          handleIsRender={handleIsRender} 
         /> 
       ): null} 
       <SidebarOption 

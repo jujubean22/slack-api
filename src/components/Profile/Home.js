@@ -39,7 +39,8 @@ function Home({ loginData }) {
     //get channels
     getChannel(channelData) 
       .then(res => {
-        setChannels(res)
+        setChannels(res.data.data)
+        //console.log(channels)
       })
       .catch(err => console.log("Error Getting Channel: ", err))
 
@@ -52,12 +53,15 @@ function Home({ loginData }) {
     
     //get owned channels
     getOwnedChannel(channelData)
-      .then(res => setChannelOwned(res.data.data))
+      .then(res => {
+        setChannelOwned(res.data.data)
+        //console.log(channelsOwned)
+      })
       .catch(err => err);
     
   }, [isRender]);
 
-  if (!channels.data || !recentUsers) {
+  if (!recentUsers) {
     return <div><h1>Loading...</h1></div>
   }
   
@@ -76,7 +80,7 @@ function Home({ loginData }) {
               channelsOwned={channelsOwned}
               loginUserData={loginUserData}
               headers={userHeaders}
-              handleIsRender = {handleIsRender}
+              handleIsRender={handleIsRender}
             />
             <Switch>              
               <Route exact path='/' component={Homepage}>

@@ -1,58 +1,96 @@
 import styled from 'styled-components'
 import React, { useState} from 'react';
+import AddMember from '../../../AddMember'
 import { addChannel } from "../../../../api/API"
+import { useHistory } from "react-router-dom"
 
-function AddChannel({loginData, headers, handleToggleAddChannel }) {
+function AddChannel({loginData, headers, handleToggleAddChannel, handleIsRender}) {
 
   //state
   const [channelName, setChannelName] = useState('')
   const [errorWarning, setErrorWarning] = useState(false)
   const [errorText, setErrorText] = useState('')
   const [usersDataArray, setUsersDataArray] = useState([])
+  const [addMemberToggle, setAddMemberToggle] = useState(false)
+
+  const history = useHistory()
+
+  const handleGetAddMembersArray = (data) => {
+    //console.log(data)
+    const membersID = data.map(user => user.id)
+    setUsersDataArray(membersID)
+    //console.log(membersID)
+    console.log(usersDataArray)
+  }
+
+  const handleToggleAddMembersForm = () => {
+    setAddMemberToggle(!addMemberToggle)
+  }
 
   //channel name value
   const handleChannelInput = (e) => {
     setChannelName(e.target.value);
   }
 
-  const createChannel = (e) => {
+  const handleAddChanneltoAddMembers = (e) => {
     e.preventDefault();
+    
+    if(channelName.length < 3 || (channelName === "") 
+    || channelName.length > 15){
+      setErrorText("Error: can't add channel")
+      return setErrorWarning(true)
+    }
+    // When you click next, AddMember component will toggle to true
+    handleToggleAddMembersForm()
+    setErrorText("")
+    setErrorWarning(false)
+  }
 
-    setUsersDataArray(loginData.data.data.id)
-
+  const createChannel = () => {
+    
     const addNewChannelObj = {
       name: channelName,
-      user_ids: [usersDataArray],
+      user_ids: usersDataArray,
       headers: headers,
     }  
-
+    
     addChannel(addNewChannelObj)
     .then(res => {
-      if(res.data.errors[0] !== null) {
-        setErrorText(res.data.errors[0])
-        setErrorWarning(true)
-      } else {
-        console.log("successfully added", res)
-        setErrorWarning(false)
-      }
+      const channelID = res.data.data.id
+      handleToggleAddChannel()
+      history.push(`/channel/${channelID}`)
+      console.log("successfully added", res)
     })
     .catch(error => error)
+
+    handleIsRender()
+    setErrorWarning(false) 
   }
 
   return (
     <AddChannelOuterContainer>
       <AddChannelContainer>
-        <AddChannelForm onSubmit={createChannel} >
-          <AddChannelInput 
-            placeholder='Add Channel Name' 
-            onChange={handleChannelInput} 
-            value = {channelName}
-          />
-          <button onClick={createChannel}>Next</button>
-          <ErrorStyle>{errorWarning ? <p>{errorText}</p> : "" }</ErrorStyle>
-        </AddChannelForm>
-        {/* <AddMemberChannelForm>
-        </AddMemberChannelForm> */}
+        {!addMemberToggle ?
+          <AddChannelForm onSubmit={handleAddChanneltoAddMembers} >
+            <AddChannelInput 
+              placeholder='Add Channel Name' 
+              onChange={handleChannelInput} 
+              value = {channelName}
+            />
+            <button onClick={handleAddChanneltoAddMembers}>Next</button>
+            <ErrorStyle>{errorWarning ? <p>{errorText}</p> : "" }</ErrorStyle>
+          </AddChannelForm>
+        : "" }
+        {addMemberToggle ? 
+          <div>
+            <AddMember
+              handleAddMemberstoArray={handleGetAddMembersArray}
+              channelName={channelName}
+              headers={headers}
+            /> 
+            <button onClick={createChannel}>Add Channel with Members!</button>
+          </div>
+        : "" }
       </AddChannelContainer>
   </AddChannelOuterContainer>
   )
@@ -66,6 +104,7 @@ const AddChannelOuterContainer = styled.div`
   position: absolute;
   top: 20%;
   left: 40%;
+  color: black;
 `
 
 const AddChannelContainer = styled.div`

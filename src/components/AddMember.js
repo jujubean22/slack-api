@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { getAllUsers, getUser } from '../api/API'
 
 function AddMember({
-  headers, handleToggleAddMembers, 
-  handleSubmitAddedMembers, handleAddMemberstoArray=null}) {
+  headers, handleToggleAddMembers, channelName="", handleAddMemberstoArray=null}) {
 
   const [allUsers, setAllUsers] = useState([]);
   const [searching, setSearching] = useState("");
@@ -91,6 +90,7 @@ function AddMember({
   
   return (
     <AddMemberContainer>
+      <p style={{color: 'black'}}>{channelName}</p>
       <HeaderSearch>
           <input 
             type="text" 
@@ -110,7 +110,6 @@ function AddMember({
       <div>
         {displayAddedUsers}
       </div>
-      <button onClick={handleSubmitAddedMembers}>Add Members!</button>
     </AddMemberContainer>
   )
 }

@@ -108,9 +108,10 @@ function ChatHeader({ receiver, headers, handleIsRender, homeIsRender }) {
         <MemberList>
           <AddMember 
             headers={headers} 
-            handleSubmitAddedMembers={handleSubmitAddedMembers}
+            handleToggleAddMembers={handleToggleAddMembers}
             handleAddMemberstoArray={handleAddMemberstoArray}
           />
+          <button onClick={handleSubmitAddedMembers}>Add Members!</button>
         </MemberList>
         : ""
       }
