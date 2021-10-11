@@ -57,7 +57,7 @@ function Home({ loginData }) {
     getOwnedChannel(channelData)
       .then(res => {
         setChannelOwned(res.data.data)
-        console.log(channelsOwned)
+        //console.log(channelsOwned)
       })
       .catch(err => err);
     

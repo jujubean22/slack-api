@@ -157,7 +157,6 @@ function Sidebar({channelsJoined, loginData, recentUsers,
       <hr/>
       {toggleAddChannel ? (
         <AddChannel 
-          loginData={loginData} 
           headers={headers}
           handleToggleAddChannel = {handleToggleAddChannel}
           handleIsRender={handleIsRender} 
@@ -172,7 +171,7 @@ function Sidebar({channelsJoined, loginData, recentUsers,
       />
       <div className={togChannelOwnedDropdown 
         ? `sidebar-channels` : `sidebar-channels hidden`}>
-        {/* {renderOwnedChannel} */}
+        {renderOwnedChannel}
       </div>
       <hr />
       <SidebarOption 
@@ -184,7 +183,7 @@ function Sidebar({channelsJoined, loginData, recentUsers,
       />
       <div className={togChannelJoinedDropdown 
         ? `sidebar-channels` : `sidebar-channels hidden`}>
-        {/* {renderChannels} */}
+        {renderChannels}
       </div>
       <hr />
       <SidebarOption 

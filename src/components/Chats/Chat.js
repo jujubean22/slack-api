@@ -16,9 +16,6 @@ function Chat({ loginData, headers }) {
   const params = useParams();
   const { type, id } = params;
 
-  //capitalize the first letter 
-  const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
-
   const handleChatIsRender = () => {
     setIsRender(!isRender);
   }
@@ -35,20 +32,23 @@ function Chat({ loginData, headers }) {
 
   useEffect(scrollToBottom, [chatData]);
 
-  //Message Object Data
-  const getMessageObj = {
-    receiver_class: capitalizedType,
-    receiver_id: parseInt(id),
-    headers
-  };
-
-  const getDataObj = {
-    id: parseInt(id),
-    headers
-  }
-
 
   useEffect(() => {
+    //capitalize the first letter 
+    const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
+
+    //Message Object Data
+    const getMessageObj = {
+      receiver_class: capitalizedType,
+      receiver_id: parseInt(id),
+      headers
+    };
+  
+    const getDataObj = {
+      id: parseInt(id),
+      headers
+    }
+    
     //Get User Message Data
     getMessage(getMessageObj)
       .then(res => { setChatData(res.data.data)})

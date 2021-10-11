@@ -4,7 +4,7 @@ import AddMember from '../../../AddMember'
 import { addChannel } from "../../../../api/API"
 import { useHistory } from "react-router-dom"
 
-function AddChannel({loginData, headers, handleToggleAddChannel, handleIsRender}) {
+function AddChannel({ headers, handleToggleAddChannel, handleIsRender}) {
 
   //state
   const [channelName, setChannelName] = useState('')

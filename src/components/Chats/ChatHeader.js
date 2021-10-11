@@ -17,11 +17,6 @@ function ChatHeader({ receiver, headers }) {
   //parameter for URL
   const params = useParams();
   const { type, id } = params;
-  //data obj
-  const getDataObj = {
-    id: parseInt(id),
-    headers
-  }
 
   const handleIsRender = () => {
     setIsRender(!isRender)
@@ -59,6 +54,12 @@ function ChatHeader({ receiver, headers }) {
   }
 
   useEffect(() => {
+    //data obj
+    const getDataObj = {
+      id: parseInt(id),
+      headers
+    }
+    
     getAllUsers(headers)
     .then(res => {
       setAllUsers(res.data.data)
