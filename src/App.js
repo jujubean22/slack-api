@@ -13,11 +13,15 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
-          <Route path='/register' component={Register}/>
-          <Route path='/login' component={Login}/>
+          <Route path='/register'>
+            {accessToken ? <Redirect to='/'/> : <Register/>}
+          </Route>
+          <Route path='/login'>
+            {accessToken ? <Redirect to='/'/> : <Login/>}
+          </Route>
           <Route path='/home' component={Home}/>
           <Route path="/">
-          {accessToken ? <Redirect to='/home'/> : <Redirect to='/login'/>}
+            {accessToken ? <Redirect to='/home'/> : <Redirect to='/login'/>}
           </Route>
         </Switch>
       </Router>
