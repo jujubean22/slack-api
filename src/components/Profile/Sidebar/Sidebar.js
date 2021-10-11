@@ -53,12 +53,6 @@ function Sidebar({channelsJoined, recentUsers, loginUserData,
   const email  = localStorage.getItem('email')
   const history = useHistory();
   
-  //Logout
-  const handleLogout = () => {
-    history.push('/')
-    localStorage.clear();
-  }
-
   const newMessageHistory = () => {
     history.push(`/new-message`)
   };
@@ -198,8 +192,6 @@ function Sidebar({channelsJoined, recentUsers, loginUserData,
         {renderRecentUsers}
       </div>
 
-      <button onClick={handleLogout}>Log Out</button>
-      
     </SidebarContainer>
   
   )

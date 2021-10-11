@@ -6,35 +6,45 @@ import { userLogin } from '../../api/API';
 
 function Login() {
   //set up states
-  const [email, setEmail] = useState('ayaya2@gmail.com');
-  const [password, setPassword] = useState('123123');
+  const [email, setEmail] = useState('ayaya2@gmail.com')
+  const [password, setPassword] = useState('123123')
   //state for loading
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
   //for history push
-  const history = useHistory();
-  //user login 
+  const history = useHistory()
+  //user login data
+  const [loginData, setLoginData] = useState()
 
-  const handleLogin = (e) => {
-    e.preventDefault()
+  useEffect(() => {
     setLoading(true)
-
     const data = { email, password }
 
     //User Login
     userLogin(data)
       .then(res => {
-        localStorage.setItem('id', res.data.data.id);
-        localStorage.setItem('email', res.data.data.email);
-        localStorage.setItem('access-token', res.headers['access-token']);
-        localStorage.setItem('client', res.headers['client']);
-        localStorage.setItem('expiry', res.headers['expiry']);
-        localStorage.setItem('uid', res.headers['uid']);
-        history.push('/home');
+        // localStorage.setItem('id', res.data.data.id);
+        // localStorage.setItem('email', res.data.data.email);
+        // localStorage.setItem('access-token', res.headers['access-token']);
+        // localStorage.setItem('client', res.headers['client']);
+        // localStorage.setItem('expiry', res.headers['expiry']);
+        // localStorage.setItem('uid', res.headers['uid']);
+        setLoginData(res)
         setLoading(false)
         // console.log(res.data.data.id)
         // console.log(res.data.data.email)
       })
       .catch(err => err);
+  }, [])
+
+  const handleLogin = (e) => {
+    e.preventDefault()
+    localStorage.setItem('id', loginData.data.data.id);
+    localStorage.setItem('email', loginData.data.data.email);
+    localStorage.setItem('access-token', loginData.headers['access-token']);
+    localStorage.setItem('client', loginData.headers['client']);
+    localStorage.setItem('expiry', loginData.headers['expiry']);
+    localStorage.setItem('uid', loginData.headers['uid']);
+    history.push('/home');
   }
 
   return (

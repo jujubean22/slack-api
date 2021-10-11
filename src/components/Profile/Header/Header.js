@@ -4,15 +4,24 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import SearchIcon from '@material-ui/icons/Search';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import SearchBox from '../../Search/SearchBox'
+import { useHistory } from "react-router-dom";
 
 
 function Header({ headers }) {
   const [toggleSearch, setToggleSearch] = useState(false)
 
   const id  = localStorage.getItem('id')
+  const history = useHistory()
 
   const handleToggleSearchBox = () => {
     setToggleSearch(!toggleSearch)
+  }
+
+  //Logout
+  const handleLogout = () => {
+    history.push('/')
+    localStorage.clear()
+    window.location.reload()
   }
   
   return (
@@ -32,6 +41,7 @@ function Header({ headers }) {
       </HeaderSearch> 
       <HeaderRight>
         <HelpOutlineIcon />
+        <button onClick={handleLogout}>Log Out</button>
       </HeaderRight>
       {toggleSearch ? (
         <SearchBox 
@@ -39,6 +49,7 @@ function Header({ headers }) {
           headers={headers}
         />
       ) : null}
+
     </HeaderContainer>
 )
 }
