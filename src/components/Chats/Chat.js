@@ -6,7 +6,7 @@ import { getMessage, getUser, getChannelData } from '../../api/API';
 import { useParams } from "react-router-dom"
 import ChatHeader from './ChatHeader';
 
-function Chat({ loginData, headers, handleIsRender, homeIsRender }) {
+function Chat({ loginData, headers }) {
   const [chatData, setChatData] = useState("");
   const [receiver, setReceiver] = useState("");
   const [isRender, setIsRender] = useState(false);
@@ -21,7 +21,6 @@ function Chat({ loginData, headers, handleIsRender, homeIsRender }) {
 
   const handleChatIsRender = () => {
     setIsRender(!isRender);
-    handleIsRender()
   }
 
   //Smooth scrolling to bottom
@@ -77,8 +76,6 @@ function Chat({ loginData, headers, handleIsRender, homeIsRender }) {
         <ChatHeader 
           receiver={receiver} 
           headers={headers}
-          handleIsRender={handleIsRender}
-          homeIsRender={homeIsRender}
         />
         <ChatMessages>
           <ChatBodyContainer chatData={chatData} chatRef={chatRef}/>

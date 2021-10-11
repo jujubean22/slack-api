@@ -90,8 +90,6 @@ function Home({ loginData }) {
                 <Chat 
                   loginData={loginData} 
                   headers={userHeaders} 
-                  homeIsRender={isRender}
-                  handleIsRender={handleIsRender} 
                   />
               </Route>
               <Route exact path="/new-message">

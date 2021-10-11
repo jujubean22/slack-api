@@ -4,7 +4,7 @@ import { getChannelData, getAllUsers, addMemberToTheChannel } from '../../api/AP
 import styled from "styled-components";
 import AddMember from '../AddMember';
 
-function ChatHeader({ receiver, headers, handleIsRender, homeIsRender }) {
+function ChatHeader({ receiver, headers }) {
   //state
   const [channelMembers, setChannelMembers] = useState([]);
   const [channelMemberInfo, setChannelMemberInfo] = useState([]);
@@ -12,6 +12,7 @@ function ChatHeader({ receiver, headers, handleIsRender, homeIsRender }) {
   const [toggleViewMembers, setToggleViewMembers] = useState(false)
   const [toggleAddMembers, setToggleAddMembers] = useState(false)
   const [addUserArray, setAddUserArray] = useState([])
+  const [isRender, setIsRender] = useState(false)
 
   //parameter for URL
   const params = useParams();
@@ -20,6 +21,10 @@ function ChatHeader({ receiver, headers, handleIsRender, homeIsRender }) {
   const getDataObj = {
     id: parseInt(id),
     headers
+  }
+
+  const handleIsRender = () => {
+    setIsRender(!isRender)
   }
 
   const handleToggleViewMembers = () => {
@@ -65,7 +70,7 @@ function ChatHeader({ receiver, headers, handleIsRender, homeIsRender }) {
     })
     .catch(err => err)
 
-  }, [id, homeIsRender])
+  }, [id, isRender])
 
   useEffect(() => {
     setChannelMemberInfo([])
