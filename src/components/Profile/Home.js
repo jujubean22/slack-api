@@ -16,6 +16,7 @@ function Home({ loginData }) {
   const [recentUsers, setRecentUsers] = useState("");
   const [isRender, setIsRender] = useState(false);
   const [loginUserData, setloginUserData] = useState("");
+  
 
 
   const handleIsRender = () => {
@@ -24,17 +25,18 @@ function Home({ loginData }) {
 
   useEffect(() => {
     //get header from loginData
+    setloginUserData(loginData)
+
     const headers = {
-      token: loginData.headers["access-token"],
-      client: loginData.headers.client,
-      expiry: loginData.headers.expiry,
-      uid: loginData.headers.uid,
+      token: localStorage.getItem('access-token'),
+      client : localStorage.getItem('client'),
+      expiry: localStorage.getItem('expiry'),
+      uid: localStorage.getItem('uid')
     };
 
     const channelData = { headers }
 
-    setUserHeaders(headers);
-    setloginUserData(loginData.data);
+    setUserHeaders(headers)
 
     //get channels
     getChannel(channelData) 
@@ -55,7 +57,7 @@ function Home({ loginData }) {
     getOwnedChannel(channelData)
       .then(res => {
         setChannelOwned(res.data.data)
-        //console.log(channelsOwned)
+        console.log(channelsOwned)
       })
       .catch(err => err);
     
@@ -75,20 +77,17 @@ function Home({ loginData }) {
           <Appbody>
             <Sidebar 
               channelsJoined={channels} 
-              loginData={loginData} 
+              loginData={loginUserData} 
               recentUsers={recentUsers}
               channelsOwned={channelsOwned}
-              loginUserData={loginUserData}
               headers={userHeaders}
               handleIsRender={handleIsRender}
             />
             <Switch>              
-              <Route exact path='/' component={Homepage}>
-                <Homepage />
-              </Route>
+              <Route path='/home' component={Homepage}/>
               <Route path='/:type/:id'>
                 <Chat 
-                  loginData={loginData} 
+                  loginData={loginUserData} 
                   headers={userHeaders} 
                   />
               </Route>

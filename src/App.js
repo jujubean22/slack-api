@@ -17,9 +17,7 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
-          <Route path='/register'>
-            <Register handleSetLoginData={handleSetLoginData} />
-          </Route>
+          <Route path='/register' component={Register}/>
           <Route path='/slack-api'>
             <Login handleSetLoginData={handleSetLoginData} />
           </Route>

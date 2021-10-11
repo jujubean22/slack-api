@@ -24,7 +24,11 @@ function Login({ handleSetLoginData }) {
     //User Login
     userLogin(data)
       .then(res => {
-        handleSetLoginData(res);
+        localStorage.setItem('access-token', res.headers['access-token']);
+        localStorage.setItem('client', res.headers['client']);
+        localStorage.setItem('expiry', res.headers['expiry']);
+        localStorage.setItem('uid', res.headers['uid']);
+        handleSetLoginData(res)
         history.push('/');
         setLoading(false)
       })
@@ -33,7 +37,7 @@ function Login({ handleSetLoginData }) {
 
   return (
     <LoginContainer>
-      <LoginInnerContainer handeSetLoginData={handleSetLoginData}>
+      <LoginInnerContainer>
         <img
           src="https://logos-world.net/wp-content/uploads/2020/10/Slack-Logo-2019-present.jpg"
           alt="slack logo" 

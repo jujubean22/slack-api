@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import CreateIcon from "@material-ui/icons/Create";
@@ -47,11 +47,17 @@ function Sidebar({channelsJoined, loginData, recentUsers,
   const handleTogRecentUsersDropdown = () => {
     setTogRecentUsersDropdown(!togRecentUsersDropdown)
   }
-
+  
   //new message
   const userID = loginUserData && loginUserData.data ? loginUserData.data.id : null;
   const { email } = loginData.data.data;
   const history = useHistory();
+  
+  //Logout
+  const handleLogout = () => {
+    history.push('/')
+    localStorage.clear();
+  }
 
   const newMessageHistory = () => {
     history.push(`/new-message`)
@@ -59,13 +65,13 @@ function Sidebar({channelsJoined, loginData, recentUsers,
   
   //Render Owned Channel 
   const renderOwnedChannel = channelsOwned
-    ? channelsOwned.map((channel, i) => {
+    ? channelsOwned.map((channel, index) => {
       return (
         <NavLink
           style={{ textDecoration: 'none', color: 'white' }}
-          to={`/channel/${channel.id}`}>
+          to={`/channel/${channel.id}`}
+          key={index}>
           <SidebarOption
-            key={i}
             Icon={ChatBubbleIcon}
             title={channel.name}
           />
@@ -81,9 +87,9 @@ function Sidebar({channelsJoined, loginData, recentUsers,
         return (
           <NavLink 
             style={{textDecoration: 'none', color: 'white'}} 
-            to={`/channel/${channel.id}`}>
+            to={`/channel/${channel.id}`}
+            key={index}>
             <SidebarOption
-              key={index}
               Icon={InsertCommentIcon}
               title={channel.name}
             />
@@ -99,9 +105,9 @@ function Sidebar({channelsJoined, loginData, recentUsers,
         return (
           <NavLink 
             style={{textDecoration: 'none', color: 'white'}} 
-            to={`/user/${user.id}`}>
+            to={`/user/${user.id}`}
+            key={index}>
             <SidebarOption
-              key={index}
               Icon={PeopleAltIcon}
               title={user.uid}
             />
@@ -166,7 +172,7 @@ function Sidebar({channelsJoined, loginData, recentUsers,
       />
       <div className={togChannelOwnedDropdown 
         ? `sidebar-channels` : `sidebar-channels hidden`}>
-        {renderOwnedChannel}
+        {/* {renderOwnedChannel} */}
       </div>
       <hr />
       <SidebarOption 
@@ -178,7 +184,7 @@ function Sidebar({channelsJoined, loginData, recentUsers,
       />
       <div className={togChannelJoinedDropdown 
         ? `sidebar-channels` : `sidebar-channels hidden`}>
-        {renderChannels}
+        {/* {renderChannels} */}
       </div>
       <hr />
       <SidebarOption 
@@ -192,6 +198,8 @@ function Sidebar({channelsJoined, loginData, recentUsers,
         ? `sidebar-channels` : `sidebar-channels hidden`}>
         {renderRecentUsers}
       </div>
+
+      <button onClick={handleLogout}>Log Out</button>
       
     </SidebarContainer>
   
